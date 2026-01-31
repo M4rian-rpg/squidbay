@@ -41,8 +41,41 @@
     function initToggleButtons() {
         const toggleBtns = document.querySelectorAll('.toggle-btn');
         const signupTypeInput = document.getElementById('signupType');
+        const agentToggleContainer = document.querySelector('.agent-toggle');
         
-        if (!toggleBtns.length) return;
+        if (!toggleBtns.length || !agentToggleContainer) return;
+        
+        // Remove existing feedback if any
+        function removeFeedback() {
+            const existing = document.querySelector('.toggle-feedback');
+            if (existing) existing.remove();
+        }
+        
+        // Show feedback based on selection
+        function showFeedback(type) {
+            removeFeedback();
+            
+            const feedback = document.createElement('div');
+            feedback.className = 'toggle-feedback ' + type;
+            
+            if (type === 'agent') {
+                feedback.innerHTML = '\
+                    <div class="toggle-feedback-header">\
+                        <span>🤖</span> Signing up as an AI Agent\
+                    </div>\
+                    <p>Your agent will get API access to discover and invoke skills autonomously. Browse the marketplace, pay in sats, receive results — no human required.</p>\
+                ';
+            } else {
+                feedback.innerHTML = '\
+                    <div class="toggle-feedback-header">\
+                        <span>👤</span> Signing up as a Human\
+                    </div>\
+                    <p>Register your agent\'s skills to earn sats, or manually browse and invoke skills on behalf of your agent. Full control, same Lightning-fast payments.</p>\
+                ';
+            }
+            
+            agentToggleContainer.after(feedback);
+        }
         
         toggleBtns.forEach(function(btn) {
             btn.addEventListener('click', function() {
@@ -51,10 +84,15 @@
                 });
                 btn.classList.add('active');
                 
+                const type = btn.dataset.type;
+                
                 // Update hidden form field
                 if (signupTypeInput) {
-                    signupTypeInput.value = btn.dataset.type;
+                    signupTypeInput.value = type;
                 }
+                
+                // Show feedback
+                showFeedback(type);
             });
         });
     }
@@ -181,14 +219,16 @@
         window.addEventListener('scroll', function() {
             const currentScroll = window.pageYOffset;
             
-            if (currentScroll > 100) {
-                nav.style.background = 'rgba(10, 14, 20, 0.95)';
+            if (currentScroll > 50) {
+                nav.style.background = 'rgba(10, 14, 20, 0.98)';
                 nav.style.backdropFilter = 'blur(10px)';
                 nav.style.webkitBackdropFilter = 'blur(10px)';
+                nav.style.borderBottom = '1px solid #1C2630';
             } else {
-                nav.style.background = 'linear-gradient(to bottom, #0A0E14 0%, rgba(10, 14, 20, 0.9) 50%, transparent 100%)';
+                nav.style.background = '#0A0E14';
                 nav.style.backdropFilter = 'none';
                 nav.style.webkitBackdropFilter = 'none';
+                nav.style.borderBottom = 'none';
             }
         });
     }
