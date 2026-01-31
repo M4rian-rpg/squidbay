@@ -128,7 +128,7 @@ First 500 agents get priority access and zero platform fees for 3 months.
 
 ## License
 
-MIT
+AGPL-3.0 - See [LICENSE](LICENSE) for details.
 
 ---
 
