@@ -40,6 +40,7 @@
     
     function initToggleButtons() {
         const toggleBtns = document.querySelectorAll('.toggle-btn');
+        const signupTypeInput = document.getElementById('signupType');
         
         if (!toggleBtns.length) return;
         
@@ -49,12 +50,17 @@
                     b.classList.remove('active');
                 });
                 btn.classList.add('active');
+                
+                // Update hidden form field
+                if (signupTypeInput) {
+                    signupTypeInput.value = btn.dataset.type;
+                }
             });
         });
     }
 
     // --------------------------------------------------------------------------
-    // Waitlist Form
+    // Waitlist Form (Web3Forms)
     // --------------------------------------------------------------------------
     
     function initWaitlistForm() {
@@ -62,83 +68,24 @@
         
         if (!form) return;
         
-        form.addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const emailInput = form.querySelector('input[type="email"]');
-            const email = emailInput.value.trim();
-            const activeToggle = document.querySelector('.toggle-btn.active');
-            const type = activeToggle ? activeToggle.dataset.type : 'agent';
-            
-            if (!email) return;
-            
-            // Prepare data
-            const data = {
-                email: email,
-                type: type,
-                timestamp: new Date().toISOString(),
-                source: 'squidbay.io'
-            };
-            
-            // Log for now (replace with actual API call)
-            console.log('SquidBay waitlist signup:', data);
-            
-            // Show success message
-            showSuccessMessage(email, type);
-            
-            // Reset form
-            form.reset();
+        // Form will submit to Web3Forms and redirect to thanks.html
+        // No additional JS needed for basic functionality
+        
+        // Optional: Add loading state
+        form.addEventListener('submit', function() {
+            const submitBtn = form.querySelector('button[type="submit"]');
+            if (submitBtn) {
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = '\
+                    <svg class="spinner-small" width="18" height="18" viewBox="0 0 24 24">\
+                        <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="3" fill="none" stroke-dasharray="31.4" stroke-dashoffset="10">\
+                            <animateTransform attributeName="transform" type="rotate" from="0 12 12" to="360 12 12" dur="1s" repeatCount="indefinite"/>\
+                        </circle>\
+                    </svg>\
+                    Joining...\
+                ';
+            }
         });
-    }
-    
-    function showSuccessMessage(email, type) {
-        const form = document.getElementById('waitlistForm');
-        const formParent = form.parentElement;
-        
-        // Create success message
-        const successDiv = document.createElement('div');
-        successDiv.className = 'success-message';
-        successDiv.innerHTML = '\
-            <div class="success-icon">\
-                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">\
-                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>\
-                    <polyline points="22 4 12 14.01 9 11.01"></polyline>\
-                </svg>\
-            </div>\
-            <h3>You\'re on the list!</h3>\
-            <p>We\'ll notify <strong>' + email + '</strong> when we launch.</p>\
-            <p class="success-type">Signed up as: ' + (type === 'agent' ? 'AI Agent' : 'Human') + '</p>\
-        ';
-        
-        // Add inline styles
-        successDiv.style.cssText = '\
-            text-align: center;\
-            padding: 40px;\
-            background: #0F1419;\
-            border: 1px solid #00D26A;\
-            border-radius: 16px;\
-            max-width: 500px;\
-            margin: 0 auto;\
-            animation: fadeInUp 0.4s ease-out;\
-        ';
-        
-        // Style inner elements
-        const style = document.createElement('style');
-        style.textContent = '\
-            .success-message .success-icon { color: #00D26A; margin-bottom: 20px; }\
-            .success-message h3 { font-size: 1.5rem; margin-bottom: 12px; color: #E8F4F8; }\
-            .success-message p { color: #7B8FA3; margin-bottom: 8px; }\
-            .success-message strong { color: #00D9FF; }\
-            .success-message .success-type { font-size: 0.85rem; margin-top: 16px; }\
-        ';
-        document.head.appendChild(style);
-        
-        // Hide form and toggle, show success
-        form.style.display = 'none';
-        const toggle = document.querySelector('.agent-toggle');
-        if (toggle) toggle.style.display = 'none';
-        
-        formParent.insertBefore(successDiv, form);
     }
 
     // --------------------------------------------------------------------------
@@ -209,7 +156,8 @@
                 if (targetElement) {
                     e.preventDefault();
                     
-                    const navHeight = document.querySelector('nav').offsetHeight;
+                    const nav = document.querySelector('nav');
+                    const navHeight = nav ? nav.offsetHeight : 0;
                     const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - navHeight;
                     
                     window.scrollTo({
