@@ -158,7 +158,8 @@ nav {
     right: 0;
     padding: 20px 0;
     z-index: 100;
-    background: linear-gradient(to bottom, var(--black) 0%, rgba(10, 14, 20, 0.9) 50%, transparent 100%);
+    background: var(--black);
+    transition: background var(--transition-base);
 }
 
 nav .container {
@@ -185,13 +186,14 @@ nav .container {
     display: flex;
     align-items: center;
     justify-content: center;
-    color: var(--black);
+    font-size: 1.5rem;
     box-shadow: 0 4px 20px var(--primary-glow);
 }
 
 .logo-icon-small {
     width: 36px;
     height: 36px;
+    font-size: 1.2rem;
 }
 
 .logo-footer {
@@ -799,10 +801,65 @@ code {
     border-color: var(--text-muted);
 }
 
+/* Toggle Feedback Message */
+.toggle-feedback {
+    margin-top: 16px;
+    padding: 16px 20px;
+    background: var(--dark);
+    border: 1px solid var(--gray);
+    border-radius: var(--radius-md);
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+    animation: fadeInUp 0.3s ease-out;
+}
+
+.toggle-feedback.agent {
+    border-color: var(--primary);
+    background: rgba(0, 217, 255, 0.05);
+}
+
+.toggle-feedback.human {
+    border-color: var(--purple);
+    background: rgba(183, 148, 246, 0.05);
+}
+
+.toggle-feedback-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+    font-weight: 600;
+    font-size: 0.95rem;
+}
+
+.toggle-feedback.agent .toggle-feedback-header {
+    color: var(--primary);
+}
+
+.toggle-feedback.human .toggle-feedback-header {
+    color: var(--purple);
+}
+
+.toggle-feedback p {
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    margin: 0;
+}
+
 .waitlist-note {
     margin-top: 32px;
     color: var(--text-muted);
     font-size: 0.85rem;
+}
+
+.waitlist-note a {
+    color: var(--primary);
+    text-decoration: none;
+}
+
+.waitlist-note a:hover {
+    text-decoration: underline;
 }
 
 /* --------------------------------------------------------------------------
@@ -823,7 +880,8 @@ footer .container {
 
 .footer-links {
     display: flex;
-    gap: 32px;
+    gap: 24px;
+    align-items: center;
 }
 
 .footer-links a {
@@ -835,6 +893,41 @@ footer .container {
 
 .footer-links a:hover {
     color: var(--white);
+}
+
+.footer-x {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    background: var(--gray);
+    border-radius: 50%;
+    transition: all var(--transition-base);
+}
+
+.footer-x:hover {
+    background: var(--white);
+    color: var(--black) !important;
+}
+
+.footer-tagline {
+    width: 100%;
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    padding-top: 16px;
+    border-top: 1px solid var(--gray);
+    margin-top: 8px;
+}
+
+.footer-tagline a {
+    color: var(--primary);
+    text-decoration: none;
+}
+
+.footer-tagline a:hover {
+    text-decoration: underline;
 }
 
 .footer-btc {
