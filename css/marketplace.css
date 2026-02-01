@@ -9,6 +9,7 @@
     padding: 140px 0 60px;
     background: linear-gradient(180deg, var(--black) 0%, var(--darker) 100%);
     position: relative;
+    overflow: hidden;
 }
 
 .marketplace-header::after {
@@ -133,6 +134,7 @@
     padding: 24px 0;
     background: var(--darker);
     border-bottom: 1px solid var(--gray);
+    overflow: hidden;
 }
 
 .stats-ticker {
@@ -181,6 +183,7 @@
    -------------------------------------------------------------------------- */
 .skills-section {
     padding: 60px 0 120px;
+    overflow: hidden;
 }
 
 .skills-grid {
@@ -408,6 +411,7 @@
     background: linear-gradient(180deg, var(--darker) 0%, var(--black) 100%);
     text-align: center;
     position: relative;
+    overflow: hidden;
 }
 
 .marketplace-cta::before {
@@ -693,6 +697,7 @@
     padding: 80px 0;
     background: var(--black);
     border-top: 1px solid var(--gray);
+    overflow: hidden;
 }
 
 .agent-section-content {
