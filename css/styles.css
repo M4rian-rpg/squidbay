@@ -482,6 +482,11 @@ nav .container {
     font-size: 0.95rem;
 }
 
+.section-title-second {
+    margin-top: 80px;
+    margin-bottom: 48px;
+}
+
 /* --------------------------------------------------------------------------
    Code Section
    -------------------------------------------------------------------------- */
@@ -505,6 +510,16 @@ nav .container {
 .code-compat {
     color: var(--text-muted);
     font-size: 0.9rem;
+}
+
+.code-grid-second {
+    margin-top: 48px;
+    grid-template-columns: 1fr 1fr;
+}
+
+.code-section-subtitle {
+    font-size: 1.25rem;
+    margin-bottom: 16px;
 }
 
 .code-block {
