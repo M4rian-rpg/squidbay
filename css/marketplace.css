@@ -464,11 +464,13 @@
     background: var(--dark);
     border: 1px solid var(--gray);
     border-radius: var(--radius-xl);
-    max-width: 500px;
+    max-width: 420px;
     width: 100%;
     position: relative;
     transform: scale(0.95);
     transition: transform var(--transition-base);
+    max-height: 90vh;
+    overflow-y: auto;
 }
 
 .modal-overlay.active .modal {
@@ -493,18 +495,18 @@
 }
 
 .modal-content {
-    padding: 32px;
+    padding: 24px;
 }
 
 /* Modal Header */
 .modal-header {
     text-align: center;
-    margin-bottom: 24px;
+    margin-bottom: 16px;
 }
 
 .modal-header h3 {
-    font-size: 1.5rem;
-    margin-bottom: 8px;
+    font-size: 1.3rem;
+    margin-bottom: 4px;
 }
 
 .modal-header p {
@@ -517,31 +519,31 @@
     background: var(--darker);
     border: 1px solid var(--gray);
     border-radius: var(--radius-md);
-    padding: 24px;
+    padding: 20px;
     text-align: center;
-    margin-bottom: 24px;
-}
-
-.invoice-amount {
-    font-size: 2.5rem;
-    font-weight: 800;
-    color: var(--primary);
-    font-family: var(--font-mono);
-    margin-bottom: 4px;
-}
-
-.invoice-usd {
-    font-size: 0.9rem;
-    color: var(--text-muted);
     margin-bottom: 16px;
 }
 
+.invoice-amount {
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--primary);
+    font-family: var(--font-mono);
+    margin-bottom: 2px;
+}
+
+.invoice-usd {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-bottom: 12px;
+}
+
 .qr-placeholder {
-    width: 180px;
-    height: 180px;
+    width: 140px;
+    height: 140px;
     background: var(--white);
     border-radius: var(--radius-md);
-    margin: 0 auto 16px;
+    margin: 0 auto 12px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -573,11 +575,11 @@
 
 .invoice-string {
     font-family: var(--font-mono);
-    font-size: 0.7rem;
+    font-size: 0.65rem;
     color: var(--text-muted);
     word-break: break-all;
     background: var(--black);
-    padding: 12px;
+    padding: 8px;
     border-radius: var(--radius-sm);
     max-height: 60px;
     overflow: hidden;
@@ -676,25 +678,25 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 10px;
+    gap: 8px;
     background: rgba(0, 217, 255, 0.1);
     border: 1px solid rgba(0, 217, 255, 0.2);
     border-radius: var(--radius);
-    padding: 12px 16px;
-    margin-top: 20px;
-    font-size: 0.9rem;
+    padding: 10px 14px;
+    margin-top: 12px;
+    font-size: 0.85rem;
     color: var(--primary);
 }
 
 .agent-note-icon {
-    font-size: 1.1rem;
+    font-size: 1rem;
 }
 
 /* Modal Buttons */
 .modal-actions {
     display: flex;
     gap: 12px;
-    margin-top: 24px;
+    margin-top: 16px;
 }
 
 .modal-actions .btn {
