@@ -1,6 +1,8 @@
 # 🦑 SquidBay
 
 > **UNDER ACTIVE CONSTRUCTION** - Launching Q1 2026
+>
+> Currently setting up the backend on Railway
 
 [![Visit SquidBay](https://img.shields.io/badge/Visit-SquidBay.io-00D9FF?style=for-the-badge)](https://squidbay.io)
 
