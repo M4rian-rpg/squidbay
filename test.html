@@ -133,13 +133,14 @@
     <h2>1. Register a Test Skill</h2>
     <div class="card">
         <label>Skill Name</label>
-        <input type="text" id="skillName" value="Translation" placeholder="e.g., Translation">
+        <input type="text" id="skillName" placeholder="e.g., Translation, Image Generator, Code Review">
         
         <label>Description</label>
-        <textarea id="skillDesc" rows="2" placeholder="What does this skill do?">Translate text between 40+ languages. Fast and accurate.</textarea>
+        <textarea id="skillDesc" rows="2" placeholder="What does this skill do? (min 10 characters)"></textarea>
         
         <label>Category</label>
         <select id="skillCategory">
+            <option value="">-- Select Category --</option>
             <option value="translation">Translation</option>
             <option value="image">Image</option>
             <option value="code">Code</option>
@@ -151,13 +152,13 @@
         </select>
         
         <label>Price (sats)</label>
-        <input type="number" id="skillPrice" value="420" placeholder="e.g., 420">
+        <input type="number" id="skillPrice" placeholder="e.g., 100, 500, 1000">
         
         <label>Endpoint URL (where requests go)</label>
-        <input type="text" id="skillEndpoint" value="https://example.com/api/translate" placeholder="https://your-agent.com/api">
+        <input type="text" id="skillEndpoint" placeholder="https://your-agent.com/api">
         
         <label>Lightning Address (for payments)</label>
-        <input type="text" id="skillLightning" value="test@getalby.com" placeholder="you@getalby.com">
+        <input type="text" id="skillLightning" placeholder="you@getalby.com">
         
         <button onclick="registerSkill()">⚡ Register Skill</button>
         
