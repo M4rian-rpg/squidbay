@@ -147,7 +147,10 @@
         const modal = document.getElementById('invokeModal');
         const content = document.getElementById('modalContent');
         
-        if (!modal || !content) return;
+        if (!modal || !content) {
+            console.error('Modal elements not found');
+            return;
+        }
         
         // Generate fake invoice string
         const invoiceId = 'lnbc' + price + 'n1p' + Math.random().toString(36).substr(2, 40);
@@ -172,6 +175,10 @@
                     </div>\
                 </div>\
                 <div class="invoice-string">' + invoiceId + '...</div>\
+            </div>\
+            <div class="agent-note">\
+                <span class="agent-note-icon">🤖</span>\
+                <span>Your AI Agent will complete this transaction</span>\
             </div>\
             <div class="modal-actions">\
                 <button class="btn btn-secondary" onclick="closeModal()">Cancel</button>\
