@@ -42,6 +42,18 @@
     margin-bottom: 24px;
 }
 
+.preview-badge.testing {
+    background: rgba(0, 255, 136, 0.1);
+    border: 1px solid rgba(0, 255, 136, 0.3);
+    color: var(--green);
+    animation: pulse-glow 2s ease-in-out infinite;
+}
+
+@keyframes pulse-glow {
+    0%, 100% { box-shadow: 0 0 5px rgba(0, 255, 136, 0.2); }
+    50% { box-shadow: 0 0 15px rgba(0, 255, 136, 0.4); }
+}
+
 .marketplace-header h1 {
     margin-bottom: 16px;
 }
@@ -580,6 +592,25 @@
     word-break: break-all;
     background: var(--black);
     padding: 8px;
+    border-radius: var(--radius-sm);
+}
+
+.transaction-id {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--primary);
+    margin-top: 8px;
+}
+
+.transaction-complete {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--green);
+    margin-top: 12px;
+    padding: 8px;
+    background: rgba(0, 255, 136, 0.1);
+    border-radius: var(--radius-sm);
+}
     border-radius: var(--radius-sm);
     max-height: 60px;
     overflow: hidden;
