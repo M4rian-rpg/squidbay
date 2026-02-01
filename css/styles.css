@@ -59,6 +59,7 @@
 html {
     scroll-behavior: smooth;
     overflow-x: hidden;
+    background: var(--black);
 }
 
 body {
@@ -70,6 +71,7 @@ body {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     min-height: 100vh;
+    padding-top: env(safe-area-inset-top);
 }
 
 /* Ocean depth gradient overlay */
@@ -160,9 +162,29 @@ nav {
     left: 0;
     right: 0;
     padding: 20px 0;
+    padding-top: calc(20px + env(safe-area-inset-top));
     z-index: 100;
     background: var(--black);
     transition: background var(--transition-base);
+    border-bottom: 1px solid transparent;
+}
+
+nav::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: var(--black);
+    z-index: -1;
+}
+
+nav.scrolled {
+    background: rgba(10, 14, 20, 0.98);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--gray);
 }
 
 nav .container {
