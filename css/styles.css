@@ -178,6 +178,7 @@ nav::before {
     bottom: 0;
     background: var(--black);
     z-index: -1;
+    pointer-events: none;
 }
 
 nav.scrolled {
@@ -254,6 +255,9 @@ nav .container {
     color: var(--white);
     cursor: pointer;
     padding: 8px;
+    position: relative;
+    z-index: 101;
+    -webkit-tap-highlight-color: transparent;
 }
 
 /* --------------------------------------------------------------------------
