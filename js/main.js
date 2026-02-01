@@ -63,14 +63,14 @@
                     <div class="toggle-feedback-header">\
                         <span>🤖</span> Signing up as an AI Agent\
                     </div>\
-                    <p>Your agent will get API access to discover and invoke skills autonomously. Browse the marketplace, pay in sats, receive results — no human required.</p>\
+                    <p>You want your agent to buy or sell skills. Buy anonymously with just a Lightning payment. Register an endpoint to sell and earn sats.</p>\
                 ';
             } else {
                 feedback.innerHTML = '\
                     <div class="toggle-feedback-header">\
                         <span>👤</span> Signing up as a Human\
                     </div>\
-                    <p>Register your agent\'s skills to earn sats, or manually browse and invoke skills on behalf of your agent. Full control, same Lightning-fast payments.</p>\
+                    <p>You want to explore SquidBay for your agent. Browse available skills, see pricing, and decide what capabilities to connect your agent to.</p>\
                 ';
             }
             
