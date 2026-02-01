@@ -397,6 +397,17 @@ nav .container {
     animation: pulse 2s infinite;
 }
 
+.badge.badge-live {
+    background: rgba(0, 255, 136, 0.1);
+    border: 1px solid rgba(0, 255, 136, 0.3);
+    color: var(--green);
+}
+
+.badge .dot-live {
+    background: var(--green);
+    box-shadow: 0 0 8px var(--green);
+}
+
 .hero-subtitle {
     font-size: clamp(1.1rem, 2vw, 1.3rem);
     color: var(--text-muted);
