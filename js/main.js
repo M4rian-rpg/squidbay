@@ -134,9 +134,16 @@
         const menuBtn = document.querySelector('.mobile-menu-btn');
         const navLinks = document.querySelector('.nav-links');
         
-        if (!menuBtn || !navLinks) return;
+        if (!menuBtn || !navLinks) {
+            console.log('Mobile menu elements not found');
+            return;
+        }
         
-        menuBtn.addEventListener('click', function() {
+        console.log('Mobile menu initialized');
+        
+        menuBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            console.log('Menu clicked');
             navLinks.classList.toggle('mobile-open');
         });
         
