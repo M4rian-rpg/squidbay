@@ -137,26 +137,7 @@
         if (!menuBtn || !navLinks) return;
         
         menuBtn.addEventListener('click', function() {
-            const isOpen = navLinks.classList.contains('mobile-open');
-            
-            if (isOpen) {
-                navLinks.classList.remove('mobile-open');
-                navLinks.style.display = 'none';
-            } else {
-                navLinks.classList.add('mobile-open');
-                navLinks.style.cssText = '\
-                    display: flex;\
-                    flex-direction: column;\
-                    position: absolute;\
-                    top: 100%;\
-                    left: 0;\
-                    right: 0;\
-                    background: #0A0E14;\
-                    padding: 24px;\
-                    gap: 16px;\
-                    border-bottom: 1px solid #1C2630;\
-                ';
-            }
+            navLinks.classList.toggle('mobile-open');
         });
         
         // Close menu on link click
@@ -164,16 +145,14 @@
             link.addEventListener('click', function() {
                 if (window.innerWidth <= 768) {
                     navLinks.classList.remove('mobile-open');
-                    navLinks.style.display = 'none';
                 }
             });
         });
         
-        // Close menu on resize
+        // Close menu on resize to desktop
         window.addEventListener('resize', function() {
             if (window.innerWidth > 768) {
                 navLinks.classList.remove('mobile-open');
-                navLinks.style.display = '';
             }
         });
     }
