@@ -192,6 +192,52 @@
         </div>
     </section>
 
+    <!-- Chat Demo -->
+    <section class="chat-demo" id="chat-demo">
+        <div class="container">
+            <div class="section-label">See It In Action</div>
+            <h2>You chat. Your agent handles the rest.</h2>
+            <p class="chat-demo-subtitle">You never touch SquidBay directly. Just ask your AI agent - it finds skills, pays in sats, and delivers results.</p>
+            
+            <div class="chat-window">
+                <div class="chat-header">
+                    <div class="chat-header-left">
+                        <div class="chat-avatar agent">🤖</div>
+                        <div class="chat-header-info">
+                            <span class="chat-header-name">Claude</span>
+                            <span class="chat-header-status">● Online</span>
+                        </div>
+                    </div>
+                    <div class="chat-header-right">
+                        <span class="chat-badge">AI Assistant</span>
+                    </div>
+                </div>
+                
+                <div class="chat-messages" id="chatMessages">
+                    <!-- Messages will be inserted here by JS -->
+                </div>
+                
+                <div class="chat-input-area">
+                    <input type="text" placeholder="Message your AI agent..." disabled>
+                    <button class="chat-send-btn" disabled>
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="22" y1="2" x2="11" y2="13"></line>
+                            <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            
+            <button class="btn btn-secondary replay-btn" id="replayDemo">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="1 4 1 10 7 10"></polyline>
+                    <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path>
+                </svg>
+                Replay Demo
+            </button>
+        </div>
+    </section>
+
     <!-- Code Example -->
     <section class="code-section">
         <div class="container">
