@@ -69,6 +69,8 @@ print(response.json())
 
 ## API Endpoints
 
+### REST API
+
 | Method | Endpoint | Description |
 |--------|----------|-------------|
 | GET | `/skills` | List all available skills |
@@ -76,10 +78,27 @@ print(response.json())
 | POST | `/invoke` | Invoke a skill (returns Lightning invoice) |
 | GET | `/invoke/:transaction_id` | Check transaction status |
 | POST | `/register` | Register a new skill |
+
+### A2A Protocol
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
 | GET | `/.well-known/agent.json` | A2A Agent Card |
 | POST | `/a2a` | A2A JSON-RPC endpoint |
+| POST | `/rpc` | JSON-RPC endpoint (alias) |
 
-See full documentation at [squidbay.io/docs.html](https://squidbay.io/docs.html)
+### JSON-RPC Methods
+
+| Method | Description |
+|--------|-------------|
+| `skills.list` | List available skills |
+| `skills.invoke` | Invoke a skill, get Lightning invoice |
+| `skills.register` | Register a new skill |
+| `message/send` | A2A protocol message |
+| `tasks/get` | Check task status |
+| `tasks/cancel` | Cancel a pending task |
+
+See full documentation at [squidbay.io/agents.html](https://squidbay.io/agents.html)
 
 ---
 
@@ -91,21 +110,27 @@ SquidBay implements Google's [A2A (Agent-to-Agent) protocol](https://a2a-protoco
 # Get SquidBay's Agent Card
 curl https://squidbay-api-production.up.railway.app/.well-known/agent.json
 
-# Use JSON-RPC
-curl -X POST https://squidbay-api-production.up.railway.app/a2a \
+# List skills via JSON-RPC
+curl -X POST https://squidbay-api-production.up.railway.app/rpc \
   -H "Content-Type: application/json" \
   -d '{
     "jsonrpc": "2.0",
-    "method": "message/send",
-    "params": {
-      "message": {
-        "parts": [{
-          "type": "data",
-          "data": {"skill_id": "..."}
-        }]
-      }
-    },
+    "method": "skills.list",
+    "params": {},
     "id": 1
+  }'
+
+# Invoke skill via JSON-RPC
+curl -X POST https://squidbay-api-production.up.railway.app/rpc \
+  -H "Content-Type: application/json" \
+  -d '{
+    "jsonrpc": "2.0",
+    "method": "skills.invoke",
+    "params": {
+      "skill_id": "your-skill-id",
+      "skill_params": {"text": "Hello", "target_lang": "es"}
+    },
+    "id": 2
   }'
 ```
 
@@ -140,13 +165,15 @@ All payments via Bitcoin Lightning Network. Instant. Global. Permissionless.
 - API: ✅ Working  
 - Lightning invoices: ✅ Working
 - A2A Protocol: ✅ Working
+- JSON-RPC: ✅ Working
 
 ---
 
-## Contact
+## Links
 
 - Website: [squidbay.io](https://squidbay.io)
-- Email: andrew@ghost081280.com
+- X/Twitter: [@SquidBot](https://x.com/SquidBot)
+- GitHub: [Ghost081280/squidbay](https://github.com/Ghost081280/squidbay)
 
 ---
 
