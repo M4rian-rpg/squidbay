@@ -1,6 +1,6 @@
 /**
  * SquidBay Components System
- * Loads reusable nav, footer, and UI components
+ * Loads reusable nav, footer, chatbot, and UI components
  */
 
 (function() {
@@ -9,8 +9,13 @@
     // Component paths
     const COMPONENTS = {
         nav: 'components/nav.html',
-        footer: 'components/footer.html'
+        footer: 'components/footer.html',
+        chatbot: 'components/chatbot.html'
     };
+    
+    // Chatbot assets
+    const CHATBOT_CSS = 'components/chatbot.css';
+    const CHATBOT_JS = 'components/chatbot.js';
 
     // Current page detection
     const currentPage = window.location.pathname.split('/').pop().replace('.html', '') || 'index';
@@ -167,6 +172,53 @@
             progressBar.id = 'scroll-progress';
             document.body.prepend(progressBar);
             initScrollProgress();
+        }
+        
+        // Load chatbot component
+        loadChatbot();
+    }
+    
+    /**
+     * Load chatbot component (HTML, CSS, JS)
+     */
+    async function loadChatbot() {
+        try {
+            // Load chatbot CSS
+            const linkEl = document.createElement('link');
+            linkEl.rel = 'stylesheet';
+            linkEl.href = CHATBOT_CSS;
+            document.head.appendChild(linkEl);
+            
+            // Load chatbot HTML
+            const response = await fetch(COMPONENTS.chatbot);
+            if (!response.ok) throw new Error('Failed to load chatbot');
+            const html = await response.text();
+            
+            // Insert chatbot before closing body tag
+            const chatbotContainer = document.createElement('div');
+            chatbotContainer.id = 'chatbot-component';
+            chatbotContainer.innerHTML = html;
+            document.body.appendChild(chatbotContainer);
+            
+            // Load chatbot JS
+            const scriptEl = document.createElement('script');
+            scriptEl.src = CHATBOT_JS;
+            scriptEl.onload = function() {
+                // Dispatch event for chatbot init
+                document.dispatchEvent(new CustomEvent('squidbay:components-loaded'));
+                
+                // Show chatbot button after a short delay
+                setTimeout(function() {
+                    if (typeof showChatbotButton === 'function') {
+                        showChatbotButton();
+                    }
+                }, 500);
+            };
+            document.body.appendChild(scriptEl);
+            
+            console.log('SquidBot component loaded');
+        } catch (error) {
+            console.warn('Chatbot not loaded:', error.message);
         }
     }
 
