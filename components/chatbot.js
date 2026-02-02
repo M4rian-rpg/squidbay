@@ -94,12 +94,12 @@ if (document.readyState === 'complete' || document.readyState === 'interactive')
 }
 
 function initChatbot() {
-    const chatbotBtn = document.getElementById('chatbotBtn');
-    const chatWindow = document.getElementById('chatbotWindow');
-    const chatbotClose = document.getElementById('chatbotClose');
-    const chatInput = document.getElementById('chatInput');
-    const chatSend = document.getElementById('chatSend');
-    const chatMessages = document.getElementById('chatMessages');
+    const chatbotBtn = document.getElementById('squidbotBtn');
+    const chatWindow = document.getElementById('squidbotWindow');
+    const chatbotClose = document.getElementById('squidbotClose');
+    const chatInput = document.getElementById('squidbotInput');
+    const chatSend = document.getElementById('squidbotSend');
+    const chatMessages = document.getElementById('squidbotMessages');
     
     if (!chatbotBtn || !chatWindow) {
         console.warn('SquidBot: Chatbot elements not found, retrying...');
