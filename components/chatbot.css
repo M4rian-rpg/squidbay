@@ -45,6 +45,24 @@
     transform: translateX(0);
 }
 
+/* Hide tooltip when scrolled */
+.chatbot-label.scrolled {
+    opacity: 0;
+    transform: translateX(10px);
+}
+
+/* Hide tooltip when chat is active */
+.chatbot-container.chatbot-active .chatbot-label {
+    opacity: 0 !important;
+    pointer-events: none !important;
+}
+
+/* Show tooltip on hover when chat is NOT active */
+.chatbot-container:not(.chatbot-active):hover .chatbot-label {
+    opacity: 1 !important;
+    transform: translateX(0) !important;
+}
+
 .chatbot-label-title {
     font-family: var(--font-display);
     font-size: 16px;

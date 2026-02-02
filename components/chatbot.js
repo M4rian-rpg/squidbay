@@ -127,7 +127,16 @@ function initChatbot() {
     }
     
     function openChatbot() {
+        // Close mobile menu if open
+        closeMobileMenuIfOpen();
+        
         chatWindow.classList.add('active');
+        
+        // Add active state to container (hides tooltip)
+        const container = document.querySelector('.chatbot-container');
+        if (container) {
+            container.classList.add('chatbot-active');
+        }
         
         if (chatInput) {
             setTimeout(() => {
@@ -139,15 +148,54 @@ function initChatbot() {
     }
     
     function closeChatbot() {
+        // CRITICAL: Remove all state classes
         chatWindow.classList.remove('active');
         chatWindow.classList.remove('keyboard-visible');
         
+        // Remove active state from container
+        const container = document.querySelector('.chatbot-container');
+        if (container) {
+            container.classList.remove('chatbot-active');
+        }
+        
+        // CRITICAL: Force blur to close keyboard on mobile
         if (chatInput) {
             chatInput.blur();
         }
         
+        // Show tooltip again after close
+        showTooltipAfterClose();
+        
         console.log('SquidBot closed');
     }
+    
+    // ============================================
+    // TOOLTIP SCROLL HANDLING
+    // ============================================
+    function initTooltipScrollBehavior() {
+        const label = document.querySelector('.chatbot-label');
+        if (!label) return;
+        
+        let scrollTimeout;
+        window.addEventListener('scroll', function() {
+            label.classList.add('scrolled');
+            
+            clearTimeout(scrollTimeout);
+            scrollTimeout = setTimeout(() => {
+                label.classList.remove('scrolled');
+            }, 2000);
+        }, { passive: true });
+    }
+    
+    function showTooltipAfterClose() {
+        const label = document.querySelector('.chatbot-label');
+        if (label) {
+            label.classList.remove('scrolled');
+        }
+    }
+    
+    // Initialize tooltip behavior
+    initTooltipScrollBehavior();
     
     // ============================================
     // EVENT LISTENERS - BUTTON
@@ -185,16 +233,20 @@ function initChatbot() {
     // KEYBOARD HANDLING - MOBILE OPTIMIZATION
     // ============================================
     if (chatInput) {
+        // Detect when keyboard appears (input focused)
         chatInput.addEventListener('focus', function() {
+            // Only shift on mobile landscape
             if (window.innerWidth <= 926 && window.innerHeight <= 500 && window.matchMedia('(orientation: landscape)').matches) {
                 chatWindow.classList.add('keyboard-visible');
-                console.log('SquidBot: Keyboard visible (landscape)');
+                console.log('SquidBot: Keyboard visible (landscape) - shifting chat up');
             }
         });
         
+        // Detect when keyboard disappears (input blurred)
         chatInput.addEventListener('blur', function() {
             setTimeout(() => {
                 chatWindow.classList.remove('keyboard-visible');
+                console.log('SquidBot: Keyboard hidden - restoring position');
             }, 100);
         });
     }
@@ -206,10 +258,12 @@ function initChatbot() {
         setTimeout(() => {
             chatWindow.classList.remove('keyboard-visible');
             
+            // Also blur any focused inputs to close keyboard
             if (chatInput && document.activeElement === chatInput) {
                 chatInput.blur();
+                console.log('SquidBot: Orientation changed - closed keyboard');
             }
-        }, 300);
+        }, 300); // Wait for orientation change to complete
     });
     
     // ============================================
@@ -225,22 +279,28 @@ function initChatbot() {
         const currentOrientation = window.matchMedia('(orientation: landscape)').matches;
         const isLandscape = currentOrientation;
         
+        // CRITICAL: If orientation changed, clean up keyboard-visible
         if (currentOrientation !== lastOrientation) {
             chatWindow.classList.remove('keyboard-visible');
             if (chatInput && document.activeElement === chatInput) {
                 chatInput.blur();
             }
+            console.log('SquidBot: Orientation change detected in resize - cleaned up');
         }
+        // Only handle keyboard on mobile landscape
         else if (currentWidth <= 926 && currentHeight <= 500 && isLandscape) {
+            // If window height decreased significantly, keyboard probably appeared
             if (lastHeight - currentHeight > 100) {
                 if (document.activeElement === chatInput) {
                     chatWindow.classList.add('keyboard-visible');
                 }
             }
+            // If window height increased significantly, keyboard probably disappeared
             else if (currentHeight - lastHeight > 100) {
                 chatWindow.classList.remove('keyboard-visible');
             }
         } else {
+            // Remove keyboard-visible class on non-landscape mobile
             chatWindow.classList.remove('keyboard-visible');
         }
         
@@ -253,17 +313,20 @@ function initChatbot() {
     // SCROLL ISOLATION - PREVENT PAGE SCROLL
     // ============================================
     if (chatMessages) {
+        // Wheel event - prevent page scroll when at top/bottom of chat
         chatMessages.addEventListener('wheel', function(e) {
             const scrollTop = chatMessages.scrollTop;
             const scrollHeight = chatMessages.scrollHeight;
             const clientHeight = chatMessages.clientHeight;
             const delta = e.deltaY || -e.wheelDelta || e.detail;
             
+            // At top and scrolling up, or at bottom and scrolling down
             if ((delta < 0 && scrollTop <= 0) || (delta > 0 && scrollTop + clientHeight >= scrollHeight)) {
                 e.preventDefault();
             }
         }, { passive: false });
         
+        // Touch move - stop propagation to prevent page scroll
         chatMessages.addEventListener('touchmove', function(e) {
             e.stopPropagation();
         }, { passive: true });
@@ -533,6 +596,22 @@ function initChatbot() {
             }
         }
     });
+    
+    // ============================================
+    // CLOSE MOBILE MENU WHEN OPENING CHATBOT
+    // ============================================
+    function closeMobileMenuIfOpen() {
+        const mobileMenu = document.getElementById('mobile-menu');
+        if (mobileMenu && mobileMenu.classList.contains('open')) {
+            // Use the global toggle function if available
+            if (typeof window.toggleMobileMenu === 'function') {
+                window.toggleMobileMenu();
+            } else {
+                mobileMenu.classList.remove('open');
+                document.body.classList.remove('menu-open');
+            }
+        }
+    }
     
     console.log('SquidBot CMO ready to help! 🦑');
 }
