@@ -1428,11 +1428,7 @@ footer {
 }
 
 footer .container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 24px;
+    display: block;
 }
 
 .footer-links {
