@@ -10,8 +10,8 @@
 .chatbot-container {
     position: fixed;
     bottom: 30px;
-    right: 100px; /* Offset from back-to-top button */
-    z-index: 999;
+    right: 30px; /* Standard corner position */
+    z-index: 9999; /* Above back-to-top */
     display: flex;
     align-items: center;
     gap: 15px;
@@ -237,28 +237,89 @@
 }
 
 /* ===================================
-   CHAT MESSAGES
+   CHAT MESSAGES - Conversation Layout
    =================================== */
 .chat-message {
-    margin-bottom: 15px;
-    padding: 15px;
-    background: var(--dark);
-    border-radius: 8px;
-    font-size: 14px;
-    line-height: 1.6;
-    color: var(--white);
+    display: flex;
+    margin-bottom: 12px;
     animation: chatMessageSlide 0.3s ease;
+    width: 100%;
     transform: translateZ(0);
     will-change: auto;
 }
 
-.chat-message.bot {
-    border-left: 3px solid var(--primary);
+.chat-message.user {
+    justify-content: flex-end;
 }
 
-.chat-message.user {
-    background: rgba(0, 217, 255, 0.1);
-    border-left: 3px solid var(--primary-light);
+.chat-message.bot {
+    justify-content: flex-start;
+}
+
+.message-content {
+    display: flex;
+    gap: 10px;
+    max-width: 85%;
+    align-items: flex-start;
+}
+
+.chat-message.user .message-content {
+    flex-direction: row-reverse;
+}
+
+/* Hide user avatar - right side is obviously the user */
+.chat-message.user .message-avatar {
+    display: none;
+}
+
+.message-avatar {
+    width: 36px;
+    height: 36px;
+    min-width: 36px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+    flex-shrink: 0;
+    box-shadow: 0 4px 12px var(--primary-glow);
+}
+
+/* Bot messages - Floating text, transparent background */
+.chat-message.bot .message-text {
+    background: transparent;
+    border: none;
+    padding: 6px 0;
+    font-size: 14px;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+/* User messages - Cyan bubble */
+.chat-message.user .message-text {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+    padding: 12px 16px;
+    border-radius: 18px;
+    border-bottom-right-radius: 4px;
+    font-size: 14px;
+    line-height: 1.5;
+    color: white;
+    box-shadow: 0 2px 10px var(--primary-glow);
+}
+
+.message-text strong {
+    color: var(--primary);
+}
+
+.message-text a {
+    color: var(--primary);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+}
+
+.message-text a:hover {
+    color: var(--primary-light);
 }
 
 @keyframes chatMessageSlide {
@@ -275,13 +336,20 @@
 /* Typing indicator */
 .typing-indicator {
     display: flex;
-    gap: 4px;
-    padding: 15px;
+    gap: 10px;
+    align-items: flex-start;
+}
+
+.typing-indicator .message-avatar {
+    width: 36px;
+    height: 36px;
+    min-width: 36px;
 }
 
 .typing-dots {
     display: flex;
     gap: 4px;
+    padding: 10px 0;
 }
 
 .typing-dots span {

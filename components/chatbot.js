@@ -512,7 +512,11 @@ function initChatbot() {
         
         const messageDiv = document.createElement('div');
         messageDiv.className = 'chat-message user';
-        messageDiv.textContent = text;
+        messageDiv.innerHTML = `
+            <div class="message-content">
+                <div class="message-text">${escapeHtml(text)}</div>
+            </div>
+        `;
         chatMessages.appendChild(messageDiv);
         
         scrollToBottom();
@@ -523,7 +527,12 @@ function initChatbot() {
         
         const messageDiv = document.createElement('div');
         messageDiv.className = 'chat-message bot';
-        messageDiv.textContent = text;
+        messageDiv.innerHTML = `
+            <div class="message-content">
+                <div class="message-avatar">🦑</div>
+                <div class="message-text">${formatMessage(text)}</div>
+            </div>
+        `;
         chatMessages.appendChild(messageDiv);
         
         scrollToBottom();
@@ -535,7 +544,12 @@ function initChatbot() {
         const typing = document.createElement('div');
         typing.className = 'chat-message bot typing-indicator';
         typing.id = 'typingIndicator';
-        typing.innerHTML = '<div class="typing-dots"><span></span><span></span><span></span></div>';
+        typing.innerHTML = `
+            <div class="message-content">
+                <div class="message-avatar">🦑</div>
+                <div class="typing-dots"><span></span><span></span><span></span></div>
+            </div>
+        `;
         chatMessages.appendChild(typing);
         
         scrollToBottom();
@@ -554,6 +568,21 @@ function initChatbot() {
         requestAnimationFrame(() => {
             chatMessages.scrollTop = chatMessages.scrollHeight;
         });
+    }
+    
+    // Helper functions for message formatting
+    function escapeHtml(text) {
+        const div = document.createElement('div');
+        div.textContent = text;
+        return div.innerHTML;
+    }
+    
+    function formatMessage(text) {
+        // Convert **bold** to <strong>
+        let formatted = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+        // Convert newlines to <br>
+        formatted = formatted.replace(/\n/g, '<br>');
+        return formatted;
     }
     
     // ============================================
