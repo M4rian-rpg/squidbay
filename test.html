@@ -69,10 +69,17 @@
             font-weight: 600;
             cursor: pointer;
             width: 100%;
+            margin-bottom: 8px;
         }
         
         button:hover { opacity: 0.9; }
         button:disabled { opacity: 0.5; cursor: not-allowed; }
+        
+        .btn-secondary {
+            background: linear-gradient(135deg, #2a3540 0%, #1a2530 100%);
+            color: #00d9ff;
+            border: 1px solid #2a3540;
+        }
         
         .result {
             background: #0a0e14;
@@ -120,23 +127,44 @@
             margin-top: 8px;
         }
         
+        .skill-actions {
+            margin-top: 10px;
+            display: flex;
+            gap: 8px;
+        }
+        
+        .skill-actions button {
+            width: auto;
+            padding: 8px 16px;
+            font-size: 0.8rem;
+        }
+        
         a { color: #00d9ff; }
+        
+        .section-note {
+            color: #555;
+            font-size: 0.8rem;
+            margin-bottom: 15px;
+            font-style: italic;
+        }
     </style>
 </head>
 <body>
     <h1>🦑 SquidBay API Test</h1>
-    <p class="subtitle">Test the Railway backend</p>
+    <p class="subtitle">Admin panel — register skills, test invoices, verify A2A protocol</p>
     
     <div id="apiStatus" class="status loading">Checking API status...</div>
     
     <!-- Register Skill -->
-    <h2>1. Register a Test Skill</h2>
+    <h2>1. Register a Skill</h2>
     <div class="card">
+        <p class="section-note">Skills are listed in the marketplace for other agents to discover and buy.</p>
+        
         <label>Skill Name</label>
         <input type="text" id="skillName" placeholder="e.g., Translation, Image Generator, Code Review">
         
         <label>Description</label>
-        <textarea id="skillDesc" rows="2" placeholder="What does this skill do? (min 10 characters)"></textarea>
+        <textarea id="skillDesc" rows="3" placeholder="What does this skill do? (min 10 characters)"></textarea>
         
         <label>Category</label>
         <select id="skillCategory">
@@ -152,13 +180,13 @@
         </select>
         
         <label>Price (sats)</label>
-        <input type="number" id="skillPrice" placeholder="e.g., 100, 500, 1000">
+        <input type="number" id="skillPrice" placeholder="e.g., 100, 500, 1000" min="1" max="1000000">
         
-        <label>Endpoint URL (where requests go)</label>
+        <label>Endpoint URL (where requests are forwarded)</label>
         <input type="text" id="skillEndpoint" placeholder="https://your-agent.com/api">
         
-        <label>Lightning Address (for payments)</label>
-        <input type="text" id="skillLightning" placeholder="you@getalby.com">
+        <label>Lightning Address (for seller payouts)</label>
+        <input type="text" id="skillLightning" placeholder="you@wallet.com">
         
         <button onclick="registerSkill()">⚡ Register Skill</button>
         
@@ -166,21 +194,69 @@
     </div>
     
     <!-- View Skills -->
-    <h2>2. View Registered Skills</h2>
+    <h2>2. View Marketplace Skills</h2>
     <div class="card">
-        <button onclick="loadSkills()">🔍 Load Skills from API</button>
+        <label>Search (optional)</label>
+        <input type="text" id="searchQuery" placeholder="Search by name or keyword...">
+        <button onclick="loadSkills()">🔍 Load Skills from Marketplace</button>
         <div id="skillsList" class="skills-list"></div>
     </div>
     
     <!-- Test Invoke -->
-    <h2>3. Test Invoke (Create Invoice)</h2>
+    <h2>3. Invoke Skill (Create Lightning Invoice)</h2>
     <div class="card">
-        <label>Skill ID (copy from above)</label>
-        <input type="text" id="invokeSkillId" placeholder="paste skill ID here">
+        <p class="section-note">Invoking a skill generates a Lightning invoice. Pay the invoice and the skill executes.</p>
         
-        <button onclick="testInvoke()">⚡ Create Invoice</button>
+        <label>Skill ID (copy from above or click "Invoke" on a skill)</label>
+        <input type="text" id="invokeSkillId" placeholder="paste skill UUID here">
+        
+        <label>Parameters (JSON)</label>
+        <textarea id="invokeParams" rows="2" placeholder='{"text": "Hello world"}'>{}</textarea>
+        
+        <button onclick="testInvoke()">⚡ Invoke & Get Invoice</button>
         
         <div id="invokeResult" class="result" style="display: none;"></div>
+    </div>
+    
+    <!-- A2A Agent Card -->
+    <h2>4. A2A Protocol — Agent Card</h2>
+    <div class="card">
+        <p class="section-note">Google A2A protocol. Other agents discover SquidBay via /.well-known/agent.json</p>
+        
+        <button onclick="loadAgentCard()">🤖 Fetch Agent Card</button>
+        
+        <div id="agentResult" class="result" style="display: none;"></div>
+    </div>
+    
+    <!-- JSON-RPC -->
+    <h2>5. JSON-RPC 2.0</h2>
+    <div class="card">
+        <p class="section-note">A2A agents communicate via JSON-RPC. Test the /rpc endpoint here.</p>
+        
+        <label>Method</label>
+        <select id="rpcMethod" onchange="updateRpcParams()">
+            <option value="skills.list">skills.list — List all skills</option>
+            <option value="skills.invoke">skills.invoke — Invoke a skill</option>
+            <option value="skills.register">skills.register — Register a skill</option>
+        </select>
+        
+        <label>Params (JSON)</label>
+        <textarea id="rpcParams" rows="3">{}</textarea>
+        
+        <button onclick="sendRPC()">📡 Send JSON-RPC Request</button>
+        
+        <div id="rpcResult" class="result" style="display: none;"></div>
+    </div>
+    
+    <!-- Quick Checks -->
+    <h2>6. Quick Checks</h2>
+    <div class="card">
+        <button class="btn-secondary" onclick="checkHealth()">❤️ Health Check</button>
+        <button class="btn-secondary" onclick="checkSkillsCount()">📊 Skills Count</button>
+        <button class="btn-secondary" onclick="window.open(API + '/.well-known/agent.json', '_blank')">🔗 Open Agent Card in Browser</button>
+        <button class="btn-secondary" onclick="window.open(API + '/skills', '_blank')">🔗 Open /skills in Browser</button>
+        <button class="btn-secondary" onclick="window.open(API + '/docs', '_blank')">📖 Open /docs in Browser</button>
+        <div id="healthResult" class="result" style="display: none;"></div>
     </div>
     
     <p style="margin-top: 40px; color: #666; text-align: center;">
@@ -190,7 +266,6 @@
     <script>
         const API = 'https://squidbay-api-production.up.railway.app';
         
-        // Check API status on load
         async function checkStatus() {
             const statusEl = document.getElementById('apiStatus');
             try {
@@ -198,7 +273,7 @@
                 const data = await res.json();
                 if (data.status === 'online') {
                     statusEl.className = 'status online';
-                    statusEl.textContent = '✓ API Online: ' + API;
+                    statusEl.textContent = '✓ API Online — ' + data.name + ' v' + data.version + ' — ' + API;
                 } else {
                     throw new Error('Not online');
                 }
@@ -208,12 +283,13 @@
             }
         }
         
-        // Register skill
         async function registerSkill() {
+            const btn = event.target;
             const resultEl = document.getElementById('registerResult');
             resultEl.style.display = 'block';
             resultEl.className = 'result';
             resultEl.textContent = 'Registering...';
+            btn.disabled = true;
             
             try {
                 const res = await fetch(API + '/register', {
@@ -233,50 +309,69 @@
                 
                 if (data.success) {
                     resultEl.className = 'result success';
-                    resultEl.innerHTML = '✅ <strong>Skill Registered Successfully!</strong>\n\n' +
+                    resultEl.textContent = '✅ Skill Registered!\n\n' +
                         'Name: ' + data.skill.name + '\n' +
                         'ID: ' + data.skill.id + '\n' +
-                        'Price: ' + data.skill.price_sats + ' sats\n\n' +
-                        '👉 Check the marketplace to see it live!';
+                        'Price: ' + data.skill.price_sats + ' sats\n' +
+                        'Category: ' + data.skill.category;
                     document.getElementById('invokeSkillId').value = data.skill.id;
                 } else {
                     resultEl.className = 'result error';
-                    resultEl.textContent = '❌ Error: ' + (data.error || 'Unknown error');
+                    resultEl.textContent = '❌ ' + (data.error || JSON.stringify(data, null, 2));
                 }
             } catch (e) {
                 resultEl.className = 'result error';
-                resultEl.textContent = '❌ Error: ' + e.message;
+                resultEl.textContent = '❌ ' + e.message;
             }
+            btn.disabled = false;
         }
         
-        // Load skills
         async function loadSkills() {
             const listEl = document.getElementById('skillsList');
-            listEl.innerHTML = '<p>Loading...</p>';
+            listEl.innerHTML = '<p style="color:#ffbd2e">Loading...</p>';
             
             try {
-                const res = await fetch(API + '/skills');
+                const q = document.getElementById('searchQuery').value;
+                const url = q ? API + '/skills?q=' + encodeURIComponent(q) : API + '/skills';
+                const res = await fetch(url);
                 const data = await res.json();
                 
                 if (data.skills && data.skills.length > 0) {
-                    listEl.innerHTML = data.skills.map(skill => `
+                    listEl.innerHTML = '<p style="color:#00ff88;margin-bottom:12px">Found ' + data.pagination.total + ' skill(s)</p>' +
+                        data.skills.map(skill => `
                         <div class="skill-item">
-                            <h4>${skill.name}</h4>
-                            <p>${skill.description}</p>
+                            <h4>${esc(skill.name)}</h4>
+                            <p>${esc(skill.description)}</p>
                             <p class="price">⚡ ${skill.price_sats} sats</p>
-                            <p style="font-size: 0.75rem; color: #666; margin-top: 5px;">ID: ${skill.id}</p>
+                            <p style="font-size: 0.75rem; color: #666; margin-top: 5px;">
+                                ID: ${skill.id}<br>
+                                Category: ${skill.category || 'other'}
+                            </p>
+                            <div class="skill-actions">
+                                <button onclick="quickInvoke('${skill.id}')">⚡ Invoke</button>
+                                <button class="btn-secondary" onclick="copyText('${skill.id}')">📋 Copy ID</button>
+                            </div>
                         </div>
                     `).join('');
                 } else {
                     listEl.innerHTML = '<p style="color: #888;">No skills registered yet. Register one above!</p>';
                 }
             } catch (e) {
-                listEl.innerHTML = '<p style="color: #ff6464;">Error loading skills: ' + e.message + '</p>';
+                listEl.innerHTML = '<p style="color: #ff6464;">Error: ' + e.message + '</p>';
             }
         }
         
-        // Test invoke
+        function quickInvoke(id) {
+            document.getElementById('invokeSkillId').value = id;
+            document.getElementById('invokeSkillId').scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        function copyText(text) {
+            navigator.clipboard.writeText(text);
+        }
+        
         async function testInvoke() {
+            const btn = event.target;
             const resultEl = document.getElementById('invokeResult');
             const skillId = document.getElementById('invokeSkillId').value;
             
@@ -288,14 +383,22 @@
             resultEl.style.display = 'block';
             resultEl.className = 'result';
             resultEl.textContent = 'Creating invoice...';
+            btn.disabled = true;
             
             try {
+                let params;
+                try {
+                    params = JSON.parse(document.getElementById('invokeParams').value);
+                } catch(e) {
+                    params = {};
+                }
+                
                 const res = await fetch(API + '/invoke', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
                         skill_id: skillId,
-                        params: { text: 'Hello world', target_lang: 'ja' }
+                        params: params
                     })
                 });
                 
@@ -304,11 +407,116 @@
                 resultEl.textContent = JSON.stringify(data, null, 2);
             } catch (e) {
                 resultEl.className = 'result error';
-                resultEl.textContent = 'Error: ' + e.message;
+                resultEl.textContent = '❌ ' + e.message;
+            }
+            btn.disabled = false;
+        }
+        
+        async function loadAgentCard() {
+            const resultEl = document.getElementById('agentResult');
+            resultEl.style.display = 'block';
+            resultEl.className = 'result';
+            resultEl.textContent = 'Fetching...';
+            
+            try {
+                const res = await fetch(API + '/.well-known/agent.json');
+                const data = await res.json();
+                resultEl.className = 'result success';
+                resultEl.textContent = JSON.stringify(data, null, 2);
+            } catch (e) {
+                resultEl.className = 'result error';
+                resultEl.textContent = '❌ ' + e.message;
             }
         }
         
-        // Init
+        function updateRpcParams() {
+            const method = document.getElementById('rpcMethod').value;
+            const paramsEl = document.getElementById('rpcParams');
+            if (method === 'skills.list') {
+                paramsEl.value = '{}';
+            } else if (method === 'skills.invoke') {
+                paramsEl.value = '{\n  "skill_id": "PASTE_ID_HERE",\n  "params": {}\n}';
+            } else if (method === 'skills.register') {
+                paramsEl.value = '{\n  "name": "My Skill",\n  "description": "A skill that does something useful for agents",\n  "category": "other",\n  "price_sats": 100,\n  "endpoint": "https://example.com/api",\n  "lightning_address": "me@wallet.com"\n}';
+            }
+        }
+        
+        async function sendRPC() {
+            const btn = event.target;
+            const resultEl = document.getElementById('rpcResult');
+            resultEl.style.display = 'block';
+            resultEl.className = 'result';
+            resultEl.textContent = 'Sending...';
+            btn.disabled = true;
+            
+            try {
+                let params;
+                try {
+                    params = JSON.parse(document.getElementById('rpcParams').value);
+                } catch(e) {
+                    params = {};
+                }
+                
+                const res = await fetch(API + '/rpc', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        jsonrpc: '2.0',
+                        method: document.getElementById('rpcMethod').value,
+                        params: params,
+                        id: Date.now()
+                    })
+                });
+                
+                const data = await res.json();
+                resultEl.className = 'result ' + (data.result ? 'success' : 'error');
+                resultEl.textContent = JSON.stringify(data, null, 2);
+            } catch (e) {
+                resultEl.className = 'result error';
+                resultEl.textContent = '❌ ' + e.message;
+            }
+            btn.disabled = false;
+        }
+        
+        async function checkHealth() {
+            const resultEl = document.getElementById('healthResult');
+            resultEl.style.display = 'block';
+            resultEl.className = 'result';
+            resultEl.textContent = 'Checking...';
+            
+            try {
+                const res = await fetch(API + '/');
+                const data = await res.json();
+                resultEl.className = 'result success';
+                resultEl.textContent = JSON.stringify(data, null, 2);
+            } catch (e) {
+                resultEl.className = 'result error';
+                resultEl.textContent = '❌ ' + e.message;
+            }
+        }
+        
+        async function checkSkillsCount() {
+            const resultEl = document.getElementById('healthResult');
+            resultEl.style.display = 'block';
+            resultEl.className = 'result';
+            
+            try {
+                const res = await fetch(API + '/skills');
+                const data = await res.json();
+                resultEl.className = 'result success';
+                resultEl.textContent = '📊 Total skills in marketplace: ' + data.pagination.total;
+            } catch (e) {
+                resultEl.className = 'result error';
+                resultEl.textContent = '❌ ' + e.message;
+            }
+        }
+        
+        function esc(str) {
+            const d = document.createElement('div');
+            d.textContent = str || '';
+            return d.innerHTML;
+        }
+        
         checkStatus();
     </script>
 </body>
