@@ -49,12 +49,13 @@
                 grid.innerHTML = data.skills.map(skill => renderSkillCard(skill)).join('');
                 if (emptyState) emptyState.style.display = 'none';
                 
-                // Update stats
-                updateLiveStats(data.skills.length);
+                // Update stats with real data
+                updateLiveStats(data.skills);
             } else {
                 // Show empty state
                 grid.innerHTML = '';
                 if (emptyState) emptyState.style.display = 'block';
+                updateLiveStats([]);
             }
         } catch (error) {
             console.error('Error loading skills:', error);
@@ -70,6 +71,9 @@
         const successRate = skill.success_rate || 100;
         const responseTime = skill.avg_response_ms ? (skill.avg_response_ms / 1000).toFixed(1) + 's' : '~2s';
         const totalJobs = (skill.success_count || 0) + (skill.fail_count || 0);
+        
+        // Use agent_name if available, otherwise show truncated ID
+        const agentName = skill.agent_name || 'Agent-' + skill.id.substring(0, 6);
         
         return `
             <div class="skill-card" data-category="${skill.category || 'other'}" data-skill="${skill.id}">
@@ -88,12 +92,12 @@
                 <div class="skill-agent">
                     <div class="agent-avatar">${icon}</div>
                     <div class="agent-info">
-                        <span class="agent-name">Agent-${skill.id.substring(0, 6)}</span>
+                        <span class="agent-name">${escapeHtml(agentName)}</span>
                         <span class="agent-rating">
                             <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
                                 <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
                             </svg>
-                            ${(successRate / 20).toFixed(1)} (${totalJobs} jobs)
+                            ${(successRate / 20).toFixed(1)} (${totalJobs} ${totalJobs === 1 ? 'job' : 'jobs'})
                         </span>
                     </div>
                 </div>
@@ -113,7 +117,7 @@
                     </div>
                 </div>
                 
-                <button class="btn-invoke" onclick="showInvokeModal('${escapeHtml(skill.name)}', 'Agent-${skill.id.substring(0, 6)}', ${skill.price_sats}, '${skill.id}')">
+                <button class="btn-invoke" onclick="showInvokeModal('${escapeHtml(skill.name)}', '${escapeHtml(agentName)}', ${skill.price_sats}, '${skill.id}')">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
                         <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
                     </svg>
@@ -222,34 +226,44 @@
     }
 
     // --------------------------------------------------------------------------
-    // Live Stats Animation
+    // Live Stats — Real Data Only
     // --------------------------------------------------------------------------
     
-    function updateLiveStats(skillCount) {
+    function updateLiveStats(skills) {
         const skillsListed = document.getElementById('skillsListed');
-        if (skillsListed) {
-            skillsListed.textContent = skillCount.toLocaleString();
+        const activeAgents = document.getElementById('activeAgents');
+        const transactions24h = document.getElementById('transactions24h');
+        const satsFlowing = document.getElementById('satsFlowing');
+        
+        const skillCount = skills.length;
+        
+        // Count unique agents by lightning_address or agent_name
+        const uniqueAgents = new Set();
+        let totalJobs = 0;
+        let totalSats = 0;
+        
+        skills.forEach(function(skill) {
+            uniqueAgents.add(skill.agent_name || skill.lightning_address || skill.id.substring(0, 6));
+            
+            var jobs = (skill.success_count || 0) + (skill.fail_count || 0);
+            totalJobs += jobs;
+            totalSats += jobs * (skill.price_sats || 0);
+        });
+        
+        // Update with real numbers only
+        if (skillsListed) skillsListed.textContent = skillCount.toLocaleString();
+        if (activeAgents) activeAgents.textContent = uniqueAgents.size.toLocaleString();
+        if (transactions24h) transactions24h.textContent = totalJobs.toLocaleString();
+        
+        if (satsFlowing) {
+            if (totalSats >= 1000000) {
+                satsFlowing.textContent = '⚡ ' + (totalSats / 1000000).toFixed(1) + 'M';
+            } else if (totalSats >= 1000) {
+                satsFlowing.textContent = '⚡ ' + (totalSats / 1000).toFixed(1) + 'K';
+            } else {
+                satsFlowing.textContent = '⚡ ' + totalSats.toLocaleString();
+            }
         }
-    }
-    
-    function initLiveStats() {
-        // Simulate live data updates
-        setInterval(function() {
-            const transactions = document.getElementById('transactions24h');
-            const satsFlowing = document.getElementById('satsFlowing');
-            
-            if (transactions) {
-                const current = parseInt(transactions.textContent.replace(/,/g, ''));
-                const newVal = current + Math.floor(Math.random() * 5);
-                transactions.textContent = newVal.toLocaleString();
-            }
-            
-            if (satsFlowing) {
-                const values = ['4.2M', '4.3M', '4.1M', '4.4M', '4.2M'];
-                const randomVal = values[Math.floor(Math.random() * values.length)];
-                satsFlowing.textContent = '⚡ ' + randomVal;
-            }
-        }, 5000);
     }
 
     // --------------------------------------------------------------------------
@@ -305,7 +319,7 @@
             content.innerHTML = `
                 <div class="modal-header">
                     <h3>⚡ Invoke ${escapeHtml(skillName)}</h3>
-                    <p>Provider: ${agent}</p>
+                    <p>Provider: ${escapeHtml(agent)}</p>
                 </div>
                 <div class="invoice-display">
                     <div class="invoice-amount">${price.toLocaleString()} sats</div>
@@ -433,7 +447,6 @@
         
         // Initialize UI
         initFilters();
-        initLiveStats();
         
         console.log('🦑 SquidBay Marketplace ready!');
     }
