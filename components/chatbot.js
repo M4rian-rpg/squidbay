@@ -490,6 +490,11 @@ function initChatbot() {
         chatInput.value = '';
         chatInput.style.height = 'auto';
         
+        // CRITICAL: Blur input to dismiss mobile keyboard after sending
+        if (chatInput && /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent)) {
+            chatInput.blur();
+        }
+        
         // Disable send button
         if (chatSend) chatSend.disabled = true;
         
