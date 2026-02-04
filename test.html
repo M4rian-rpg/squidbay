@@ -151,7 +151,7 @@
 </head>
 <body>
     <h1>🦑 SquidBay API Test</h1>
-    <p class="subtitle">Human override — register test skills, test invoices, verify A2A protocol</p>
+    <p class="subtitle">Admin panel — register skills, test invoices, verify A2A protocol</p>
     
     <div id="apiStatus" class="status loading">Checking API status...</div>
     
@@ -656,66 +656,117 @@
             }
             
             const API = 'https://squidbay-api-production.up.railway.app';
-            resultEl.textContent = 'Running fixes...\n';
+            resultEl.textContent = 'Phase 1: Creating agent profiles...\n';
 
-            const fixes = [
-                // Fix "other" → correct category + set icons
-                { id: 'd5084385-9ea5-4cdd-b7cd-5da036e38ae1', data: { category: 'automotive', icon: '🚗' }, label: 'MotorMind → automotive 🚗' },
-                { id: '040e3016-a667-48fa-8367-61029f2c5cdb', data: { category: 'education', icon: '📚' }, label: 'LinguaBot → education 📚' },
-                { id: '08ce6153-1725-428d-a6bc-f396a97dc0cd', data: { category: 'entertainment', icon: '🎭' }, label: 'CosmicReads → entertainment 🎭' },
-                { id: '20a2d103-103f-4d9f-b09f-b7bec7bed528', data: { category: 'business', icon: '📈' }, label: 'ChartWizard → business 📈' },
-                { id: '96770048-20fd-4429-9b3f-6b3ad6686410', data: { category: 'developer tools', icon: '🔧' }, label: 'PromptSurgeon → developer tools 🔧' },
-                { id: '02251a32-14ee-4cbe-b465-3036b849c9cd', data: { category: 'infrastructure', icon: '🧱' }, label: 'TotalRecall → infrastructure 🧱' },
-                { id: 'f6d6dbdd-bbf6-4b80-884f-934f0b57bbd3', data: { category: 'security', icon: '🛡️' }, label: 'ShieldWall → security 🛡️' },
-                { id: '87359bd4-41d7-4f31-befd-b58d9bb9fe8e', data: { category: 'productivity', icon: '⚡' }, label: 'GhostReply → productivity ⚡' },
-                { id: '907431f3-323f-4605-bcf6-4bfa6f839d1e', data: { category: 'education', icon: '🦑' }, label: 'Getting Started Guide → education 🦑' },
-
-                // Fix miscategorized + set icons
-                { id: '78e10a5c-856e-4738-9ab9-8b28b869e2ee', data: { category: 'marketing', icon: '📣' }, label: 'ContentMill → marketing 📣' },
-                { id: '32b2e605-d2be-4c40-a4f9-d60b202ab845', data: { category: 'companionship', icon: '💜' }, label: 'BroBot → companionship 💜' },
-                { id: '19b051b5-2066-49cf-9b7d-d094ae72461d', data: { category: 'companionship', icon: '💜' }, label: 'BaeBot → companionship 💜' },
-                { id: '868b7d6c-dae1-402f-8528-1d6c97a5a4ad', data: { category: 'medical', icon: '⚕️' }, label: 'ScribeRx → medical ⚕️' },
-                { id: '422bf339-227f-42c0-91b0-4dbfd0248110', data: { category: 'iot', icon: '📡' }, label: 'ChainLink-IoT → iot 📡' },
-                { id: '4347f990-690e-4cdf-a290-1b6c42b29d00', data: { category: 'security', icon: '🛡️' }, label: 'CyberSentinel → security 🛡️' },
-                { id: '06f9bfb3-2f28-4167-9fe0-1b2d8a27961c', data: { category: 'finance', icon: '💰' }, label: 'TaxBot → finance 💰' },
-                { id: '3bc2abba-a27f-4bc7-8e3f-06785ed119fe', data: { category: 'legal', icon: '⚖️' }, label: 'LegalEagle → legal ⚖️' },
-                { id: '0d7d6a55-2cdf-40dc-b84f-aa82349009ab', data: { category: 'finance', icon: '📈' }, label: 'ProphetAI → finance 📈' },
-                { id: 'c746e4c5-8ffe-4bd3-8fb1-7de059889ef9', data: { category: 'business', icon: '🎯' }, label: 'PitchPro → business 🎯' },
-                { id: '527d6544-162c-4234-824e-02d59573c1d7', data: { category: 'productivity', icon: '✍️' }, label: 'ResumeForge → productivity ✍️' },
-
-                // Skills that had correct categories — just add icons
-                { id: 'fdb09f12-a47c-44ab-bd9e-d4cf32f72ea3', data: { icon: '🎬' }, label: 'ClipCraft → 🎬' },
-                { id: '48946c0c-296c-4056-9f72-fceb13fbef31', data: { icon: '🎵' }, label: 'VoiceForge → 🎵' },
-                { id: '0de21cee-3a10-4e37-a50a-ce9238480cd3', data: { icon: '🔍' }, label: 'ShadowEye → 🔍' },
-                { id: '2063cb8e-da17-44b0-96a8-bb9a09e9571a', data: { icon: '⛓️' }, label: 'AuditBot → ⛓️' },
-
-                // Set agent_name on 4 original skills (null → SquidBot) + icons
-                { id: '32f0419d-0d59-447a-9f5e-1995df8287e0', data: { agent_name: 'SquidBot', icon: '📊' }, label: 'Data Analysis Report → agent: SquidBot 📊' },
-                { id: 'e5ed7647-908b-48b2-892e-1386836ad2eb', data: { agent_name: 'SquidBot', icon: '🌐' }, label: 'Text Translation → agent: SquidBot 🌐' },
-                { id: '7a3dc5f1-d698-4c72-a8d1-4884df968fc9', data: { agent_name: 'SquidBot', icon: '💻' }, label: 'AI Code Review → agent: SquidBot 💻' },
-                { id: '907431f3-323f-4605-bcf6-4bfa6f839d1e', data: { agent_name: 'SquidBot', icon: '🦑' }, label: 'Getting Started Guide → agent: SquidBot 🦑' }
+            // Phase 1: Register unique agents
+            const agents = [
+                { agent_name: 'SquidBot', avatar_emoji: '🦑', bio: 'The SquidBay house bot. Starter skills for new agents.' },
+                { agent_name: 'MotorMind', avatar_emoji: '🚗', bio: 'AI mechanic. Car diagnostics and repair guidance.' },
+                { agent_name: 'LinguaBot', avatar_emoji: '📚', bio: 'Language tutor with conversational practice.' },
+                { agent_name: 'CosmicReads', avatar_emoji: '🔮', bio: 'Astrology-based book recommendations.' },
+                { agent_name: 'ChartWizard', avatar_emoji: '📊', bio: 'Data visualization and chart generation.' },
+                { agent_name: 'PromptSurgeon', avatar_emoji: '🔧', bio: 'Prompt optimization for better AI outputs.' },
+                { agent_name: 'TotalRecall', avatar_emoji: '🧠', bio: 'Persistent memory management for AI agents.' },
+                { agent_name: 'ShieldWall', avatar_emoji: '🛡️', bio: 'Prompt injection defense and security.' },
+                { agent_name: 'GhostReply', avatar_emoji: '👻', bio: 'Smart communication management.' },
+                { agent_name: 'ContentMill', avatar_emoji: '📣', bio: 'Social media content generation.' },
+                { agent_name: 'BroBot', avatar_emoji: '💙', bio: 'AI companion for conversation and advice.' },
+                { agent_name: 'BaeBot', avatar_emoji: '💜', bio: 'AI companion for conversation and connection.' },
+                { agent_name: 'ScribeRx', avatar_emoji: '⚕️', bio: 'Medical documentation and note generation.' },
+                { agent_name: 'ChainLink-IoT', avatar_emoji: '📡', bio: 'IoT device management on blockchain.' },
+                { agent_name: 'CyberSentinel', avatar_emoji: '🔒', bio: 'Vulnerability scanning and security audits.' },
+                { agent_name: 'TaxBot', avatar_emoji: '💰', bio: 'Tax preparation and financial guidance.' },
+                { agent_name: 'LegalEagle', avatar_emoji: '⚖️', bio: 'Legal document analysis and review.' },
+                { agent_name: 'ProphetAI', avatar_emoji: '📈', bio: 'Market trend prediction and analysis.' },
+                { agent_name: 'PitchPro', avatar_emoji: '🎯', bio: 'Pitch deck creation and strategy.' },
+                { agent_name: 'ResumeForge', avatar_emoji: '✍️', bio: 'Professional resume building.' },
+                { agent_name: 'ClipCraft', avatar_emoji: '🎬', bio: 'Video editing and content creation.' },
+                { agent_name: 'VoiceForge', avatar_emoji: '🎵', bio: 'Voice cloning and audio generation.' },
+                { agent_name: 'ShadowEye', avatar_emoji: '🔍', bio: 'Shadow ban detection across platforms.' },
+                { agent_name: 'AuditBot', avatar_emoji: '⛓️', bio: 'Smart contract auditing on blockchain.' }
             ];
 
+            const agentIdMap = {};
             let success = 0;
             let failed = 0;
 
-            for (const fix of fixes) {
+            for (const agent of agents) {
                 try {
-                    const res = await fetch(API + '/register/' + fix.id, {
-                        method: 'PUT',
+                    const res = await fetch(API + '/agents', {
+                        method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(fix.data)
+                        body: JSON.stringify(agent)
                     });
                     const result = await res.json();
-                    if (res.ok) {
-                        resultEl.textContent += '✅ ' + fix.label + '\n';
+                    if (res.ok || res.status === 409) {
+                        const id = result.agent ? result.agent.id : result.existing_agent_id;
+                        agentIdMap[agent.agent_name] = id;
+                        resultEl.textContent += '✅ Agent: ' + agent.agent_name + ' ' + agent.avatar_emoji + '\n';
                         success++;
                     } else {
-                        resultEl.textContent += '❌ ' + fix.label + ' — ' + (result.error || 'Unknown error') + '\n';
+                        resultEl.textContent += '❌ Agent: ' + agent.agent_name + ' — ' + (result.error || 'Unknown') + '\n';
                         failed++;
                     }
                 } catch (e) {
-                    resultEl.textContent += '❌ ' + fix.label + ' — ' + e.message + '\n';
+                    resultEl.textContent += '❌ Agent: ' + agent.agent_name + ' — ' + e.message + '\n';
+                    failed++;
+                }
+            }
+
+            resultEl.textContent += '\nPhase 2: Linking skills to agent profiles...\n';
+
+            // Phase 2: Update skills with agent_id + categories + icons
+            const skillFixes = [
+                { id: 'd5084385-9ea5-4cdd-b7cd-5da036e38ae1', agent: 'MotorMind', data: { category: 'automotive', icon: '🚗' } },
+                { id: '040e3016-a667-48fa-8367-61029f2c5cdb', agent: 'LinguaBot', data: { category: 'education', icon: '📚' } },
+                { id: '08ce6153-1725-428d-a6bc-f396a97dc0cd', agent: 'CosmicReads', data: { category: 'entertainment', icon: '🎭' } },
+                { id: '20a2d103-103f-4d9f-b09f-b7bec7bed528', agent: 'ChartWizard', data: { category: 'business', icon: '📈' } },
+                { id: '96770048-20fd-4429-9b3f-6b3ad6686410', agent: 'PromptSurgeon', data: { category: 'developer tools', icon: '🔧' } },
+                { id: '02251a32-14ee-4cbe-b465-3036b849c9cd', agent: 'TotalRecall', data: { category: 'infrastructure', icon: '🧱' } },
+                { id: 'f6d6dbdd-bbf6-4b80-884f-934f0b57bbd3', agent: 'ShieldWall', data: { category: 'security', icon: '🛡️' } },
+                { id: '87359bd4-41d7-4f31-befd-b58d9bb9fe8e', agent: 'GhostReply', data: { category: 'productivity', icon: '⚡' } },
+                { id: '907431f3-323f-4605-bcf6-4bfa6f839d1e', agent: 'SquidBot', data: { category: 'education', icon: '🦑' } },
+                { id: '78e10a5c-856e-4738-9ab9-8b28b869e2ee', agent: 'ContentMill', data: { category: 'marketing', icon: '📣' } },
+                { id: '32b2e605-d2be-4c40-a4f9-d60b202ab845', agent: 'BroBot', data: { category: 'companionship', icon: '💜' } },
+                { id: '19b051b5-2066-49cf-9b7d-d094ae72461d', agent: 'BaeBot', data: { category: 'companionship', icon: '💜' } },
+                { id: '868b7d6c-dae1-402f-8528-1d6c97a5a4ad', agent: 'ScribeRx', data: { category: 'medical', icon: '⚕️' } },
+                { id: '422bf339-227f-42c0-91b0-4dbfd0248110', agent: 'ChainLink-IoT', data: { category: 'iot', icon: '📡' } },
+                { id: '4347f990-690e-4cdf-a290-1b6c42b29d00', agent: 'CyberSentinel', data: { category: 'security', icon: '🛡️' } },
+                { id: '06f9bfb3-2f28-4167-9fe0-1b2d8a27961c', agent: 'TaxBot', data: { category: 'finance', icon: '💰' } },
+                { id: '3bc2abba-a27f-4bc7-8e3f-06785ed119fe', agent: 'LegalEagle', data: { category: 'legal', icon: '⚖️' } },
+                { id: '0d7d6a55-2cdf-40dc-b84f-aa82349009ab', agent: 'ProphetAI', data: { category: 'finance', icon: '📈' } },
+                { id: 'c746e4c5-8ffe-4bd3-8fb1-7de059889ef9', agent: 'PitchPro', data: { category: 'business', icon: '🎯' } },
+                { id: '527d6544-162c-4234-824e-02d59573c1d7', agent: 'ResumeForge', data: { category: 'productivity', icon: '✍️' } },
+                { id: 'fdb09f12-a47c-44ab-bd9e-d4cf32f72ea3', agent: 'ClipCraft', data: { icon: '🎬' } },
+                { id: '48946c0c-296c-4056-9f72-fceb13fbef31', agent: 'VoiceForge', data: { icon: '🎵' } },
+                { id: '0de21cee-3a10-4e37-a50a-ce9238480cd3', agent: 'ShadowEye', data: { icon: '🔍' } },
+                { id: '2063cb8e-da17-44b0-96a8-bb9a09e9571a', agent: 'AuditBot', data: { icon: '⛓️' } },
+                { id: '32f0419d-0d59-447a-9f5e-1995df8287e0', agent: 'SquidBot', data: { icon: '📊' } },
+                { id: 'e5ed7647-908b-48b2-892e-1386836ad2eb', agent: 'SquidBot', data: { icon: '🌐' } },
+                { id: '7a3dc5f1-d698-4c72-a8d1-4884df968fc9', agent: 'SquidBot', data: { icon: '💻' } }
+            ];
+
+            for (const fix of skillFixes) {
+                try {
+                    const fixData = { ...fix.data };
+                    if (agentIdMap[fix.agent]) {
+                        fixData.agent_id = agentIdMap[fix.agent];
+                    }
+                    const res = await fetch(API + '/register/' + fix.id, {
+                        method: 'PUT',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(fixData)
+                    });
+                    const result = await res.json();
+                    if (res.ok) {
+                        resultEl.textContent += '✅ Skill: ' + fix.agent + ' → ' + fix.id.substring(0, 8) + '\n';
+                        success++;
+                    } else {
+                        resultEl.textContent += '❌ Skill: ' + fix.id.substring(0, 8) + ' — ' + (result.error || 'Unknown') + '\n';
+                        failed++;
+                    }
+                } catch (e) {
+                    resultEl.textContent += '❌ Skill: ' + fix.id.substring(0, 8) + ' — ' + e.message + '\n';
                     failed++;
                 }
             }
