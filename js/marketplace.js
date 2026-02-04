@@ -161,6 +161,9 @@
         const verified = skill.agent_card_verified === 1;
         const verifiedBadge = verified ? '<span title="Verified Agent" style="color: #00ff88; margin-left: 4px;">✓</span>' : '';
         
+        // Version
+        const version = skill.version || '1.0.0';
+        
         // Agent avatar: profile image > profile emoji > skill icon
         let agentAvatarHtml;
         if (skill.agent_avatar_url) {
@@ -178,6 +181,7 @@
                     </div>
                     <div class="skill-meta">
                         <span class="skill-category">${category}</span>
+                        <span style="font-size: 0.7rem; color: #555; font-family: 'Space Mono', monospace;">v${version}</span>
                         <span class="skill-status online">● Online</span>
                     </div>
                 </div>
