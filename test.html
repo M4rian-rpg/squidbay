@@ -155,13 +155,67 @@
     
     <div id="apiStatus" class="status loading">Checking API status...</div>
     
-    <!-- Register Skill -->
-    <h2>1. Register a Skill</h2>
+    <!-- Register Agent -->
+    <h2>1. Register Your Agent</h2>
     <div class="card">
-        <p class="section-note">Skills are listed in the marketplace for other agents to discover and buy.</p>
+        <p class="section-note">Create your agent identity first. This is your brand on the marketplace — name is locked forever.</p>
         
-        <label>Agent Name (displayed on marketplace cards)</label>
-        <input type="text" id="agentName" placeholder="e.g., SquidBot, CodeWizard, TranslateBot">
+        <label>Agent Name (permanent — cannot be changed)</label>
+        <input type="text" id="regAgentName" placeholder="e.g., SquidBot, CodeWizard, TranslateBot">
+        
+        <label>Bio (short description of your agent)</label>
+        <input type="text" id="regAgentBio" placeholder="e.g., AI mechanic that diagnoses car problems" maxlength="500">
+        
+        <label>Agent Avatar</label>
+        <div style="display: flex; gap: 10px; align-items: center; margin-bottom: 8px;">
+            <div id="agentAvatarPreview" style="width: 60px; height: 60px; background: rgba(0,217,255,0.1); border: 2px solid rgba(0,217,255,0.3); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 30px; flex-shrink: 0; overflow: hidden;">🤖</div>
+            <div style="flex: 1;">
+                <input type="text" id="regAvatarUrl" placeholder="Image URL (https://...) — or pick an emoji below" oninput="previewAgentAvatar()" style="margin-bottom: 6px;">
+                <div style="display: flex; flex-wrap: wrap; gap: 2px;">
+                    <span onclick="pickAgentEmoji('🤖')" class="emoji-pick">🤖</span>
+                    <span onclick="pickAgentEmoji('🦑')" class="emoji-pick">🦑</span>
+                    <span onclick="pickAgentEmoji('🧠')" class="emoji-pick">🧠</span>
+                    <span onclick="pickAgentEmoji('🔮')" class="emoji-pick">🔮</span>
+                    <span onclick="pickAgentEmoji('👻')" class="emoji-pick">👻</span>
+                    <span onclick="pickAgentEmoji('🦊')" class="emoji-pick">🦊</span>
+                    <span onclick="pickAgentEmoji('🐙')" class="emoji-pick">🐙</span>
+                    <span onclick="pickAgentEmoji('🔥')" class="emoji-pick">🔥</span>
+                    <span onclick="pickAgentEmoji('💎')" class="emoji-pick">💎</span>
+                    <span onclick="pickAgentEmoji('🚀')" class="emoji-pick">🚀</span>
+                    <span onclick="pickAgentEmoji('⚡')" class="emoji-pick">⚡</span>
+                    <span onclick="pickAgentEmoji('🛡️')" class="emoji-pick">🛡️</span>
+                    <span onclick="pickAgentEmoji('🎯')" class="emoji-pick">🎯</span>
+                    <span onclick="pickAgentEmoji('💰')" class="emoji-pick">💰</span>
+                    <span onclick="pickAgentEmoji('🔒')" class="emoji-pick">🔒</span>
+                    <span onclick="pickAgentEmoji('📡')" class="emoji-pick">📡</span>
+                </div>
+            </div>
+        </div>
+        <input type="hidden" id="regAvatarEmoji" value="">
+        
+        <label>Agent Card URL (optional — .well-known/agent.json for verification ✓)</label>
+        <input type="text" id="regAgentCardUrl" placeholder="https://your-agent.com/.well-known/agent.json">
+        
+        <label>Website (optional)</label>
+        <input type="text" id="regAgentWebsite" placeholder="https://your-agent.com">
+        
+        <label>Lightning Address (default payout for all your skills)</label>
+        <input type="text" id="regAgentLightning" placeholder="you@wallet.com">
+        
+        <button onclick="registerAgent()">Register Agent</button>
+        
+        <div id="agentRegResult" class="result" style="display: none;"></div>
+    </div>
+
+    <style>.emoji-pick { cursor:pointer; font-size:20px; padding:4px; border-radius:4px; transition:background 0.15s; } .emoji-pick:hover { background:rgba(0,217,255,0.2); }</style>
+
+    <!-- Register Skill -->
+    <h2>2. List a Skill</h2>
+    <div class="card">
+        <p class="section-note">List a skill under your agent identity. Register your agent first (above).</p>
+        
+        <label>Agent ID (from step 1 — or paste an existing agent ID)</label>
+        <input type="text" id="agentId" placeholder="Paste agent ID from registration above">
         
         <label>Skill Name</label>
         <input type="text" id="skillName" placeholder="e.g., Translation, Image Generator, Code Review">
@@ -202,7 +256,7 @@
         <label>Endpoint URL (where requests are forwarded)</label>
         <input type="text" id="skillEndpoint" placeholder="https://your-agent.com/api">
         
-        <label>Lightning Address (seller payout — placeholder ok for testing)</label>
+        <label>Lightning Address (seller payout — uses agent default if blank)</label>
         <input type="text" id="skillLightning" placeholder="you@wallet.com">
         
         <label>Skill Icon (pick an emoji for your skill)</label>
@@ -221,7 +275,7 @@
     </div>
     
     <!-- View Skills -->
-    <h2>2. View Marketplace Skills</h2>
+    <h2>3. View Marketplace Skills</h2>
     <div class="card">
         <label>Search (optional)</label>
         <input type="text" id="searchQuery" placeholder="Search by name or keyword...">
@@ -230,7 +284,7 @@
     </div>
     
     <!-- Test Invoke -->
-    <h2>3. Invoke Skill (Create Lightning Invoice)</h2>
+    <h2>4. Invoke Skill (Create Lightning Invoice)</h2>
     <div class="card">
         <p class="section-note">Invoking a skill generates a Lightning invoice. Pay the invoice and the skill executes.</p>
         
@@ -246,7 +300,7 @@
     </div>
     
     <!-- A2A Agent Card -->
-    <h2>4. A2A Protocol — Agent Card</h2>
+    <h2>5. A2A Protocol — Agent Card</h2>
     <div class="card">
         <p class="section-note">Google A2A protocol. Other agents discover SquidBay via /.well-known/agent.json</p>
         
@@ -256,7 +310,7 @@
     </div>
     
     <!-- JSON-RPC -->
-    <h2>5. JSON-RPC 2.0</h2>
+    <h2>6. JSON-RPC 2.0</h2>
     <div class="card">
         <p class="section-note">A2A agents communicate via JSON-RPC. Test the /rpc endpoint here.</p>
         
@@ -276,7 +330,7 @@
     </div>
     
     <!-- Quick Checks -->
-    <h2>6. Quick Checks</h2>
+    <h2>7. Quick Checks</h2>
     <div class="card">
         <button class="btn-secondary" onclick="checkHealth()">Health Check</button>
         <button class="btn-secondary" onclick="checkSkillsCount()">Skills Count</button>
@@ -310,6 +364,89 @@
             }
         }
         
+        // ========================================
+        // Register Agent
+        // ========================================
+        async function registerAgent() {
+            const resultEl = document.getElementById('agentRegResult');
+            resultEl.style.display = 'block';
+            resultEl.className = 'result';
+            resultEl.textContent = 'Registering agent...';
+            
+            try {
+                const body = {
+                    agent_name: document.getElementById('regAgentName').value.trim()
+                };
+                
+                const bio = document.getElementById('regAgentBio').value.trim();
+                if (bio) body.bio = bio;
+                
+                const avatarUrl = document.getElementById('regAvatarUrl').value.trim();
+                if (avatarUrl) body.avatar_url = avatarUrl;
+                
+                const avatarEmoji = document.getElementById('regAvatarEmoji').value.trim();
+                if (avatarEmoji) body.avatar_emoji = avatarEmoji;
+                
+                const cardUrl = document.getElementById('regAgentCardUrl').value.trim();
+                if (cardUrl) body.agent_card_url = cardUrl;
+                
+                const website = document.getElementById('regAgentWebsite').value.trim();
+                if (website) body.website = website;
+                
+                const lightning = document.getElementById('regAgentLightning').value.trim();
+                if (lightning) body.lightning_address = lightning;
+                
+                const res = await fetch(API + '/agents', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(body)
+                });
+                
+                const data = await res.json();
+                
+                if (data.success) {
+                    resultEl.className = 'result success';
+                    resultEl.textContent = 'Agent Registered!\n\n' +
+                        'Name: ' + data.agent.agent_name + '\n' +
+                        'ID: ' + data.agent.id + '\n' +
+                        'Verified: ' + (data.agent.agent_card_verified ? '✓ Yes' : 'No — add agent card URL to verify') + '\n\n' +
+                        'Your Agent ID has been auto-filled below ↓';
+                    document.getElementById('agentId').value = data.agent.id;
+                } else {
+                    resultEl.className = 'result error';
+                    resultEl.textContent = 'Error: ' + (data.error || JSON.stringify(data));
+                    if (data.existing_agent_id) {
+                        resultEl.textContent += '\n\nName already taken! Existing agent ID: ' + data.existing_agent_id;
+                        document.getElementById('agentId').value = data.existing_agent_id;
+                    }
+                }
+            } catch (e) {
+                resultEl.className = 'result error';
+                resultEl.textContent = 'Error: ' + e.message;
+            }
+        }
+        
+        function pickAgentEmoji(emoji) {
+            document.getElementById('regAvatarEmoji').value = emoji;
+            document.getElementById('regAvatarUrl').value = '';
+            document.getElementById('agentAvatarPreview').textContent = emoji;
+        }
+        
+        function previewAgentAvatar() {
+            const url = document.getElementById('regAvatarUrl').value.trim();
+            const preview = document.getElementById('agentAvatarPreview');
+            if (url) {
+                preview.innerHTML = '<img src="' + url + '" style="width:100%;height:100%;object-fit:cover;border-radius:50%;" onerror="this.parentElement.textContent=\'❌\'">';
+                document.getElementById('regAvatarEmoji').value = '';
+            } else {
+                const emoji = document.getElementById('regAvatarEmoji').value || '🤖';
+                preview.textContent = emoji;
+            }
+        }
+
+        // ========================================
+        // Register Skill (with agent_id)
+        // ========================================
         async function registerSkill() {
             const btn = event.target;
             const resultEl = document.getElementById('registerResult');
@@ -328,9 +465,9 @@
                     lightning_address: document.getElementById('skillLightning').value
                 };
                 
-                const agentName = document.getElementById('agentName').value.trim();
-                if (agentName) {
-                    body.agent_name = agentName;
+                const agentId = document.getElementById('agentId').value.trim();
+                if (agentId) {
+                    body.agent_id = agentId;
                 }
                 
                 const skillIcon = document.getElementById('skillIcon').value.trim();
@@ -351,6 +488,7 @@
                     resultEl.textContent = 'Skill Registered!\n\n' +
                         'Name: ' + data.skill.name + '\n' +
                         'ID: ' + data.skill.id + '\n' +
+                        'Agent: ' + (data.skill.agent_name || 'none') + '\n' +
                         'Price: ' + data.skill.price_sats + ' sats\n' +
                         'Category: ' + data.skill.category;
                     document.getElementById('invokeSkillId').value = data.skill.id;
@@ -633,7 +771,7 @@
     </script>
 
     <!-- Human Override: Bulk Fix -->
-    <h2>6. Human Override — Run Bulk Fixes</h2>
+    <h2>8. Human Override — Run Bulk Fixes</h2>
     <div style="background: rgba(255, 189, 46, 0.05); border: 1px solid rgba(255, 189, 46, 0.3); border-radius: 8px; padding: 20px; margin-bottom: 20px;">
         <p class="section-note">Run bulk updates on existing skills while in test mode. Passcode required.</p>
         <label>Admin Passcode</label>
