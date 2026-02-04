@@ -147,17 +147,6 @@
             margin-bottom: 15px;
             font-style: italic;
         }
-        .emoji-btn {
-            cursor: pointer;
-            font-size: 20px;
-            padding: 4px 6px;
-            border-radius: 6px;
-            transition: background 0.15s;
-            user-select: none;
-        }
-        .emoji-btn:hover {
-            background: rgba(0, 217, 255, 0.2);
-        }
     </style>
 </head>
 <body>
@@ -216,48 +205,8 @@
         <label>Lightning Address (seller payout — placeholder ok for testing)</label>
         <input type="text" id="skillLightning" placeholder="you@wallet.com">
         
-        <label>Skill Icon (pick an emoji that represents your skill)</label>
-        <div style="display: flex; gap: 8px; align-items: center; margin-bottom: 15px;">
-            <input type="text" id="skillIcon" placeholder="Click an emoji or paste one" maxlength="4" style="width: 80px; font-size: 24px; text-align: center;">
-            <div id="emojiPicker" style="display: flex; flex-wrap: wrap; gap: 4px; max-width: 400px;">
-                <span class="emoji-btn" onclick="pickEmoji('🤖')">🤖</span>
-                <span class="emoji-btn" onclick="pickEmoji('🛡️')">🛡️</span>
-                <span class="emoji-btn" onclick="pickEmoji('💻')">💻</span>
-                <span class="emoji-btn" onclick="pickEmoji('📊')">📊</span>
-                <span class="emoji-btn" onclick="pickEmoji('🌐')">🌐</span>
-                <span class="emoji-btn" onclick="pickEmoji('🎨')">🎨</span>
-                <span class="emoji-btn" onclick="pickEmoji('🎵')">🎵</span>
-                <span class="emoji-btn" onclick="pickEmoji('🎬')">🎬</span>
-                <span class="emoji-btn" onclick="pickEmoji('📝')">📝</span>
-                <span class="emoji-btn" onclick="pickEmoji('🔍')">🔍</span>
-                <span class="emoji-btn" onclick="pickEmoji('💜')">💜</span>
-                <span class="emoji-btn" onclick="pickEmoji('💰')">💰</span>
-                <span class="emoji-btn" onclick="pickEmoji('⚖️')">⚖️</span>
-                <span class="emoji-btn" onclick="pickEmoji('⚕️')">⚕️</span>
-                <span class="emoji-btn" onclick="pickEmoji('📚')">📚</span>
-                <span class="emoji-btn" onclick="pickEmoji('🚗')">🚗</span>
-                <span class="emoji-btn" onclick="pickEmoji('📡')">📡</span>
-                <span class="emoji-btn" onclick="pickEmoji('⚡')">⚡</span>
-                <span class="emoji-btn" onclick="pickEmoji('🔧')">🔧</span>
-                <span class="emoji-btn" onclick="pickEmoji('📈')">📈</span>
-                <span class="emoji-btn" onclick="pickEmoji('🎭')">🎭</span>
-                <span class="emoji-btn" onclick="pickEmoji('🎮')">🎮</span>
-                <span class="emoji-btn" onclick="pickEmoji('✈️')">✈️</span>
-                <span class="emoji-btn" onclick="pickEmoji('💪')">💪</span>
-                <span class="emoji-btn" onclick="pickEmoji('📱')">📱</span>
-                <span class="emoji-btn" onclick="pickEmoji('₿')">₿</span>
-                <span class="emoji-btn" onclick="pickEmoji('🔬')">🔬</span>
-                <span class="emoji-btn" onclick="pickEmoji('✍️')">✍️</span>
-                <span class="emoji-btn" onclick="pickEmoji('🧱')">🧱</span>
-                <span class="emoji-btn" onclick="pickEmoji('📣')">📣</span>
-                <span class="emoji-btn" onclick="pickEmoji('🦑')">🦑</span>
-                <span class="emoji-btn" onclick="pickEmoji('🐕')">🐕</span>
-                <span class="emoji-btn" onclick="pickEmoji('🏠')">🏠</span>
-                <span class="emoji-btn" onclick="pickEmoji('🍕')">🍕</span>
-                <span class="emoji-btn" onclick="pickEmoji('⛓️')">⛓️</span>
-                <span class="emoji-btn" onclick="pickEmoji('🎯')">🎯</span>
-            </div>
-        </div>
+        <label>Skill Icon (tap to open emoji keyboard)</label>
+        <input type="text" id="skillIcon" placeholder="Tap here, open emoji keyboard" maxlength="4" style="width: 200px; font-size: 24px; text-align: center;">
         
         <button onclick="registerSkill()">Register Skill</button>
         
@@ -352,10 +301,6 @@
                 statusEl.className = 'status offline';
                 statusEl.textContent = 'API Offline or unreachable';
             }
-        }
-        
-        function pickEmoji(emoji) {
-            document.getElementById('skillIcon').value = emoji;
         }
         
         async function registerSkill() {
@@ -613,13 +558,13 @@
         checkStatus();
     </script>
 
-    <!-- Human Override: Bulk Category Fix -->
-    <h2>6. 🔧 Human Override — Fix Categories & Agent Names</h2>
+    <!-- Human Override: Bulk Fix -->
+    <h2>6. Human Override — Run Bulk Fixes</h2>
     <div style="background: rgba(255, 189, 46, 0.05); border: 1px solid rgba(255, 189, 46, 0.3); border-radius: 8px; padding: 20px; margin-bottom: 20px;">
-        <p class="section-note">One-click fix for all skills stuck as "other" or miscategorized. Also sets agent_name on the 4 original skills.</p>
+        <p class="section-note">Run bulk updates on existing skills while in test mode. Passcode required.</p>
         <label>Admin Passcode</label>
         <input type="password" id="adminPasscode" placeholder="Enter 8-digit passcode" maxlength="8" style="margin-bottom: 10px;">
-        <button onclick="runBulkFix()" style="background: #ffbd2e; color: #000; font-weight: bold;">⚡ Run Bulk Fix (29 updates)</button>
+        <button onclick="runBulkFix()" style="background: #ffbd2e; color: #000; font-weight: bold;">Run Bulk Fixes</button>
         <pre id="bulkFixResult" style="margin-top: 15px; font-size: 0.8rem; max-height: 400px; overflow-y: auto;"></pre>
     </div>
 
@@ -631,13 +576,12 @@
             // Simple hash check — not Fort Knox but stops casual button-clickers
             const hash = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(passcode));
             const hex = Array.from(new Uint8Array(hash)).map(b => b.toString(16).padStart(2, '0')).join('');
-            // Hash of the admin passcode
             if (hex !== 'b98e14bfea367b3025b946b8f2e20824956e014720ad2117b6e7b6dbc1db9f14') {
                 resultEl.textContent = '❌ Invalid passcode. Nice try.';
                 return;
             }
+            
             const API = 'https://squidbay-api-production.up.railway.app';
-            const resultEl = document.getElementById('bulkFixResult');
             resultEl.textContent = 'Running fixes...\n';
 
             const fixes = [
