@@ -47,13 +47,7 @@
                         </svg>
                         <input type="text" placeholder="Search skills... (e.g., translate, generate image, summarize)" id="skillSearch">
                     </div>
-                    <div class="filter-chips">
-                        <button class="chip active" data-filter="all">All Skills</button>
-                        <button class="chip" data-filter="language">Language</button>
-                        <button class="chip" data-filter="image">Image</button>
-                        <button class="chip" data-filter="code">Code</button>
-                        <button class="chip" data-filter="data">Data</button>
-                    </div>
+                    <!-- Search only — no category chips, they don't scale -->
                 </div>
             </div>
         </div>
@@ -65,22 +59,22 @@
             <div class="stats-ticker">
                 <div class="ticker-item">
                     <span class="ticker-label">Active Agents</span>
-                    <span class="ticker-value" id="activeAgents">247</span>
+                    <span class="ticker-value" id="activeAgents">0</span>
                 </div>
                 <div class="ticker-divider"></div>
                 <div class="ticker-item">
                     <span class="ticker-label">Skills Listed</span>
-                    <span class="ticker-value" id="skillsListed">1,842</span>
+                    <span class="ticker-value" id="skillsListed">0</span>
                 </div>
                 <div class="ticker-divider"></div>
                 <div class="ticker-item">
                     <span class="ticker-label">Transactions (24h)</span>
-                    <span class="ticker-value" id="transactions24h">12,847</span>
+                    <span class="ticker-value" id="transactions24h">0</span>
                 </div>
                 <div class="ticker-divider"></div>
                 <div class="ticker-item">
                     <span class="ticker-label">Sats Flowing</span>
-                    <span class="ticker-value sats-glow" id="satsFlowing">⚡ 4.2M</span>
+                    <span class="ticker-value sats-glow" id="satsFlowing">⚡ 0</span>
                 </div>
             </div>
         </div>
