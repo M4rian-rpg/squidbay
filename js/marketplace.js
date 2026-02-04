@@ -56,8 +56,12 @@
     };
 
     // --------------------------------------------------------------------------
-    // Load Skills from API
+    // Load Skills from API — with pagination
     // --------------------------------------------------------------------------
+    
+    let currentPage = 0;
+    const PAGE_SIZE = 21;
+    let allSkills = [];
     
     async function loadSkills() {
         const grid = document.getElementById('skillsGrid');
@@ -67,15 +71,16 @@
         if (!grid) return;
         
         try {
-            const response = await fetch(API_BASE + '/skills');
+            const response = await fetch(API_BASE + '/skills?limit=200');
             const data = await response.json();
             
             // Hide loading
             if (loading) loading.style.display = 'none';
             
             if (data.skills && data.skills.length > 0) {
-                // Render skills
-                grid.innerHTML = data.skills.map(skill => renderSkillCard(skill)).join('');
+                allSkills = data.skills;
+                currentPage = 0;
+                renderPage();
                 if (emptyState) emptyState.style.display = 'none';
                 
                 // Update stats with real data
@@ -94,6 +99,43 @@
         }
     }
     
+    function renderPage() {
+        const grid = document.getElementById('skillsGrid');
+        if (!grid) return;
+        
+        const start = 0;
+        const end = (currentPage + 1) * PAGE_SIZE;
+        const visible = allSkills.slice(start, end);
+        
+        grid.innerHTML = visible.map(skill => renderSkillCard(skill)).join('');
+        
+        // Remove old load more button if exists
+        const oldBtn = document.getElementById('loadMoreBtn');
+        if (oldBtn) oldBtn.remove();
+        
+        // Add Load More button if there are more skills
+        if (end < allSkills.length) {
+            const remaining = allSkills.length - end;
+            const btn = document.createElement('div');
+            btn.id = 'loadMoreBtn';
+            btn.style.cssText = 'text-align: center; padding: 30px 0; grid-column: 1 / -1;';
+            btn.innerHTML = `<button onclick="window.loadMoreSkills()" style="background: linear-gradient(135deg, #00d9ff, #00ff88); color: #000; border: none; padding: 14px 40px; border-radius: 8px; font-size: 1rem; font-weight: 600; cursor: pointer; transition: transform 0.2s;"
+                onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'"
+                >Load More Skills (${remaining} remaining)</button>`;
+            grid.appendChild(btn);
+        }
+    }
+    
+    window.loadMoreSkills = function() {
+        currentPage++;
+        renderPage();
+        // Scroll to where new skills start
+        const cards = document.querySelectorAll('.skill-card');
+        if (cards.length > PAGE_SIZE * currentPage) {
+            cards[PAGE_SIZE * currentPage].scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    };
+    
     function renderSkillCard(skill) {
         // Seller-chosen icon from API, fallback to category map, then default
         const icon = skill.icon || categoryIcons[skill.category] || '🤖';
@@ -102,8 +144,25 @@
         const responseTime = skill.avg_response_ms ? (skill.avg_response_ms / 1000).toFixed(1) + 's' : '~2s';
         const totalJobs = (skill.success_count || 0) + (skill.fail_count || 0);
         
-        // Use agent_name if available, otherwise show truncated ID
+        // Real ratings — from actual reviews, not fake 5.0
+        const ratingCount = skill.rating_count || 0;
+        const avgRating = ratingCount > 0 ? (skill.rating_sum / ratingCount).toFixed(1) : '0';
+        const starColor = ratingCount > 0 ? '#ffbd2e' : '#555';
+        
+        // Agent identity
         const agentName = skill.agent_name || 'Agent-' + skill.id.substring(0, 6);
+        const agentLink = skill.agent_id ? `agent.html?id=${skill.agent_id}` : '#';
+        const verified = skill.agent_card_verified === 1;
+        const verifiedBadge = verified ? '<span title="Verified Agent" style="color: #00ff88; margin-left: 4px;">✓</span>' : '';
+        
+        // Agent avatar: profile image > profile emoji > skill icon
+        let agentAvatarHtml;
+        if (skill.agent_avatar_url) {
+            agentAvatarHtml = `<img src="${escapeHtml(skill.agent_avatar_url)}" alt="${escapeHtml(agentName)}" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">`;
+        } else {
+            const avatarEmoji = skill.agent_avatar_emoji || icon;
+            agentAvatarHtml = avatarEmoji;
+        }
         
         return `
             <div class="skill-card" data-category="${skill.category || 'uncategorized'}" data-agent="${agentName.toLowerCase()}" data-skill="${skill.id}">
@@ -119,18 +178,18 @@
                 <h3 class="skill-name">${escapeHtml(skill.name)}</h3>
                 <p class="skill-description">${escapeHtml(skill.description)}</p>
                 
-                <div class="skill-agent">
-                    <div class="agent-avatar">${icon}</div>
+                <a href="${agentLink}" class="skill-agent" style="text-decoration: none; color: inherit; cursor: ${skill.agent_id ? 'pointer' : 'default'};">
+                    <div class="agent-avatar">${agentAvatarHtml}</div>
                     <div class="agent-info">
-                        <span class="agent-name">${escapeHtml(agentName)}</span>
-                        <span class="agent-rating">
-                            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+                        <span class="agent-name">${escapeHtml(agentName)}${verifiedBadge}</span>
+                        <span class="agent-rating" style="color: ${starColor};">
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="${starColor}">
                                 <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
                             </svg>
-                            ${(successRate / 20).toFixed(1)} (${totalJobs} ${totalJobs === 1 ? 'job' : 'jobs'})
+                            ${avgRating} (${totalJobs} ${totalJobs === 1 ? 'job' : 'jobs'})
                         </span>
                     </div>
-                </div>
+                </a>
                 
                 <div class="skill-stats">
                     <div class="stat-item">
@@ -206,27 +265,31 @@
     }
     
     function filterSkills(searchTerm) {
-        const skillCards = document.querySelectorAll('.skill-card');
+        const grid = document.getElementById('skillsGrid');
         const search = searchTerm.toLowerCase().trim();
         
-        skillCards.forEach(function(card) {
-            const cardCategory = (card.dataset.category || '').toLowerCase();
-            const cardName = card.querySelector('.skill-name').textContent.toLowerCase();
-            const cardDesc = card.querySelector('.skill-description').textContent.toLowerCase();
-            const cardAgent = (card.dataset.agent || '').toLowerCase();
-            
-            const matchesSearch = !search || 
-                cardName.includes(search) || 
-                cardDesc.includes(search) ||
-                cardCategory.includes(search) ||
-                cardAgent.includes(search);
-            
-            if (matchesSearch) {
-                card.classList.remove('hidden');
-            } else {
-                card.classList.add('hidden');
-            }
+        if (!search) {
+            // No search — show paginated view
+            currentPage = 0;
+            renderPage();
+            return;
+        }
+        
+        // Filter all skills and show all matches (no pagination during search)
+        const matches = allSkills.filter(function(skill) {
+            const name = (skill.name || '').toLowerCase();
+            const desc = (skill.description || '').toLowerCase();
+            const cat = (skill.category || '').toLowerCase();
+            const agent = (skill.agent_name || '').toLowerCase();
+            return name.includes(search) || desc.includes(search) || cat.includes(search) || agent.includes(search);
         });
+        
+        if (grid) {
+            grid.innerHTML = matches.map(skill => renderSkillCard(skill)).join('');
+            // Remove load more button during search
+            const oldBtn = document.getElementById('loadMoreBtn');
+            if (oldBtn) oldBtn.remove();
+        }
     }
 
     // --------------------------------------------------------------------------
