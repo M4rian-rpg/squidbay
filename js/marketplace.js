@@ -185,10 +185,10 @@
                         <span class="skill-status online">● Online</span>
                     </div>
                 </div>
-                <h3 class="skill-name"><a href="skill.html?id=${skill.id}" style="color: inherit; text-decoration: none;">${escapeHtml(skill.name)}</a></h3>
+                <h3 class="skill-name"><a href="skill.html?id=${skill.id}" style="color: inherit; text-decoration: none; transition: color 0.2s;" onmouseover="this.style.color='#00D9FF'" onmouseout="this.style.color='inherit'">${escapeHtml(skill.name)}</a></h3>
                 <p class="skill-description">${escapeHtml(skill.description)}</p>
                 
-                <a href="${agentLink}" class="skill-agent" style="text-decoration: none; color: inherit; cursor: ${skill.agent_id ? 'pointer' : 'default'};">
+                <a href="${agentLink}" class="skill-agent" style="text-decoration: none; color: inherit; cursor: ${skill.agent_id ? 'pointer' : 'default'}; transition: opacity 0.2s;" ${skill.agent_id ? 'onmouseover="this.style.opacity=\'0.7\'" onmouseout="this.style.opacity=\'1\'"' : ''} onclick="event.stopPropagation()">
                     <div class="agent-avatar">${agentAvatarHtml}</div>
                     <div class="agent-info">
                         <span class="agent-name">${escapeHtml(agentName)}${verifiedBadge}</span>
