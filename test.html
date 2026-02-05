@@ -81,6 +81,16 @@
             border: 1px solid #2a3540;
         }
         
+        .btn-x {
+            background: linear-gradient(135deg, #1d9bf0 0%, #0d8ce0 100%);
+            color: #fff;
+        }
+
+        .btn-x-danger {
+            background: linear-gradient(135deg, #ff6464 0%, #cc4444 100%);
+            color: #fff;
+        }
+        
         .result {
             background: #0a0e14;
             border: 1px solid #2a3540;
@@ -147,6 +157,62 @@
             margin-bottom: 15px;
             font-style: italic;
         }
+
+        /* X Integration styles */
+        .x-status-bar {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            font-family: monospace;
+            font-size: 0.85rem;
+        }
+        .x-status-bar.connected { background: rgba(29, 155, 240, 0.1); border: 1px solid #1d9bf0; color: #1d9bf0; }
+        .x-status-bar.disconnected { background: rgba(255, 100, 100, 0.1); border: 1px solid #ff6464; color: #ff6464; }
+        .x-status-bar.checking { background: rgba(255, 189, 46, 0.1); border: 1px solid #ffbd2e; color: #ffbd2e; }
+        .x-status-dot {
+            width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0;
+        }
+        .x-status-dot.on { background: #1d9bf0; box-shadow: 0 0 6px #1d9bf0; }
+        .x-status-dot.off { background: #ff6464; }
+        .x-status-dot.pending { background: #ffbd2e; }
+
+        .x-tweet-preview {
+            background: #16202a;
+            border: 1px solid #2a3540;
+            border-radius: 12px;
+            padding: 16px;
+            margin-top: 12px;
+        }
+        .x-tweet-preview .tweet-header {
+            display: flex; align-items: center; gap: 10px; margin-bottom: 10px;
+        }
+        .x-tweet-preview .tweet-avatar {
+            width: 40px; height: 40px; border-radius: 50%; background: #1d9bf0;
+            display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0;
+        }
+        .x-tweet-preview .tweet-name { font-weight: 600; color: #e0e0e0; }
+        .x-tweet-preview .tweet-handle { color: #555; font-size: 0.85rem; }
+        .x-tweet-preview .tweet-body { color: #e0e0e0; line-height: 1.5; margin-bottom: 10px; }
+        .x-tweet-preview .tweet-link { color: #1d9bf0; font-size: 0.8rem; text-decoration: none; }
+        .x-tweet-preview .tweet-link:hover { text-decoration: underline; }
+        .x-char-count { text-align: right; font-size: 0.8rem; color: #555; margin-top: -10px; margin-bottom: 10px; }
+        .x-char-count.warn { color: #ffbd2e; }
+        .x-char-count.over { color: #ff6464; }
+
+        .x-tab-bar {
+            display: flex; gap: 0; margin-bottom: 20px; border-bottom: 1px solid #2a3540;
+        }
+        .x-tab {
+            padding: 10px 16px; cursor: pointer; color: #555; font-size: 0.9rem;
+            border-bottom: 2px solid transparent; transition: all 0.2s;
+        }
+        .x-tab:hover { color: #1d9bf0; }
+        .x-tab.active { color: #1d9bf0; border-bottom-color: #1d9bf0; }
+        .x-tab-panel { display: none; }
+        .x-tab-panel.active { display: block; }
     </style>
 </head>
 <body>
@@ -344,6 +410,73 @@
         <button class="btn-secondary" onclick="window.open(API + '/skills', '_blank')">Open /skills in Browser</button>
         <button class="btn-secondary" onclick="window.open(API + '/docs', '_blank')">Open /docs in Browser</button>
         <div id="healthResult" class="result" style="display: none;"></div>
+    </div>
+
+    <!-- ============================================ -->
+    <!-- SQUIDBOT X (TWITTER) CONTROLS               -->
+    <!-- ============================================ -->
+    <h2>8. 🐦 SquidBot X Controls</h2>
+    <div style="background: rgba(29, 155, 240, 0.05); border: 1px solid rgba(29, 155, 240, 0.3); border-radius: 12px; padding: 20px; margin-bottom: 20px;">
+        <p class="section-note">Control SquidBot's X (Twitter) presence. Generate AI posts, reply to mentions, or post manually.</p>
+
+        <!-- X Status -->
+        <div id="xStatusBar" class="x-status-bar checking">
+            <div class="x-status-dot pending" id="xStatusDot"></div>
+            <span id="xStatusText">Checking X connection...</span>
+        </div>
+
+        <!-- Admin Key -->
+        <label>Admin Key (SQUIDBAY_ADMIN_KEY)</label>
+        <input type="password" id="xAdminKey" placeholder="Enter your admin key to unlock posting">
+
+        <!-- Tab Navigation -->
+        <div class="x-tab-bar">
+            <div class="x-tab active" onclick="switchXTab('ai-post')">🤖 AI Post</div>
+            <div class="x-tab" onclick="switchXTab('reply')">💬 Reply</div>
+            <div class="x-tab" onclick="switchXTab('manual')">✍️ Manual</div>
+        </div>
+
+        <!-- TAB 1: AI-Generated Post -->
+        <div id="xTab-ai-post" class="x-tab-panel active">
+            <label>Context (tell SquidBot what to post about — or leave blank for freestyle)</label>
+            <textarea id="xPostContext" rows="3" placeholder="e.g., Write your first ever tweet. You just got connected to X. Be excited but keep it real."></textarea>
+            <button class="btn-x" onclick="sendXPost()" id="xPostBtn">🦑 Generate & Post to X</button>
+        </div>
+
+        <!-- TAB 2: Reply to Mention -->
+        <div id="xTab-reply" class="x-tab-panel">
+            <label>Tweet ID (the tweet to reply to)</label>
+            <input type="text" id="xReplyTweetId" placeholder="e.g., 1893847562938475">
+
+            <label>Their message (what they said)</label>
+            <textarea id="xReplyMentionText" rows="2" placeholder="e.g., Hey @squidbot what is SquidBay?"></textarea>
+
+            <label>Their @handle (without @)</label>
+            <input type="text" id="xReplyAuthor" placeholder="e.g., Ghost081280">
+
+            <button class="btn-x" onclick="sendXReply()" id="xReplyBtn">🦑 Generate & Reply</button>
+        </div>
+
+        <!-- TAB 3: Manual Post -->
+        <div id="xTab-manual" class="x-tab-panel">
+            <label>Tweet text (exactly what gets posted — no AI)</label>
+            <textarea id="xManualText" rows="3" maxlength="280" placeholder="Type your exact tweet..." oninput="updateManualCharCount()"></textarea>
+            <div id="xManualCharCount" class="x-char-count">0 / 280</div>
+            <button class="btn-x-danger" onclick="sendXManual()" id="xManualBtn">Post Exact Text to X</button>
+        </div>
+
+        <!-- Result / Tweet Preview -->
+        <div id="xResult" style="display: none;"></div>
+    </div>
+
+    <!-- Human Override: Bulk Fix -->
+    <h2>9. Human Override — Run Bulk Fixes</h2>
+    <div style="background: rgba(255, 189, 46, 0.05); border: 1px solid rgba(255, 189, 46, 0.3); border-radius: 8px; padding: 20px; margin-bottom: 20px;">
+        <p class="section-note">Run bulk updates on existing skills while in test mode. Passcode required.</p>
+        <label>Admin Passcode</label>
+        <input type="password" id="adminPasscode" placeholder="Enter 8-digit passcode" maxlength="8" style="margin-bottom: 10px;">
+        <button onclick="runBulkFix()" style="background: #ffbd2e; color: #000; font-weight: bold;">Run Bulk Fixes</button>
+        <pre id="bulkFixResult" style="margin-top: 15px; font-size: 0.8rem; max-height: 400px; overflow-y: auto;"></pre>
     </div>
     
     <p style="margin-top: 40px; color: #666; text-align: center;">
@@ -839,19 +972,209 @@
         
         // Show all emojis on load
         renderEmojis(emojiDB);
+
+        // ========================================
+        // SquidBot X (Twitter) Controls
+        // ========================================
+
+        // Check X status on load
+        async function checkXStatus() {
+            const bar = document.getElementById('xStatusBar');
+            const dot = document.getElementById('xStatusDot');
+            const text = document.getElementById('xStatusText');
+            try {
+                const res = await fetch(API + '/x/status');
+                const data = await res.json();
+                if (data.configured) {
+                    bar.className = 'x-status-bar connected';
+                    dot.className = 'x-status-dot on';
+                    text.textContent = 'X Connected — @' + data.bot_handle + ' | Founder: @' + data.founder_handle;
+                } else {
+                    bar.className = 'x-status-bar disconnected';
+                    dot.className = 'x-status-dot off';
+                    text.textContent = 'X Not Configured — add X_API_KEY, X_API_SECRET, X_ACCESS_TOKEN, X_ACCESS_SECRET to Railway';
+                }
+            } catch (e) {
+                bar.className = 'x-status-bar disconnected';
+                dot.className = 'x-status-dot off';
+                text.textContent = 'Could not reach API — ' + e.message;
+            }
+        }
+
+        // Tab switching
+        function switchXTab(tabName) {
+            document.querySelectorAll('.x-tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.x-tab-panel').forEach(p => p.classList.remove('active'));
+            document.getElementById('xTab-' + tabName).classList.add('active');
+            // Activate the clicked tab header
+            const tabs = document.querySelectorAll('.x-tab');
+            tabs.forEach(t => {
+                if (t.getAttribute('onclick').includes(tabName)) t.classList.add('active');
+            });
+        }
+
+        // Get admin key
+        function getXAdminKey() {
+            const key = document.getElementById('xAdminKey').value.trim();
+            if (!key) {
+                showXResult('error', '🔒 Enter your admin key first.');
+                return null;
+            }
+            return key;
+        }
+
+        // Show result — either error or tweet preview
+        function showXResult(type, content, tweetUrl) {
+            const el = document.getElementById('xResult');
+            el.style.display = 'block';
+
+            if (type === 'error') {
+                el.innerHTML = '<div class="result error" style="margin-top:0;">' + esc(content) + '</div>';
+            } else if (type === 'loading') {
+                el.innerHTML = '<div class="result" style="margin-top:0; border-color: #1d9bf0; color: #1d9bf0;">' + esc(content) + '</div>';
+            } else if (type === 'tweet') {
+                el.innerHTML = `
+                    <div class="x-tweet-preview">
+                        <div class="tweet-header">
+                            <div class="tweet-avatar">🦑</div>
+                            <div>
+                                <div class="tweet-name">SquidBot</div>
+                                <div class="tweet-handle">@squidbot</div>
+                            </div>
+                        </div>
+                        <div class="tweet-body">${esc(content)}</div>
+                        ${tweetUrl ? '<a href="' + tweetUrl + '" target="_blank" class="tweet-link">View on X →</a>' : ''}
+                    </div>
+                `;
+            }
+        }
+
+        // Manual char count
+        function updateManualCharCount() {
+            const text = document.getElementById('xManualText').value;
+            const el = document.getElementById('xManualCharCount');
+            const len = text.length;
+            el.textContent = len + ' / 280';
+            el.className = 'x-char-count' + (len > 280 ? ' over' : len > 250 ? ' warn' : '');
+        }
+
+        // POST /x/post — AI-generated post
+        async function sendXPost() {
+            const key = getXAdminKey();
+            if (!key) return;
+            const btn = document.getElementById('xPostBtn');
+            btn.disabled = true;
+            btn.textContent = '🦑 Generating...';
+            showXResult('loading', '🦑 SquidBot is thinking of something to say...');
+
+            try {
+                const context = document.getElementById('xPostContext').value.trim();
+                const res = await fetch(API + '/x/post', {
+                    method: 'POST',
+                    headers: { 
+                        'Content-Type': 'application/json',
+                        'x-squidbay-key': key 
+                    },
+                    body: JSON.stringify({ context: context || undefined })
+                });
+                const data = await res.json();
+                if (data.success) {
+                    showXResult('tweet', data.tweet, data.url);
+                } else {
+                    showXResult('error', data.error || 'Unknown error');
+                }
+            } catch (e) {
+                showXResult('error', 'Request failed: ' + e.message);
+            }
+            btn.disabled = false;
+            btn.textContent = '🦑 Generate & Post to X';
+        }
+
+        // POST /x/reply — AI-generated reply
+        async function sendXReply() {
+            const key = getXAdminKey();
+            if (!key) return;
+            const tweetId = document.getElementById('xReplyTweetId').value.trim();
+            const mentionText = document.getElementById('xReplyMentionText').value.trim();
+            if (!tweetId || !mentionText) {
+                showXResult('error', 'Tweet ID and mention text are both required.');
+                return;
+            }
+            const btn = document.getElementById('xReplyBtn');
+            btn.disabled = true;
+            btn.textContent = '🦑 Generating reply...';
+            showXResult('loading', '🦑 SquidBot is crafting a reply...');
+
+            try {
+                const author = document.getElementById('xReplyAuthor').value.trim();
+                const res = await fetch(API + '/x/reply', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'x-squidbay-key': key
+                    },
+                    body: JSON.stringify({
+                        tweet_id: tweetId,
+                        mention_text: mentionText,
+                        mention_author: author || 'someone'
+                    })
+                });
+                const data = await res.json();
+                if (data.success) {
+                    showXResult('tweet', data.reply, data.url);
+                } else {
+                    showXResult('error', data.error || 'Unknown error');
+                }
+            } catch (e) {
+                showXResult('error', 'Request failed: ' + e.message);
+            }
+            btn.disabled = false;
+            btn.textContent = '🦑 Generate & Reply';
+        }
+
+        // POST /x/manual — Exact text post
+        async function sendXManual() {
+            const key = getXAdminKey();
+            if (!key) return;
+            const text = document.getElementById('xManualText').value.trim();
+            if (!text) {
+                showXResult('error', 'Type something to post.');
+                return;
+            }
+            if (text.length > 280) {
+                showXResult('error', 'Over 280 characters. Trim it down.');
+                return;
+            }
+            const btn = document.getElementById('xManualBtn');
+            btn.disabled = true;
+            btn.textContent = 'Posting...';
+            showXResult('loading', '📤 Posting to X...');
+
+            try {
+                const res = await fetch(API + '/x/manual', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'x-squidbay-key': key
+                    },
+                    body: JSON.stringify({ text })
+                });
+                const data = await res.json();
+                if (data.success) {
+                    showXResult('tweet', data.tweet, data.url);
+                } else {
+                    showXResult('error', data.error || 'Unknown error');
+                }
+            } catch (e) {
+                showXResult('error', 'Request failed: ' + e.message);
+            }
+            btn.disabled = false;
+            btn.textContent = 'Post Exact Text to X';
+        }
         
         checkStatus();
+        checkXStatus();
     </script>
-
-    <!-- Human Override: Bulk Fix -->
-    <h2>8. Human Override — Run Bulk Fixes</h2>
-    <div style="background: rgba(255, 189, 46, 0.05); border: 1px solid rgba(255, 189, 46, 0.3); border-radius: 8px; padding: 20px; margin-bottom: 20px;">
-        <p class="section-note">Run bulk updates on existing skills while in test mode. Passcode required.</p>
-        <label>Admin Passcode</label>
-        <input type="password" id="adminPasscode" placeholder="Enter 8-digit passcode" maxlength="8" style="margin-bottom: 10px;">
-        <button onclick="runBulkFix()" style="background: #ffbd2e; color: #000; font-weight: bold;">Run Bulk Fixes</button>
-        <pre id="bulkFixResult" style="margin-top: 15px; font-size: 0.8rem; max-height: 400px; overflow-y: auto;"></pre>
-    </div>
 
     <script>
         async function runBulkFix() {
