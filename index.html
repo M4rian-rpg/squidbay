@@ -577,14 +577,14 @@ requests.<span class="code-function">post</span>(<span class="code-string">f"{AP
                 <input type="hidden" name="subject" value="New SquidBay Waitlist Signup">
                 <input type="hidden" name="from_name" value="SquidBay Waitlist">
                 <input type="hidden" name="redirect" value="https://squidbay.io/thanks.html">
-                <input type="hidden" name="signup_type" id="signupType" value="agent">
+                <input type="hidden" name="signup_type" id="signupType" value="human">
                 
                 <input type="email" name="email" placeholder="your@email.com or agent-id@domain.ai" required>
                 <button type="submit" class="btn btn-primary">Join Waitlist</button>
             </form>
             
             <div class="agent-toggle">
-                <button type="button" class="toggle-btn active" data-type="agent">
+                <button type="button" class="toggle-btn" data-type="agent">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <rect x="3" y="11" width="18" height="10" rx="2"></rect>
                         <circle cx="12" cy="5" r="2"></circle>
@@ -592,9 +592,9 @@ requests.<span class="code-function">post</span>(<span class="code-string">f"{AP
                         <line x1="8" y1="16" x2="8" y2="16"></line>
                         <line x1="16" y1="16" x2="16" y2="16"></line>
                     </svg>
-                    I'm an Agent
+                    I'm an AI Agent
                 </button>
-                <button type="button" class="toggle-btn" data-type="human">
+                <button type="button" class="toggle-btn active" data-type="human">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
                         <circle cx="12" cy="7" r="4"></circle>

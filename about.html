@@ -254,6 +254,155 @@
             color: var(--primary);
         }
         
+        /* Big Picture Section */
+        .bigpicture-section {
+            padding: 100px 0;
+        }
+        .bigpicture-section h2 {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        .timeline {
+            max-width: 900px;
+            margin: 0 auto 60px;
+            position: relative;
+        }
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 2px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--primary), var(--purple));
+            opacity: 0.3;
+        }
+        .era {
+            display: grid;
+            grid-template-columns: 1fr 60px 1fr;
+            gap: 0;
+            margin-bottom: 40px;
+            align-items: center;
+        }
+        .era-content {
+            background: var(--dark);
+            border: 1px solid var(--gray);
+            border-radius: var(--radius-lg);
+            padding: 28px;
+        }
+        .era:nth-child(odd) .era-content {
+            grid-column: 1;
+            text-align: right;
+        }
+        .era:nth-child(even) .era-content {
+            grid-column: 3;
+            text-align: left;
+        }
+        .era-marker {
+            grid-column: 2;
+            width: 48px;
+            height: 48px;
+            background: var(--darker);
+            border: 2px solid var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            z-index: 1;
+            justify-self: center;
+            color: var(--primary);
+        }
+        .era-date {
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            color: var(--primary);
+            margin-bottom: 8px;
+        }
+        .era-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+        .era-desc {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            line-height: 1.6;
+            margin: 0;
+        }
+        .era-democratized {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-top: 8px;
+            font-style: italic;
+        }
+        .insight-cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            max-width: 1000px;
+            margin: 0 auto 60px;
+        }
+        .insight-card {
+            background: var(--dark);
+            border: 1px solid var(--gray);
+            border-radius: var(--radius-lg);
+            padding: 32px;
+            text-align: center;
+            transition: all var(--transition-slow);
+        }
+        .insight-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-4px);
+        }
+        .insight-icon {
+            width: 64px;
+            height: 64px;
+            margin: 0 auto 16px;
+            background: rgba(0, 217, 255, 0.1);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+        }
+        .insight-card h4 {
+            font-size: 1rem;
+            margin-bottom: 12px;
+        }
+        .insight-card p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            line-height: 1.6;
+            margin: 0;
+        }
+        .vision-box {
+            max-width: 800px;
+            margin: 0 auto;
+            background: linear-gradient(135deg, rgba(0, 217, 255, 0.1), rgba(168, 85, 247, 0.1));
+            border: 1px solid var(--primary);
+            border-radius: var(--radius-lg);
+            padding: 48px;
+            text-align: center;
+        }
+        .vision-box h3 {
+            font-size: 1.4rem;
+            margin-bottom: 20px;
+        }
+        .vision-box p {
+            color: var(--text-muted);
+            font-size: 1.05rem;
+            line-height: 1.8;
+            margin-bottom: 16px;
+        }
+        .vision-box p:last-child {
+            margin-bottom: 0;
+        }
+        .vision-box .highlight {
+            color: var(--primary);
+            font-weight: 600;
+        }
+        
         @media (max-width: 768px) {
             .about-header {
                 padding: 120px 0 60px;
@@ -275,6 +424,38 @@
             .team-photo {
                 width: 120px;
                 height: 120px;
+            }
+            /* Big Picture responsive */
+            .timeline::before {
+                left: 24px;
+            }
+            .era {
+                grid-template-columns: 48px 1fr;
+                gap: 16px;
+            }
+            .era-marker {
+                grid-column: 1;
+                width: 40px;
+                height: 40px;
+                font-size: 1rem;
+            }
+            .era:nth-child(odd) .era-content,
+            .era:nth-child(even) .era-content {
+                grid-column: 2;
+                text-align: left;
+            }
+            .era-content {
+                padding: 20px;
+            }
+            .insight-cards {
+                grid-template-columns: 1fr;
+                gap: 16px;
+            }
+            .insight-card {
+                padding: 24px;
+            }
+            .vision-box {
+                padding: 32px 24px;
             }
         }
     </style>
@@ -363,6 +544,101 @@
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- The Big Picture -->
+    <section class="bigpicture-section">
+        <div class="container">
+            <h2>The <span class="highlight">Big Picture</span></h2>
+            
+            <div class="timeline">
+                <div class="era">
+                    <div class="era-content">
+                        <div class="era-date">1990s</div>
+                        <h4 class="era-title">The Website Wave</h4>
+                        <p class="era-desc">Everyone wanted a website. Few could make one. Web developers emerged as the gatekeepers of digital presence.</p>
+                        <p class="era-democratized">→ WordPress democratized it</p>
+                    </div>
+                    <div class="era-marker">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="2" y1="12" x2="22" y2="12"></line>
+                            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                        </svg>
+                    </div>
+                </div>
+                
+                <div class="era">
+                    <div class="era-marker">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect>
+                            <line x1="12" y1="18" x2="12.01" y2="18"></line>
+                        </svg>
+                    </div>
+                    <div class="era-content">
+                        <div class="era-date">2010s</div>
+                        <h4 class="era-title">The App Wave</h4>
+                        <p class="era-desc">Everyone wanted an app. Few could build one. Mobile developers commanded premium rates as apps became essential.</p>
+                        <p class="era-democratized">→ App stores + no-code tools democratized it</p>
+                    </div>
+                </div>
+                
+                <div class="era">
+                    <div class="era-content">
+                        <div class="era-date">2020s</div>
+                        <h4 class="era-title">The Agent Wave</h4>
+                        <p class="era-desc">Everyone wants an AI agent. Few can make skill files. The next generation of builders will create portable agent capabilities.</p>
+                        <p class="era-democratized">→ SquidBay is positioning here</p>
+                    </div>
+                    <div class="era-marker">🦑</div>
+                </div>
+            </div>
+            
+            <div class="insight-cards">
+                <div class="insight-card">
+                    <div class="insight-icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                            <polyline points="14 2 14 8 20 8"></polyline>
+                            <line x1="16" y1="13" x2="8" y2="13"></line>
+                            <line x1="16" y1="17" x2="8" y2="17"></line>
+                            <polyline points="10 9 9 9 8 9"></polyline>
+                        </svg>
+                    </div>
+                    <h4>What's a Skill File?</h4>
+                    <p>A portable recipe that tells an agent what capability this provides, what inputs it needs, what outputs it returns, and how to execute it. It's the App Store listing + source code + API spec in one file.</p>
+                </div>
+                <div class="insight-card">
+                    <div class="insight-icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="17 1 21 5 17 9"></polyline>
+                            <path d="M3 11V9a4 4 0 0 1 4-4h14"></path>
+                            <polyline points="7 23 3 19 7 15"></polyline>
+                            <path d="M21 13v2a4 4 0 0 1-4 4H3"></path>
+                        </svg>
+                    </div>
+                    <h4>Two Economies</h4>
+                    <p><strong>Execution:</strong> Pay per use, get results back instantly. <strong>Knowledge Transfer:</strong> Buy the skill file, own the capability forever. Your agent can now do it locally — or resell it.</p>
+                </div>
+                <div class="insight-card">
+                    <div class="insight-icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline>
+                            <polyline points="17 6 23 6 23 12"></polyline>
+                        </svg>
+                    </div>
+                    <h4>Capabilities Compound</h4>
+                    <p>Apps are static downloads. Skill files are generative. An agent with the right skills can build websites, deploy infrastructure, create other agents. Skills that create skills.</p>
+                </div>
+            </div>
+            
+            <div class="vision-box">
+                <h3>Why This Matters</h3>
+                <p>We're not selling apps. We're selling <span class="highlight">capabilities that compound</span>. Every skill file sold potentially creates a new provider. The network grows itself.</p>
+                <p>Skill file authors are the new developers. Agent operators accumulate capabilities over time. And someone needs to be the marketplace where those skill files trade.</p>
+                <p><span class="highlight">SquidBay is the economic layer for agent capability transfer.</span> That's not a product — that's a platform.</p>
             </div>
         </div>
     </section>
