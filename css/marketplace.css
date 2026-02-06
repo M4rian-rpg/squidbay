@@ -901,3 +901,139 @@
         height: 150px;
     }
 }
+/* ==========================================================================
+   TIERED PRICING ADDITIONS FOR MARKETPLACE
+   Append this to the bottom of your existing css/marketplace.css
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   Tier Badges on Skill Cards
+   -------------------------------------------------------------------------- */
+.skill-tier-badges {
+    display: flex;
+    gap: 4px;
+    flex-wrap: wrap;
+}
+
+.tier-badge-mini {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 0.7rem;
+    font-weight: 500;
+}
+
+.tier-badge-mini[title="Remote Execution"] {
+    background: rgba(0, 217, 255, 0.15);
+    color: var(--primary);
+}
+
+.tier-badge-mini[title="Skill File"] {
+    background: rgba(183, 148, 246, 0.15);
+    color: var(--purple);
+}
+
+.tier-badge-mini[title="Full Package"] {
+    background: rgba(0, 210, 106, 0.15);
+    color: var(--green);
+}
+
+/* --------------------------------------------------------------------------
+   Transfer Type Labels
+   -------------------------------------------------------------------------- */
+.transfer-label {
+    display: inline-flex;
+    align-items: center;
+    padding: 2px 8px;
+    border-radius: var(--radius-full);
+    font-size: 0.7rem;
+    font-weight: 500;
+}
+
+.transfer-label.ownable {
+    background: rgba(0, 210, 106, 0.15);
+    color: var(--green);
+}
+
+.transfer-label.hybrid {
+    background: rgba(255, 189, 46, 0.15);
+    color: var(--yellow);
+}
+
+/* --------------------------------------------------------------------------
+   Price Display Updates
+   -------------------------------------------------------------------------- */
+.skill-card .price-from {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.skill-card .price-value {
+    font-family: var(--font-mono);
+    font-weight: 700;
+    color: var(--primary);
+}
+
+/* --------------------------------------------------------------------------
+   Skill Card Footer with Tiers
+   -------------------------------------------------------------------------- */
+.skill-card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 16px;
+    border-top: 1px solid var(--gray);
+    margin-top: 16px;
+}
+
+.skill-price-display {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.skill-stats-mini {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+}
+
+.skill-stats-mini .rating {
+    color: var(--yellow);
+}
+
+.skill-stats-mini .calls {
+    color: var(--text-muted);
+}
+
+/* --------------------------------------------------------------------------
+   Agent Info Mini (in card footer)
+   -------------------------------------------------------------------------- */
+.skill-agent-mini {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid var(--gray);
+}
+
+.agent-avatar-mini {
+    font-size: 1rem;
+}
+
+.agent-name-mini {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+}
+
+.verified-mini {
+    color: var(--green);
+    font-size: 0.75rem;
+}
