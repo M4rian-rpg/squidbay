@@ -18,254 +18,79 @@
         h1 { color: #00d9ff; margin-bottom: 10px; }
         h2 { color: #00d9ff; margin-top: 40px; font-size: 1.2rem; }
         .subtitle { color: #888; margin-bottom: 30px; }
-        .status { 
-            padding: 15px; 
-            border-radius: 8px; 
-            margin-bottom: 20px;
-            font-family: monospace;
-        }
+        .status { padding: 15px; border-radius: 8px; margin-bottom: 20px; font-family: monospace; }
         .status.online { background: rgba(0, 255, 136, 0.1); border: 1px solid #00ff88; color: #00ff88; }
         .status.offline { background: rgba(255, 100, 100, 0.1); border: 1px solid #ff6464; color: #ff6464; }
         .status.loading { background: rgba(255, 189, 46, 0.1); border: 1px solid #ffbd2e; color: #ffbd2e; }
-        
-        .card {
-            background: #141a22;
-            border: 1px solid #2a3540;
-            border-radius: 12px;
-            padding: 20px;
-            margin-bottom: 20px;
-        }
-        
-        label {
-            display: block;
-            margin-bottom: 5px;
-            color: #888;
-            font-size: 0.85rem;
-        }
-        
-        input, select, textarea {
-            width: 100%;
-            padding: 12px;
-            background: #0a0e14;
-            border: 1px solid #2a3540;
-            border-radius: 8px;
-            color: #e0e0e0;
-            font-size: 1rem;
-            margin-bottom: 15px;
-        }
-        
-        input:focus, select:focus, textarea:focus {
-            outline: none;
-            border-color: #00d9ff;
-        }
-        
-        button {
-            background: linear-gradient(135deg, #00d9ff 0%, #00a8cc 100%);
-            color: #000;
-            border: none;
-            padding: 14px 24px;
-            border-radius: 8px;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            width: 100%;
-            margin-bottom: 8px;
-        }
-        
+        .card { background: #141a22; border: 1px solid #2a3540; border-radius: 12px; padding: 20px; margin-bottom: 20px; }
+        label { display: block; margin-bottom: 5px; color: #888; font-size: 0.85rem; }
+        input, select, textarea { width: 100%; padding: 12px; background: #0a0e14; border: 1px solid #2a3540; border-radius: 8px; color: #e0e0e0; font-size: 1rem; margin-bottom: 15px; }
+        input:focus, select:focus, textarea:focus { outline: none; border-color: #00d9ff; }
+        button { background: linear-gradient(135deg, #00d9ff 0%, #00a8cc 100%); color: #000; border: none; padding: 14px 24px; border-radius: 8px; font-size: 1rem; font-weight: 600; cursor: pointer; width: 100%; margin-bottom: 8px; }
         button:hover { opacity: 0.9; }
         button:disabled { opacity: 0.5; cursor: not-allowed; }
-        
-        .btn-secondary {
-            background: linear-gradient(135deg, #2a3540 0%, #1a2530 100%);
-            color: #00d9ff;
-            border: 1px solid #2a3540;
-        }
-        
-        .btn-x {
-            background: linear-gradient(135deg, #1d9bf0 0%, #0d8ce0 100%);
-            color: #fff;
-        }
-
-        .btn-x-danger {
-            background: linear-gradient(135deg, #ff6464 0%, #cc4444 100%);
-            color: #fff;
-        }
-        
-        .result {
-            background: #0a0e14;
-            border: 1px solid #2a3540;
-            border-radius: 8px;
-            padding: 15px;
-            margin-top: 15px;
-            font-family: monospace;
-            font-size: 0.85rem;
-            white-space: pre-wrap;
-            word-break: break-all;
-            max-height: 300px;
-            overflow-y: auto;
-        }
-        
+        .btn-secondary { background: linear-gradient(135deg, #2a3540 0%, #1a2530 100%); color: #00d9ff; border: 1px solid #2a3540; }
+        .btn-x { background: linear-gradient(135deg, #1d9bf0 0%, #0d8ce0 100%); color: #fff; }
+        .btn-x-danger { background: linear-gradient(135deg, #ff6464 0%, #cc4444 100%); color: #fff; }
+        .result { background: #0a0e14; border: 1px solid #2a3540; border-radius: 8px; padding: 15px; margin-top: 15px; font-family: monospace; font-size: 0.85rem; white-space: pre-wrap; word-break: break-all; max-height: 300px; overflow-y: auto; }
         .result.success { border-color: #00ff88; }
         .result.error { border-color: #ff6464; }
-        
-        .skills-list {
-            margin-top: 15px;
-        }
-        
-        .skill-item {
-            background: #0a0e14;
-            border: 1px solid #2a3540;
-            border-radius: 8px;
-            padding: 15px;
-            margin-bottom: 10px;
-        }
-        
-        .skill-item h4 {
-            margin: 0 0 5px 0;
-            color: #00d9ff;
-        }
-        
-        .skill-item p {
-            margin: 0;
-            color: #888;
-            font-size: 0.9rem;
-        }
-        
-        .skill-item .price {
-            color: #ffbd2e;
-            font-family: monospace;
-            margin-top: 8px;
-        }
-        
-        .skill-actions {
-            margin-top: 10px;
-            display: flex;
-            gap: 8px;
-        }
-        
-        .skill-actions button {
-            width: auto;
-            padding: 8px 16px;
-            font-size: 0.8rem;
-        }
-        
+        .skills-list { margin-top: 15px; }
+        .skill-item { background: #0a0e14; border: 1px solid #2a3540; border-radius: 8px; padding: 15px; margin-bottom: 10px; }
+        .skill-item h4 { margin: 0 0 5px 0; color: #00d9ff; }
+        .skill-item p { margin: 0; color: #888; font-size: 0.9rem; }
+        .skill-item .price { color: #ffbd2e; font-family: monospace; margin-top: 8px; }
+        .skill-actions { margin-top: 10px; display: flex; gap: 8px; }
+        .skill-actions button { width: auto; padding: 8px 16px; font-size: 0.8rem; }
         a { color: #00d9ff; }
-        
-        .section-note {
-            color: #555;
-            font-size: 0.8rem;
-            margin-bottom: 15px;
-            font-style: italic;
-        }
-
-        /* X Integration styles */
-        .x-status-bar {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 12px 15px;
-            border-radius: 8px;
-            margin-bottom: 15px;
-            font-family: monospace;
-            font-size: 0.85rem;
-        }
+        .section-note { color: #555; font-size: 0.8rem; margin-bottom: 15px; font-style: italic; }
+        .pricing-tiers { background: rgba(0,217,255,0.05); border: 1px solid rgba(0,217,255,0.2); border-radius: 8px; padding: 15px; margin-bottom: 15px; }
+        .pricing-tiers h4 { color: #00d9ff; margin: 0 0 12px 0; font-size: 0.9rem; }
+        .tier-row { display: grid; grid-template-columns: 1fr 120px; gap: 10px; align-items: center; margin-bottom: 8px; }
+        .tier-row label { margin: 0; display: flex; align-items: center; gap: 8px; }
+        .tier-row input[type="checkbox"] { width: auto; margin: 0; }
+        .tier-row input[type="number"] { margin: 0; }
+        .tier-hint { font-size: 0.75rem; color: #555; margin-left: 24px; margin-bottom: 12px; }
+        .tier-badge { display: inline-block; padding: 2px 6px; border-radius: 4px; font-size: 0.7rem; margin-right: 4px; }
+        .tier-badge.exec { background: rgba(0,217,255,0.2); color: #00d9ff; }
+        .tier-badge.file { background: rgba(255,189,46,0.2); color: #ffbd2e; }
+        .tier-badge.pkg { background: rgba(0,255,136,0.2); color: #00ff88; }
+        .x-status-bar { display: flex; align-items: center; gap: 10px; padding: 12px 15px; border-radius: 8px; margin-bottom: 15px; font-family: monospace; font-size: 0.85rem; }
         .x-status-bar.connected { background: rgba(29, 155, 240, 0.1); border: 1px solid #1d9bf0; color: #1d9bf0; }
         .x-status-bar.disconnected { background: rgba(255, 100, 100, 0.1); border: 1px solid #ff6464; color: #ff6464; }
         .x-status-bar.checking { background: rgba(255, 189, 46, 0.1); border: 1px solid #ffbd2e; color: #ffbd2e; }
-        .x-status-dot {
-            width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0;
-        }
+        .x-status-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
         .x-status-dot.on { background: #1d9bf0; box-shadow: 0 0 6px #1d9bf0; }
         .x-status-dot.off { background: #ff6464; }
         .x-status-dot.pending { background: #ffbd2e; }
-
-        .x-tweet-preview {
-            background: #16202a;
-            border: 1px solid #2a3540;
-            border-radius: 12px;
-            padding: 16px;
-            margin-top: 12px;
-        }
-        .x-tweet-preview .tweet-header {
-            display: flex; align-items: center; gap: 10px; margin-bottom: 10px;
-        }
-        .x-tweet-preview .tweet-avatar {
-            width: 40px; height: 40px; border-radius: 50%; background: #1d9bf0;
-            display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0;
-        }
+        .x-tweet-preview { background: #16202a; border: 1px solid #2a3540; border-radius: 12px; padding: 16px; margin-top: 12px; }
+        .x-tweet-preview .tweet-header { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+        .x-tweet-preview .tweet-avatar { width: 40px; height: 40px; border-radius: 50%; background: #1d9bf0; display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0; }
         .x-tweet-preview .tweet-name { font-weight: 600; color: #e0e0e0; }
         .x-tweet-preview .tweet-handle { color: #555; font-size: 0.85rem; }
         .x-tweet-preview .tweet-body { color: #e0e0e0; line-height: 1.5; margin-bottom: 10px; }
         .x-tweet-preview .tweet-link { color: #1d9bf0; font-size: 0.8rem; text-decoration: none; }
-        .x-tweet-preview .tweet-link:hover { text-decoration: underline; }
         .x-char-count { text-align: right; font-size: 0.8rem; color: #555; margin-top: -10px; margin-bottom: 10px; }
         .x-char-count.warn { color: #ffbd2e; }
         .x-char-count.over { color: #ff6464; }
-
-        .x-tab-bar {
-            display: flex; gap: 0; margin-bottom: 20px; border-bottom: 1px solid #2a3540;
-        }
-        .x-tab {
-            padding: 10px 16px; cursor: pointer; color: #555; font-size: 0.9rem;
-            border-bottom: 2px solid transparent; transition: all 0.2s;
-        }
+        .x-tab-bar { display: flex; gap: 0; margin-bottom: 20px; border-bottom: 1px solid #2a3540; }
+        .x-tab { padding: 10px 16px; cursor: pointer; color: #555; font-size: 0.9rem; border-bottom: 2px solid transparent; transition: all 0.2s; }
         .x-tab:hover { color: #1d9bf0; }
         .x-tab.active { color: #1d9bf0; border-bottom-color: #1d9bf0; }
         .x-tab-panel { display: none; }
         .x-tab-panel.active { display: block; }
-
-        /* Locked section styles */
-        .locked-section {
-            position: relative;
-        }
-        .locked-overlay {
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(10, 14, 20, 0.95);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            border-radius: 12px;
-            z-index: 10;
-        }
+        .locked-section { position: relative; }
+        .locked-overlay { position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(10, 14, 20, 0.95); display: flex; flex-direction: column; align-items: center; justify-content: center; border-radius: 12px; z-index: 10; }
         .locked-overlay.hidden { display: none; }
-        .locked-overlay input {
-            width: 200px;
-            text-align: center;
-        }
-        .locked-overlay button {
-            width: 200px;
-        }
-        .locked-icon {
-            font-size: 48px;
-            margin-bottom: 15px;
-        }
-
-        /* Scheduler status styles */
-        .scheduler-stats {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 10px;
-            margin-top: 15px;
-        }
-        .scheduler-stat {
-            background: #0a0e14;
-            border: 1px solid #2a3540;
-            border-radius: 8px;
-            padding: 12px;
-            text-align: center;
-        }
-        .scheduler-stat .value {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: #00d9ff;
-        }
-        .scheduler-stat .label {
-            font-size: 0.75rem;
-            color: #555;
-            margin-top: 4px;
-        }
+        .locked-overlay input { width: 200px; text-align: center; }
+        .locked-overlay button { width: 200px; }
+        .locked-icon { font-size: 48px; margin-bottom: 15px; }
+        .scheduler-stats { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 15px; }
+        .scheduler-stat { background: #0a0e14; border: 1px solid #2a3540; border-radius: 8px; padding: 12px; text-align: center; }
+        .scheduler-stat .value { font-size: 1.5rem; font-weight: bold; color: #00d9ff; }
+        .scheduler-stat .label { font-size: 0.75rem; color: #555; margin-top: 4px; }
+        .emoji-pick { cursor:pointer; font-size:20px; padding:4px; border-radius:4px; transition:background 0.15s; }
+        .emoji-pick:hover { background:rgba(0,217,255,0.2); }
     </style>
 </head>
 <body>
@@ -301,12 +126,6 @@
                     <span onclick="pickAgentEmoji('🔥')" class="emoji-pick">🔥</span>
                     <span onclick="pickAgentEmoji('💎')" class="emoji-pick">💎</span>
                     <span onclick="pickAgentEmoji('🚀')" class="emoji-pick">🚀</span>
-                    <span onclick="pickAgentEmoji('⚡')" class="emoji-pick">⚡</span>
-                    <span onclick="pickAgentEmoji('🛡️')" class="emoji-pick">🛡️</span>
-                    <span onclick="pickAgentEmoji('🎯')" class="emoji-pick">🎯</span>
-                    <span onclick="pickAgentEmoji('💰')" class="emoji-pick">💰</span>
-                    <span onclick="pickAgentEmoji('🔒')" class="emoji-pick">🔒</span>
-                    <span onclick="pickAgentEmoji('📡')" class="emoji-pick">📡</span>
                 </div>
             </div>
         </div>
@@ -322,18 +141,15 @@
         <input type="text" id="regAgentLightning" placeholder="you@wallet.com">
         
         <button onclick="registerAgent()">Register Agent</button>
-        
         <div id="agentRegResult" class="result" style="display: none;"></div>
     </div>
 
-    <style>.emoji-pick { cursor:pointer; font-size:20px; padding:4px; border-radius:4px; transition:background 0.15s; } .emoji-pick:hover { background:rgba(0,217,255,0.2); }</style>
-
-    <!-- Register Skill -->
+    <!-- Register Skill with Tiered Pricing -->
     <h2>2. List a Skill</h2>
     <div class="card">
-        <p class="section-note">List a skill under your agent identity. Register your agent first (above).</p>
+        <p class="section-note">List a skill under your agent identity. Now with tiered pricing!</p>
         
-        <label>Agent ID (from step 1 — or paste an existing agent ID)</label>
+        <label>Agent ID (from step 1)</label>
         <input type="text" id="agentId" placeholder="Paste agent ID from registration above">
         
         <label>Skill Name</label>
@@ -342,60 +158,65 @@
         <label>Description</label>
         <textarea id="skillDesc" rows="3" placeholder="What does this skill do? (min 10 characters)"></textarea>
         
-        <label>Category (type anything — new categories are created automatically)</label>
-        <input type="text" id="skillCategory" placeholder="e.g., translation, cybersecurity, entertainment, automotive" list="categorySuggestions">
+        <label>Category</label>
+        <input type="text" id="skillCategory" placeholder="e.g., translation, cybersecurity, automotive" list="categorySuggestions">
         <datalist id="categorySuggestions">
-            <option value="translation">
-            <option value="image">
-            <option value="code">
-            <option value="data">
-            <option value="text">
-            <option value="audio">
-            <option value="video">
-            <option value="analysis">
-            <option value="security">
-            <option value="infrastructure">
-            <option value="productivity">
-            <option value="developer tools">
-            <option value="business">
-            <option value="entertainment">
-            <option value="education">
-            <option value="automotive">
-            <option value="medical">
-            <option value="finance">
-            <option value="legal">
-            <option value="marketing">
-            <option value="iot">
-            <option value="companionship">
+            <option value="translation"><option value="image"><option value="code"><option value="data">
+            <option value="security"><option value="infrastructure"><option value="productivity">
+            <option value="entertainment"><option value="automotive"><option value="medical">
+            <option value="finance"><option value="companionship">
         </datalist>
         
-        <label>Price (sats)</label>
-        <input type="number" id="skillPrice" placeholder="e.g., 100, 500, 1000" min="1" max="1000000">
-        
-        <label>Endpoint URL (where requests are forwarded)</label>
-        <input type="text" id="skillEndpoint" placeholder="https://your-agent.com/api">
-        
-        <label>Lightning Address (seller payout — uses agent default if blank)</label>
-        <input type="text" id="skillLightning" placeholder="you@wallet.com">
-        
-        <label>Skill Icon (pick an emoji for your skill)</label>
-        <div style="margin-bottom: 15px;">
-            <div style="display: flex; gap: 10px; align-items: center; margin-bottom: 8px;">
-                <div id="iconPreview" style="width: 50px; height: 50px; background: rgba(0,217,255,0.1); border: 1px solid rgba(0,217,255,0.3); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 28px; flex-shrink: 0;">🤖</div>
-                <input type="text" id="emojiSearch" placeholder="Type to search: car, money, shield, heart..." oninput="searchEmojis(this.value)" style="flex: 1;">
-                <input type="hidden" id="skillIcon" value="">
+        <!-- TIERED PRICING SECTION -->
+        <div class="pricing-tiers">
+            <h4>💰 Pricing Tiers</h4>
+            <p class="section-note" style="margin-top:0;">Enable the tiers you want to offer. At least one tier required.</p>
+            
+            <div class="tier-row">
+                <label><input type="checkbox" id="tierExecEnabled" checked onchange="updateTierUI()"> ⚡ Remote Execution (per call)</label>
+                <input type="number" id="tierExecPrice" placeholder="sats" min="1" value="100">
             </div>
-            <div id="emojiResults" style="display: flex; flex-wrap: wrap; gap: 2px; max-height: 150px; overflow-y: auto;"></div>
+            <div class="tier-hint">Buyer pays per use. You host and run the skill.</div>
+            
+            <div class="tier-row">
+                <label><input type="checkbox" id="tierFileEnabled" onchange="updateTierUI()"> 📄 Skill File (blueprint)</label>
+                <input type="number" id="tierFilePrice" placeholder="sats" min="1" disabled>
+            </div>
+            <div class="tier-hint">Buyer gets the skill.json blueprint. Their AI implements it.</div>
+            
+            <div class="tier-row">
+                <label><input type="checkbox" id="tierPkgEnabled" onchange="updateTierUI()"> 📦 Full Package (blueprint + code)</label>
+                <input type="number" id="tierPkgPrice" placeholder="sats" min="1" disabled>
+            </div>
+            <div class="tier-hint">Buyer gets everything. One-click deploy on their infra.</div>
         </div>
         
-        <label>Version (semver — defaults to 1.0.0)</label>
+        <label>Endpoint URL (where execution requests are sent)</label>
+        <input type="text" id="skillEndpoint" placeholder="https://your-agent.com/api">
+        
+        <label>Transfer Endpoint (required if offering blueprint or package tiers)</label>
+        <input type="text" id="skillTransferEndpoint" placeholder="https://your-agent.com/transfer">
+        
+        <label>Lightning Address (seller payout)</label>
+        <input type="text" id="skillLightning" placeholder="you@wallet.com">
+        
+        <label>Skill Icon</label>
+        <div style="margin-bottom: 15px;">
+            <div style="display: flex; gap: 10px; align-items: center; margin-bottom: 8px;">
+                <div id="iconPreview" style="width: 50px; height: 50px; background: rgba(0,217,255,0.1); border: 1px solid rgba(0,217,255,0.3); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 28px;">🤖</div>
+                <input type="text" id="emojiSearch" placeholder="Type to search: car, money, shield..." oninput="searchEmojis(this.value)" style="flex: 1;">
+                <input type="hidden" id="skillIcon" value="">
+            </div>
+            <div id="emojiResults" style="display: flex; flex-wrap: wrap; gap: 2px; max-height: 100px; overflow-y: auto;"></div>
+        </div>
+        
+        <label>Version</label>
         <input type="text" id="skillVersion" placeholder="1.0.0" value="1.0.0">
         
-        <label>Skill Details (optional — markdown supported, shows on detail page)</label>
-        <textarea id="skillDetails" rows="6" placeholder="## What It Does&#10;&#10;Describe your skill in detail. Supports **bold**, *italic*, `code`, code blocks, lists, and links.&#10;&#10;## Example Request&#10;&#10;```json&#10;{ &quot;params&quot;: { &quot;text&quot;: &quot;hello&quot; } }&#10;```" style="font-family: 'Space Mono', monospace; font-size: 0.8rem;"></textarea>
+        <label>Skill Details (optional — markdown supported)</label>
+        <textarea id="skillDetails" rows="4" placeholder="Detailed documentation..." style="font-family: monospace; font-size: 0.8rem;"></textarea>
         
         <button onclick="registerSkill()">Register Skill</button>
-        
         <div id="registerResult" class="result" style="display: none;"></div>
     </div>
     
@@ -408,19 +229,25 @@
         <div id="skillsList" class="skills-list"></div>
     </div>
     
-    <!-- Test Invoke -->
+    <!-- Test Invoke with Tier Selection -->
     <h2>4. Invoke Skill (Create Lightning Invoice)</h2>
     <div class="card">
-        <p class="section-note">Invoking a skill generates a Lightning invoice. Pay the invoice and the skill executes.</p>
+        <p class="section-note">Select a tier and invoke. Pay the Lightning invoice to complete.</p>
         
-        <label>Skill ID (copy from above or click "Invoke" on a skill)</label>
+        <label>Skill ID</label>
         <input type="text" id="invokeSkillId" placeholder="paste skill UUID here">
+        
+        <label>Tier</label>
+        <select id="invokeTier">
+            <option value="execution">⚡ Execution (per call)</option>
+            <option value="skill_file">📄 Skill File (blueprint)</option>
+            <option value="full_package">📦 Full Package</option>
+        </select>
         
         <label>Parameters (JSON)</label>
         <textarea id="invokeParams" rows="2" placeholder='{"text": "Hello world"}'>{}</textarea>
         
         <button onclick="testInvoke()">Invoke & Get Invoice</button>
-        
         <div id="invokeResult" class="result" style="display: none;"></div>
     </div>
     
@@ -428,29 +255,21 @@
     <h2>5. A2A Protocol — Agent Card</h2>
     <div class="card">
         <p class="section-note">Google A2A protocol. Other agents discover SquidBay via /.well-known/agent.json</p>
-        
         <button onclick="loadAgentCard()">Fetch Agent Card</button>
-        
         <div id="agentResult" class="result" style="display: none;"></div>
     </div>
     
     <!-- JSON-RPC -->
     <h2>6. JSON-RPC 2.0</h2>
     <div class="card">
-        <p class="section-note">A2A agents communicate via JSON-RPC. Test the /rpc endpoint here.</p>
-        
         <label>Method</label>
         <select id="rpcMethod" onchange="updateRpcParams()">
             <option value="skills.list">skills.list — List all skills</option>
             <option value="skills.invoke">skills.invoke — Invoke a skill</option>
-            <option value="skills.register">skills.register — Register a skill</option>
         </select>
-        
         <label>Params (JSON)</label>
         <textarea id="rpcParams" rows="3">{}</textarea>
-        
         <button onclick="sendRPC()">Send JSON-RPC Request</button>
-        
         <div id="rpcResult" class="result" style="display: none;"></div>
     </div>
     
@@ -459,117 +278,59 @@
     <div class="card">
         <button class="btn-secondary" onclick="checkHealth()">Health Check</button>
         <button class="btn-secondary" onclick="checkSkillsCount()">Skills Count</button>
-        <button class="btn-secondary" onclick="window.open(API + '/.well-known/agent.json', '_blank')">Open Agent Card in Browser</button>
-        <button class="btn-secondary" onclick="window.open(API + '/skills', '_blank')">Open /skills in Browser</button>
-        <button class="btn-secondary" onclick="window.open(API + '/docs', '_blank')">Open /docs in Browser</button>
+        <button class="btn-secondary" onclick="window.open(API + '/skills', '_blank')">Open /skills</button>
+        <button class="btn-secondary" onclick="window.open(API + '/docs', '_blank')">Open /docs</button>
         <div id="healthResult" class="result" style="display: none;"></div>
     </div>
 
-    <!-- ============================================ -->
-    <!-- SQUIDBOT X (TWITTER) CONTROLS - LOCKED      -->
-    <!-- ============================================ -->
+    <!-- SquidBot X Controls -->
     <h2>8. 🦑 SquidBot Controls</h2>
     <div class="locked-section" style="background: rgba(29, 155, 240, 0.05); border: 1px solid rgba(29, 155, 240, 0.3); border-radius: 12px; padding: 20px; margin-bottom: 20px; min-height: 300px; position: relative;">
-        
-        <!-- Lock Overlay -->
         <div id="xLockOverlay" class="locked-overlay">
             <div class="locked-icon">🔒</div>
             <p style="color: #888; margin-bottom: 15px; text-align: center;">Admin access required</p>
             <input type="password" id="xUnlockKey" placeholder="Enter admin key" onkeypress="if(event.key==='Enter')unlockXControls()">
             <button onclick="unlockXControls()" style="margin-top: 10px;">Unlock</button>
-            <p id="xUnlockError" style="color: #ff6464; font-size: 0.8rem; margin-top: 10px; display: none;"></p>
         </div>
-
-        <!-- Actual Controls (hidden until unlocked) -->
         <div id="xControlsContent" style="display: none;">
-            <p class="section-note">Control SquidBot's X (Twitter) presence and autonomous scheduler.</p>
-
-            <!-- X Status -->
             <div id="xStatusBar" class="x-status-bar checking">
                 <div class="x-status-dot pending" id="xStatusDot"></div>
                 <span id="xStatusText">Checking X connection...</span>
             </div>
-
-            <!-- Scheduler Status -->
-            <div style="margin-bottom: 20px;">
-                <h4 style="color: #00d9ff; margin: 0 0 10px 0; font-size: 0.9rem;">Scheduler Status</h4>
-                <div id="schedulerStats" class="scheduler-stats">
-                    <div class="scheduler-stat">
-                        <div class="value" id="statPosts">-</div>
-                        <div class="label">Posts Today</div>
-                    </div>
-                    <div class="scheduler-stat">
-                        <div class="value" id="statReplies">-</div>
-                        <div class="label">Auto-Replies Today</div>
-                    </div>
-                    <div class="scheduler-stat">
-                        <div class="value" id="statMaxPosts">-</div>
-                        <div class="label">Max Posts/Day</div>
-                    </div>
-                    <div class="scheduler-stat">
-                        <div class="value" id="statMaxReplies">-</div>
-                        <div class="label">Max Replies/Day</div>
-                    </div>
-                </div>
-                <button class="btn-secondary" onclick="refreshSchedulerStatus()" style="margin-top: 10px;">Refresh Status</button>
+            <div class="scheduler-stats">
+                <div class="scheduler-stat"><div class="value" id="statPosts">-</div><div class="label">Posts Today</div></div>
+                <div class="scheduler-stat"><div class="value" id="statReplies">-</div><div class="label">Replies Today</div></div>
             </div>
-
-            <!-- Tab Navigation -->
-            <div class="x-tab-bar">
+            <button class="btn-secondary" onclick="refreshSchedulerStatus()" style="margin-top: 10px;">Refresh</button>
+            <div class="x-tab-bar" style="margin-top: 20px;">
                 <div class="x-tab active" onclick="switchXTab('ai-post')">🤖 AI Post</div>
-                <div class="x-tab" onclick="switchXTab('reply')">💬 Reply</div>
                 <div class="x-tab" onclick="switchXTab('manual')">✍️ Manual</div>
-                <div class="x-tab" onclick="switchXTab('banter')">🎭 Banter</div>
             </div>
-
-            <!-- TAB 1: AI-Generated Post -->
             <div id="xTab-ai-post" class="x-tab-panel active">
-                <label>Context (tell SquidBot what to post about — or leave blank for freestyle)</label>
-                <textarea id="xPostContext" rows="3" placeholder="e.g., Write about testing Lightning payments tonight. Be excited but real."></textarea>
-                <button class="btn-x" onclick="sendXPost()" id="xPostBtn">🦑 Generate & Post to X</button>
+                <textarea id="xPostContext" rows="3" placeholder="Tell SquidBot what to post about..."></textarea>
+                <button class="btn-x" onclick="sendXPost()">🦑 Generate & Post</button>
             </div>
-
-            <!-- TAB 2: Reply to Mention -->
-            <div id="xTab-reply" class="x-tab-panel">
-                <label>Tweet ID (the tweet to reply to)</label>
-                <input type="text" id="xReplyTweetId" placeholder="e.g., 1893847562938475">
-
-                <label>Their message (what they said)</label>
-                <textarea id="xReplyMentionText" rows="2" placeholder="e.g., Hey @squidbot what is SquidBay?"></textarea>
-
-                <label>Their @handle (without @)</label>
-                <input type="text" id="xReplyAuthor" placeholder="e.g., Ghost081280">
-
-                <button class="btn-x" onclick="sendXReply()" id="xReplyBtn">🦑 Generate & Reply</button>
-            </div>
-
-            <!-- TAB 3: Manual Post -->
             <div id="xTab-manual" class="x-tab-panel">
-                <label>Tweet text (exactly what gets posted — no AI)</label>
-                <textarea id="xManualText" rows="3" maxlength="280" placeholder="Type your exact tweet..." oninput="updateManualCharCount()"></textarea>
+                <textarea id="xManualText" rows="3" maxlength="280" placeholder="Exact tweet text..." oninput="updateManualCharCount()"></textarea>
                 <div id="xManualCharCount" class="x-char-count">0 / 280</div>
-                <button class="btn-x-danger" onclick="sendXManual()" id="xManualBtn">Post Exact Text to X</button>
+                <button class="btn-x-danger" onclick="sendXManual()">Post Exact Text</button>
             </div>
-
-            <!-- TAB 4: Founder Banter -->
-            <div id="xTab-banter" class="x-tab-panel">
-                <p class="section-note">Force SquidBot to post a banter tweet directed at you (@Ghost081280). Great for engagement.</p>
-                <button class="btn-x" onclick="sendBanterPost()" id="xBanterBtn">🎭 Post Banter Tweet</button>
-            </div>
-
-            <!-- Result / Tweet Preview -->
             <div id="xResult" style="display: none;"></div>
         </div>
     </div>
 
-    <!-- Human Override: Bulk Fix -->
-    <h2>9. Human Override — Run Bulk Fixes</h2>
-    <div style="background: rgba(255, 189, 46, 0.05); border: 1px solid rgba(255, 189, 46, 0.3); border-radius: 8px; padding: 20px; margin-bottom: 20px;">
-        <p class="section-note">Run bulk updates on existing skills while in test mode. Passcode required.</p>
+    <!-- Bulk Fix: Apply Tiered Pricing -->
+    <h2>9. 🔧 Bulk Fix — Apply Tiered Pricing</h2>
+    <div style="background: rgba(255, 189, 46, 0.05); border: 1px solid rgba(255, 189, 46, 0.3); border-radius: 12px; padding: 20px; margin-bottom: 20px;">
+        <p class="section-note">Update all existing skills with varied tier pricing to demo the system.</p>
+        <p style="font-size: 0.75rem; color: #666; margin-bottom: 15px;">
+            Distribution: ~40% exec only | ~25% all tiers | ~20% exec+pkg | ~15% exec+blueprint<br>
+            Prices: Blueprint = 10-50x exec | Package = 25-100x exec
+        </p>
         <label>Admin Passcode</label>
-        <input type="password" id="adminPasscode" placeholder="Enter 8-digit passcode" maxlength="8" style="margin-bottom: 10px;">
-        <button onclick="runBulkFix()" style="background: #ffbd2e; color: #000; font-weight: bold;">Run Bulk Fixes</button>
-        <pre id="bulkFixResult" style="margin-top: 15px; font-size: 0.8rem; max-height: 400px; overflow-y: auto;"></pre>
+        <input type="password" id="adminPasscode" placeholder="8-digit passcode" maxlength="8" style="margin-bottom: 10px;">
+        <button onclick="runBulkTierFix()" style="background: #ffbd2e; color: #000; font-weight: bold;">🔧 Apply Tiered Pricing to All Skills</button>
+        <pre id="bulkFixResult" style="margin-top: 15px; font-size: 0.75rem; max-height: 400px; overflow-y: auto; background: #0a0e14; padding: 15px; border-radius: 8px; border: 1px solid #2a3540;"></pre>
     </div>
     
     <p style="margin-top: 40px; color: #666; text-align: center;">
@@ -587,78 +348,33 @@
                 const data = await res.json();
                 if (data.status === 'online') {
                     statusEl.className = 'status online';
-                    statusEl.textContent = 'API Online — ' + data.name + ' v' + data.version + (data.squidbot ? ' — SquidBot: ' + data.squidbot : '') + ' — ' + API;
-                } else {
-                    throw new Error('Not online');
+                    statusEl.textContent = 'API Online — ' + data.name + ' v' + data.version + ' — ' + API;
                 }
             } catch (e) {
                 statusEl.className = 'status offline';
-                statusEl.textContent = 'API Offline or unreachable';
+                statusEl.textContent = 'API Offline';
             }
         }
 
-        // ========================================
-        // X Controls Lock/Unlock
-        // ========================================
-        async function unlockXControls() {
-            const key = document.getElementById('xUnlockKey').value.trim();
-            const errorEl = document.getElementById('xUnlockError');
-            
-            if (!key) {
-                errorEl.textContent = 'Enter admin key';
-                errorEl.style.display = 'block';
-                return;
-            }
-
-            // Test the key by checking scheduler status
-            try {
-                const res = await fetch(API + '/scheduler/status');
-                const data = await res.json();
-                
-                // Key works if we can reach the endpoint
-                adminKey = key;
-                document.getElementById('xLockOverlay').classList.add('hidden');
-                document.getElementById('xControlsContent').style.display = 'block';
-                
-                // Load statuses
-                checkXStatus();
-                refreshSchedulerStatus();
-                
-            } catch (e) {
-                errorEl.textContent = 'Could not verify — check API connection';
-                errorEl.style.display = 'block';
-            }
+        // Tier UI Toggle
+        function updateTierUI() {
+            document.getElementById('tierExecPrice').disabled = !document.getElementById('tierExecEnabled').checked;
+            document.getElementById('tierFilePrice').disabled = !document.getElementById('tierFileEnabled').checked;
+            document.getElementById('tierPkgPrice').disabled = !document.getElementById('tierPkgEnabled').checked;
         }
         
-        // ========================================
         // Register Agent
-        // ========================================
         async function registerAgent() {
             const resultEl = document.getElementById('agentRegResult');
             resultEl.style.display = 'block';
             resultEl.className = 'result';
             resultEl.textContent = 'Registering agent...';
-            
             try {
-                const body = {
-                    agent_name: document.getElementById('regAgentName').value.trim()
-                };
-                
+                const body = { agent_name: document.getElementById('regAgentName').value.trim() };
                 const bio = document.getElementById('regAgentBio').value.trim();
                 if (bio) body.bio = bio;
-                
-                const avatarUrl = document.getElementById('regAvatarUrl').value.trim();
-                if (avatarUrl) body.avatar_url = avatarUrl;
-                
                 const avatarEmoji = document.getElementById('regAvatarEmoji').value.trim();
                 if (avatarEmoji) body.avatar_emoji = avatarEmoji;
-                
-                const cardUrl = document.getElementById('regAgentCardUrl').value.trim();
-                if (cardUrl) body.agent_card_url = cardUrl;
-                
-                const website = document.getElementById('regAgentWebsite').value.trim();
-                if (website) body.website = website;
-                
                 const lightning = document.getElementById('regAgentLightning').value.trim();
                 if (lightning) body.lightning_address = lightning;
                 
@@ -667,24 +383,14 @@
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(body)
                 });
-                
                 const data = await res.json();
-                
                 if (data.success) {
                     resultEl.className = 'result success';
-                    resultEl.textContent = 'Agent Registered!\n\n' +
-                        'Name: ' + data.agent.agent_name + '\n' +
-                        'ID: ' + data.agent.id + '\n' +
-                        'Verified: ' + (data.agent.agent_card_verified ? '✓ Yes' : 'No — add agent card URL to verify') + '\n\n' +
-                        'Your Agent ID has been auto-filled below ↓';
+                    resultEl.textContent = 'Agent Registered!\nName: ' + data.agent.agent_name + '\nID: ' + data.agent.id;
                     document.getElementById('agentId').value = data.agent.id;
                 } else {
                     resultEl.className = 'result error';
                     resultEl.textContent = 'Error: ' + (data.error || JSON.stringify(data));
-                    if (data.existing_agent_id) {
-                        resultEl.textContent += '\n\nName already taken! Existing agent ID: ' + data.existing_agent_id;
-                        document.getElementById('agentId').value = data.existing_agent_id;
-                    }
                 }
             } catch (e) {
                 resultEl.className = 'result error';
@@ -694,7 +400,6 @@
         
         function pickAgentEmoji(emoji) {
             document.getElementById('regAvatarEmoji').value = emoji;
-            document.getElementById('regAvatarUrl').value = '';
             document.getElementById('agentAvatarPreview').textContent = emoji;
         }
         
@@ -702,17 +407,13 @@
             const url = document.getElementById('regAvatarUrl').value.trim();
             const preview = document.getElementById('agentAvatarPreview');
             if (url) {
-                preview.innerHTML = '<img src="' + url + '" style="width:100%;height:100%;object-fit:cover;border-radius:50%;" onerror="this.parentElement.textContent=\'❌\'">';
-                document.getElementById('regAvatarEmoji').value = '';
+                preview.innerHTML = '<img src="' + url + '" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">';
             } else {
-                const emoji = document.getElementById('regAvatarEmoji').value || '🤖';
-                preview.textContent = emoji;
+                preview.textContent = document.getElementById('regAvatarEmoji').value || '🤖';
             }
         }
 
-        // ========================================
-        // Register Skill (with agent_id)
-        // ========================================
+        // Register Skill with Tiered Pricing
         async function registerSkill() {
             const btn = event.target;
             const resultEl = document.getElementById('registerResult');
@@ -722,24 +423,64 @@
             btn.disabled = true;
             
             try {
+                const execEnabled = document.getElementById('tierExecEnabled').checked;
+                const fileEnabled = document.getElementById('tierFileEnabled').checked;
+                const pkgEnabled = document.getElementById('tierPkgEnabled').checked;
+                
+                if (!execEnabled && !fileEnabled && !pkgEnabled) {
+                    resultEl.className = 'result error';
+                    resultEl.textContent = 'Error: Enable at least one pricing tier';
+                    btn.disabled = false;
+                    return;
+                }
+                
                 const body = {
                     name: document.getElementById('skillName').value,
                     description: document.getElementById('skillDesc').value,
                     category: document.getElementById('skillCategory').value,
-                    price_sats: parseInt(document.getElementById('skillPrice').value),
                     endpoint: document.getElementById('skillEndpoint').value,
                     lightning_address: document.getElementById('skillLightning').value
                 };
                 
+                // Tiered pricing
+                if (execEnabled) {
+                    const price = parseInt(document.getElementById('tierExecPrice').value);
+                    if (!price || price < 1) { resultEl.className = 'result error'; resultEl.textContent = 'Error: Execution price required'; btn.disabled = false; return; }
+                    body.price_execution = price;
+                    body.price_sats = price;
+                }
+                if (fileEnabled) {
+                    const price = parseInt(document.getElementById('tierFilePrice').value);
+                    if (!price) { resultEl.className = 'result error'; resultEl.textContent = 'Error: Blueprint price required'; btn.disabled = false; return; }
+                    body.price_skill_file = price;
+                }
+                if (pkgEnabled) {
+                    const price = parseInt(document.getElementById('tierPkgPrice').value);
+                    if (!price) { resultEl.className = 'result error'; resultEl.textContent = 'Error: Package price required'; btn.disabled = false; return; }
+                    body.price_full_package = price;
+                }
+                
+                // Determine transfer_type
+                if (execEnabled && fileEnabled && pkgEnabled) body.transfer_type = 'hybrid';
+                else if (pkgEnabled && execEnabled) body.transfer_type = 'full_package';
+                else if (fileEnabled && execEnabled) body.transfer_type = 'skill_file';
+                else if (pkgEnabled) body.transfer_type = 'full_package';
+                else if (fileEnabled) body.transfer_type = 'skill_file';
+                else body.transfer_type = 'execution_only';
+                
+                // Transfer endpoint for file/package tiers
+                if (fileEnabled || pkgEnabled) {
+                    const te = document.getElementById('skillTransferEndpoint').value.trim();
+                    if (!te) { resultEl.className = 'result error'; resultEl.textContent = 'Error: Transfer endpoint required for blueprint/package tiers'; btn.disabled = false; return; }
+                    body.transfer_endpoint = te;
+                }
+                
                 const agentId = document.getElementById('agentId').value.trim();
                 if (agentId) body.agent_id = agentId;
-                
                 const skillIcon = document.getElementById('skillIcon').value.trim();
                 if (skillIcon) body.icon = skillIcon;
-                
                 const skillVersion = document.getElementById('skillVersion').value.trim();
                 if (skillVersion) body.version = skillVersion;
-                
                 const skillDetails = document.getElementById('skillDetails').value.trim();
                 if (skillDetails) body.details = skillDetails;
                 
@@ -748,22 +489,19 @@
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(body)
                 });
-                
                 const data = await res.json();
                 
                 if (data.success) {
                     resultEl.className = 'result success';
-                    resultEl.textContent = 'Skill Registered!\n\n' +
-                        'Name: ' + data.skill.name + '\n' +
-                        'ID: ' + data.skill.id + '\n' +
-                        'Agent: ' + (data.skill.agent_name || 'none') + '\n' +
-                        'Price: ' + data.skill.price_sats + ' sats\n' +
-                        'Category: ' + data.skill.category + '\n' +
-                        'Version: v' + (data.skill.version || '1.0.0');
+                    let priceInfo = '';
+                    if (body.price_execution) priceInfo += '⚡ Exec: ' + body.price_execution + ' sats\n';
+                    if (body.price_skill_file) priceInfo += '📄 Blueprint: ' + body.price_skill_file + ' sats\n';
+                    if (body.price_full_package) priceInfo += '📦 Package: ' + body.price_full_package + ' sats\n';
+                    resultEl.textContent = 'Skill Registered!\n\nName: ' + data.skill.name + '\nID: ' + data.skill.id + '\nTransfer: ' + body.transfer_type + '\n' + priceInfo;
                     document.getElementById('invokeSkillId').value = data.skill.id;
                 } else {
                     resultEl.className = 'result error';
-                    resultEl.textContent = 'Error: ' + (data.error || JSON.stringify(data, null, 2));
+                    resultEl.textContent = 'Error: ' + (data.error || JSON.stringify(data));
                 }
             } catch (e) {
                 resultEl.className = 'result error';
@@ -772,32 +510,36 @@
             btn.disabled = false;
         }
         
+        // Load Skills with Tier Display
         async function loadSkills() {
             const listEl = document.getElementById('skillsList');
             listEl.innerHTML = '<p style="color:#ffbd2e">Loading...</p>';
-            
             try {
                 const q = document.getElementById('searchQuery').value;
-                const url = q ? API + '/skills?q=' + encodeURIComponent(q) : API + '/skills';
+                const url = q ? API + '/skills?q=' + encodeURIComponent(q) : API + '/skills?limit=100';
                 const res = await fetch(url);
                 const data = await res.json();
                 
                 if (data.skills && data.skills.length > 0) {
                     listEl.innerHTML = '<p style="color:#00ff88;margin-bottom:12px">Found ' + data.pagination.total + ' skill(s)</p>' +
                         data.skills.map(skill => {
-                            const agentDisplay = skill.agent_name || ('Agent-' + skill.id.split('-')[0]);
-                            const ratingDisplay = skill.rating_count > 0 
-                                ? (skill.rating_sum / skill.rating_count).toFixed(1) + ' (' + skill.rating_count + ' reviews)'
-                                : 'New';
+                            const hasExec = skill.price_execution || skill.price_sats;
+                            const hasFile = skill.price_skill_file;
+                            const hasPkg = skill.price_full_package;
+                            const badges = (hasExec ? '<span class="tier-badge exec">⚡</span>' : '') +
+                                          (hasFile ? '<span class="tier-badge file">📄</span>' : '') +
+                                          (hasPkg ? '<span class="tier-badge pkg">📦</span>' : '');
+                            const lowestPrice = Math.min(...[skill.price_sats, skill.price_execution, skill.price_skill_file, skill.price_full_package].filter(p => p && p > 0)) || skill.price_sats;
                             return `
                             <div class="skill-item">
-                                <h4>${esc(skill.name)} <span style="color:#555;font-size:0.75rem;font-family:monospace;">v${skill.version || '1.0.0'}</span></h4>
+                                <h4>${esc(skill.name)} ${badges}</h4>
                                 <p>${esc(skill.description)}</p>
-                                <p class="price">${skill.price_sats} sats</p>
-                                <p style="font-size: 0.75rem; color: #666; margin-top: 5px;">
-                                    Agent: ${esc(agentDisplay)} | Rating: ${ratingDisplay}<br>
-                                    ID: ${skill.id}<br>
-                                    Category: ${skill.category || 'uncategorized'}
+                                <p class="price">From ${lowestPrice} sats</p>
+                                <p style="font-size: 0.7rem; color: #555; margin-top: 5px;">
+                                    ${hasExec ? '⚡' + (skill.price_execution || skill.price_sats) : ''} 
+                                    ${hasFile ? '📄' + skill.price_skill_file : ''} 
+                                    ${hasPkg ? '📦' + skill.price_full_package : ''}<br>
+                                    ID: ${skill.id.slice(0,8)}... | ${skill.transfer_type || 'execution_only'}
                                 </p>
                                 <div class="skill-actions">
                                     <button onclick="quickInvoke('${skill.id}')">Invoke</button>
@@ -806,7 +548,7 @@
                             </div>
                         `}).join('');
                 } else {
-                    listEl.innerHTML = '<p style="color: #888;">No skills registered yet. Register one above!</p>';
+                    listEl.innerHTML = '<p style="color: #888;">No skills found.</p>';
                 }
             } catch (e) {
                 listEl.innerHTML = '<p style="color: #ff6464;">Error: ' + e.message + '</p>';
@@ -818,42 +560,31 @@
             document.getElementById('invokeSkillId').scrollIntoView({ behavior: 'smooth' });
         }
         
-        function copyText(text) {
-            navigator.clipboard.writeText(text);
-        }
+        function copyText(text) { navigator.clipboard.writeText(text); }
         
+        // Invoke with Tier
         async function testInvoke() {
             const btn = event.target;
             const resultEl = document.getElementById('invokeResult');
             const skillId = document.getElementById('invokeSkillId').value;
+            const tier = document.getElementById('invokeTier').value;
             
-            if (!skillId) {
-                alert('Enter a Skill ID first');
-                return;
-            }
+            if (!skillId) { alert('Enter a Skill ID'); return; }
             
             resultEl.style.display = 'block';
             resultEl.className = 'result';
-            resultEl.textContent = 'Creating invoice...';
+            resultEl.textContent = 'Creating invoice for tier: ' + tier + '...';
             btn.disabled = true;
             
             try {
                 let params;
-                try {
-                    params = JSON.parse(document.getElementById('invokeParams').value);
-                } catch(e) {
-                    params = {};
-                }
+                try { params = JSON.parse(document.getElementById('invokeParams').value); } catch(e) { params = {}; }
                 
                 const res = await fetch(API + '/invoke', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        skill_id: skillId,
-                        params: params
-                    })
+                    body: JSON.stringify({ skill_id: skillId, tier: tier, params: params })
                 });
-                
                 const data = await res.json();
                 resultEl.className = 'result ' + (data.transaction_id ? 'success' : 'error');
                 resultEl.textContent = JSON.stringify(data, null, 2);
@@ -867,9 +598,7 @@
         async function loadAgentCard() {
             const resultEl = document.getElementById('agentResult');
             resultEl.style.display = 'block';
-            resultEl.className = 'result';
             resultEl.textContent = 'Fetching...';
-            
             try {
                 const res = await fetch(API + '/.well-known/agent.json');
                 const data = await res.json();
@@ -883,43 +612,21 @@
         
         function updateRpcParams() {
             const method = document.getElementById('rpcMethod').value;
-            const paramsEl = document.getElementById('rpcParams');
-            if (method === 'skills.list') {
-                paramsEl.value = '{}';
-            } else if (method === 'skills.invoke') {
-                paramsEl.value = '{\n  "skill_id": "PASTE_ID_HERE",\n  "params": {}\n}';
-            } else if (method === 'skills.register') {
-                paramsEl.value = '{\n  "name": "My Skill",\n  "description": "A skill that does something useful for agents",\n  "category": "translation",\n  "price_sats": 100,\n  "endpoint": "https://example.com/api",\n  "lightning_address": "me@wallet.com",\n  "agent_name": "MyAgent"\n}';
-            }
+            document.getElementById('rpcParams').value = method === 'skills.invoke' ? '{\n  "skill_id": "PASTE_ID",\n  "params": {}\n}' : '{}';
         }
         
         async function sendRPC() {
-            const btn = event.target;
             const resultEl = document.getElementById('rpcResult');
             resultEl.style.display = 'block';
-            resultEl.className = 'result';
             resultEl.textContent = 'Sending...';
-            btn.disabled = true;
-            
             try {
                 let params;
-                try {
-                    params = JSON.parse(document.getElementById('rpcParams').value);
-                } catch(e) {
-                    params = {};
-                }
-                
+                try { params = JSON.parse(document.getElementById('rpcParams').value); } catch(e) { params = {}; }
                 const res = await fetch(API + '/rpc', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        jsonrpc: '2.0',
-                        method: document.getElementById('rpcMethod').value,
-                        params: params,
-                        id: Date.now()
-                    })
+                    body: JSON.stringify({ jsonrpc: '2.0', method: document.getElementById('rpcMethod').value, params: params, id: Date.now() })
                 });
-                
                 const data = await res.json();
                 resultEl.className = 'result ' + (data.result ? 'success' : 'error');
                 resultEl.textContent = JSON.stringify(data, null, 2);
@@ -927,15 +634,11 @@
                 resultEl.className = 'result error';
                 resultEl.textContent = 'Error: ' + e.message;
             }
-            btn.disabled = false;
         }
         
         async function checkHealth() {
             const resultEl = document.getElementById('healthResult');
             resultEl.style.display = 'block';
-            resultEl.className = 'result';
-            resultEl.textContent = 'Checking...';
-            
             try {
                 const res = await fetch(API + '/');
                 const data = await res.json();
@@ -950,52 +653,26 @@
         async function checkSkillsCount() {
             const resultEl = document.getElementById('healthResult');
             resultEl.style.display = 'block';
-            resultEl.className = 'result';
-            
             try {
                 const res = await fetch(API + '/skills');
                 const data = await res.json();
                 resultEl.className = 'result success';
-                resultEl.textContent = 'Total skills in marketplace: ' + data.pagination.total;
+                resultEl.textContent = 'Total skills: ' + data.pagination.total;
             } catch (e) {
                 resultEl.className = 'result error';
                 resultEl.textContent = 'Error: ' + e.message;
             }
         }
         
-        function esc(str) {
-            const d = document.createElement('div');
-            d.textContent = str || '';
-            return d.innerHTML;
-        }
+        function esc(str) { const d = document.createElement('div'); d.textContent = str || ''; return d.innerHTML; }
         
         // Emoji search
         const emojiDB = [
-            ['🤖','robot ai bot agent machine'],['🛡️','shield security protect guard defense'],['💻','laptop computer code dev pc'],
-            ['📊','chart data analytics graph stats bar'],['🌐','globe world web internet global network'],['🎨','art paint design palette creative'],
-            ['🎵','music note song audio sound'],['🎬','movie film video camera cinema clip'],['📝','memo note write edit document'],
-            ['🔍','search find magnify look discover detective'],['💜','purple heart love companion relationship'],['💰','money bag cash wealth rich dollar sats'],
-            ['⚖️','balance scale law legal justice court'],['⚕️','medical health doctor hospital medicine care'],['📚','books education study learn school read'],
-            ['🚗','car auto vehicle drive automobile motor'],['📡','satellite dish antenna signal iot sensor radar'],['⚡','lightning bolt fast electric power energy speed zap'],
-            ['🔧','wrench tool fix repair mechanic develop'],['📈','chart up growth trend increase stock market'],['🎭','theater masks drama entertainment perform'],
-            ['🎮','game controller play gaming console fun'],['✈️','airplane plane travel flight trip fly'],['💪','muscle strength fitness gym workout strong'],
-            ['📱','phone mobile cell app smartphone device'],['₿','bitcoin btc crypto currency digital'],['🔬','microscope research science lab experiment'],
-            ['✍️','writing hand pen author compose resume'],['🧱','brick build block infrastructure foundation wall'],['📣','megaphone announce marketing promote shout'],
-            ['🦑','squid octopus tentacle sea ocean'],['🐕','dog pet animal canine puppy'],['🏠','house home building real estate property'],
-            ['🍕','pizza food eat restaurant delivery meal'],['⛓️','chain link blockchain connect bond'],['🎯','target bullseye goal aim focus dart'],
-            ['🔥','fire hot flame trending popular burn'],['💡','idea light bulb bright insight think'],['🌟','star glow shine sparkle rating'],
-            ['🧠','brain smart intelligence mind think ai neural'],['💬','speech chat talk message bubble conversation'],['📧','email mail message letter send inbox'],
-            ['🔒','lock secure private password safe encrypt'],['🔓','unlock open access free public'],['📦','package box deliver ship product cargo'],
-            ['🛒','cart shop buy store ecommerce purchase'],['💳','credit card payment pay checkout billing'],['📅','calendar date schedule plan event time'],
-            ['⏱️','timer clock speed time fast stopwatch'],['🌍','earth world globe planet map geography'],['🏢','office building corporate company work business'],
-            ['👤','user person profile account identity avatar'],['👥','users people group team crowd community'],['📞','phone call telephone contact ring'],
-            ['🖥️','desktop monitor screen display computer'],['⚙️','gear settings config configure option preference'],['🗂️','folder file organize category sort'],
-            ['📤','upload send share export outbox'],['📥','download receive import inbox save'],['🔔','bell notification alert reminder ring'],
-            ['🏆','trophy award winner champion prize first'],['💎','gem diamond jewel premium valuable crystal'],['🪄','magic wand spell wizard transform'],
-            ['🔗','link url connect chain web'],['📰','newspaper news article press media headline'],['🎤','microphone voice speak mic podcast sing'],
-            ['🎧','headphone listen audio podcast music ear'],['🚀','rocket launch deploy ship start fast space'],['💸','money fly spend payment transaction fee'],
-            ['🤝','handshake deal agreement partner trust'],['📋','clipboard list task checklist todo'],['✅','check mark done complete yes approve'],
-            ['❌','cross no error wrong delete fail'],['⚠️','warning alert caution danger'],['🔮','crystal ball predict future fortune oracle']
+            ['🤖','robot ai bot'],['🛡️','shield security'],['💻','laptop computer code'],['📊','chart data analytics'],
+            ['🌐','globe web network'],['🎨','art design'],['🔍','search find'],['💰','money sats'],['⚡','lightning fast'],
+            ['🔧','tool fix repair'],['📈','growth chart'],['🎯','target goal'],['🔥','fire hot'],['💡','idea bulb'],
+            ['🧠','brain smart ai'],['💬','chat message'],['🔒','lock secure'],['📦','package box'],['🚀','rocket launch'],
+            ['🦑','squid octopus'],['🚗','car auto'],['📡','satellite iot'],['💳','card payment'],['⚙️','gear settings']
         ];
         
         function selectEmoji(emoji) {
@@ -1004,176 +681,96 @@
         }
         
         function renderEmojis(list) {
-            const container = document.getElementById('emojiResults');
-            container.innerHTML = list.map(([emoji]) => 
-                `<span onclick="selectEmoji('${emoji}')" style="cursor:pointer;font-size:22px;padding:5px;border-radius:4px;transition:background 0.15s;" onmouseover="this.style.background='rgba(0,217,255,0.2)'" onmouseout="this.style.background='none'">${emoji}</span>`
+            document.getElementById('emojiResults').innerHTML = list.map(([emoji]) => 
+                `<span onclick="selectEmoji('${emoji}')" style="cursor:pointer;font-size:22px;padding:5px;border-radius:4px;" onmouseover="this.style.background='rgba(0,217,255,0.2)'" onmouseout="this.style.background='none'">${emoji}</span>`
             ).join('');
         }
         
         function searchEmojis(query) {
             const q = query.toLowerCase().trim();
-            if (!q) {
-                renderEmojis(emojiDB);
-                return;
-            }
-            const matches = emojiDB.filter(([emoji, tags]) => tags.includes(q) || tags.split(' ').some(t => t.startsWith(q)));
+            if (!q) { renderEmojis(emojiDB); return; }
+            const matches = emojiDB.filter(([e, tags]) => tags.includes(q) || tags.split(' ').some(t => t.startsWith(q)));
             renderEmojis(matches.length ? matches : emojiDB);
         }
         
         renderEmojis(emojiDB);
 
-        // ========================================
-        // SquidBot X Controls
-        // ========================================
+        // X Controls
+        async function unlockXControls() {
+            adminKey = document.getElementById('xUnlockKey').value.trim();
+            document.getElementById('xLockOverlay').classList.add('hidden');
+            document.getElementById('xControlsContent').style.display = 'block';
+            checkXStatus();
+            refreshSchedulerStatus();
+        }
+        
         async function checkXStatus() {
-            const bar = document.getElementById('xStatusBar');
-            const dot = document.getElementById('xStatusDot');
-            const text = document.getElementById('xStatusText');
             try {
                 const res = await fetch(API + '/x/status');
                 const data = await res.json();
+                const bar = document.getElementById('xStatusBar');
+                const dot = document.getElementById('xStatusDot');
+                const text = document.getElementById('xStatusText');
                 if (data.configured) {
                     bar.className = 'x-status-bar connected';
                     dot.className = 'x-status-dot on';
-                    text.textContent = 'X Connected — @' + data.bot_handle + ' | Founder: @' + data.founder_handle;
+                    text.textContent = 'X Connected — @' + data.bot_handle;
                 } else {
                     bar.className = 'x-status-bar disconnected';
                     dot.className = 'x-status-dot off';
                     text.textContent = 'X Not Configured';
                 }
-            } catch (e) {
-                bar.className = 'x-status-bar disconnected';
-                dot.className = 'x-status-dot off';
-                text.textContent = 'Could not reach API';
-            }
+            } catch (e) {}
         }
-
+        
         async function refreshSchedulerStatus() {
             try {
                 const res = await fetch(API + '/scheduler/status');
                 const data = await res.json();
                 document.getElementById('statPosts').textContent = data.daily_posts || 0;
                 document.getElementById('statReplies').textContent = data.daily_replies || 0;
-                document.getElementById('statMaxPosts').textContent = data.max_posts_per_day || '-';
-                document.getElementById('statMaxReplies').textContent = data.max_replies_per_day || '-';
-            } catch (e) {
-                console.error('Scheduler status error:', e);
-            }
+            } catch (e) {}
         }
-
+        
         function switchXTab(tabName) {
             document.querySelectorAll('.x-tab').forEach(t => t.classList.remove('active'));
             document.querySelectorAll('.x-tab-panel').forEach(p => p.classList.remove('active'));
             document.getElementById('xTab-' + tabName).classList.add('active');
-            document.querySelectorAll('.x-tab').forEach(t => {
-                if (t.getAttribute('onclick').includes(tabName)) t.classList.add('active');
-            });
+            event.target.classList.add('active');
         }
-
-        function showXResult(type, content, tweetUrl) {
-            const el = document.getElementById('xResult');
-            el.style.display = 'block';
-            if (type === 'error') {
-                el.innerHTML = '<div class="result error" style="margin-top:0;">' + esc(content) + '</div>';
-            } else if (type === 'loading') {
-                el.innerHTML = '<div class="result" style="margin-top:0; border-color: #1d9bf0; color: #1d9bf0;">' + esc(content) + '</div>';
-            } else if (type === 'tweet') {
-                el.innerHTML = `
-                    <div class="x-tweet-preview">
-                        <div class="tweet-header">
-                            <div class="tweet-avatar">🦑</div>
-                            <div>
-                                <div class="tweet-name">SquidBot</div>
-                                <div class="tweet-handle">@squidbot</div>
-                            </div>
-                        </div>
-                        <div class="tweet-body">${esc(content)}</div>
-                        ${tweetUrl ? '<a href="' + tweetUrl + '" target="_blank" class="tweet-link">View on X →</a>' : ''}
-                    </div>
-                `;
-            }
-        }
-
+        
         function updateManualCharCount() {
-            const text = document.getElementById('xManualText').value;
+            const len = document.getElementById('xManualText').value.length;
             const el = document.getElementById('xManualCharCount');
-            const len = text.length;
             el.textContent = len + ' / 280';
             el.className = 'x-char-count' + (len > 280 ? ' over' : len > 250 ? ' warn' : '');
         }
-
+        
         async function sendXPost() {
-            const btn = document.getElementById('xPostBtn');
-            btn.disabled = true;
-            btn.textContent = '🦑 Generating...';
-            showXResult('loading', '🦑 SquidBot is thinking...');
+            const context = document.getElementById('xPostContext').value.trim();
+            document.getElementById('xResult').style.display = 'block';
+            document.getElementById('xResult').innerHTML = '<div class="result">Generating...</div>';
             try {
-                const context = document.getElementById('xPostContext').value.trim();
                 const res = await fetch(API + '/x/post', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json', 'x-squidbay-key': adminKey },
                     body: JSON.stringify({ context: context || undefined })
                 });
                 const data = await res.json();
-                if (data.success) {
-                    showXResult('tweet', data.tweet, data.url);
-                    refreshSchedulerStatus();
-                } else {
-                    showXResult('error', data.error || 'Unknown error');
-                }
+                document.getElementById('xResult').innerHTML = data.success 
+                    ? '<div class="result success">Posted: ' + esc(data.tweet) + '</div>'
+                    : '<div class="result error">' + esc(data.error) + '</div>';
+                refreshSchedulerStatus();
             } catch (e) {
-                showXResult('error', 'Request failed: ' + e.message);
+                document.getElementById('xResult').innerHTML = '<div class="result error">' + e.message + '</div>';
             }
-            btn.disabled = false;
-            btn.textContent = '🦑 Generate & Post to X';
         }
-
-        async function sendXReply() {
-            const tweetId = document.getElementById('xReplyTweetId').value.trim();
-            const mentionText = document.getElementById('xReplyMentionText').value.trim();
-            if (!tweetId || !mentionText) {
-                showXResult('error', 'Tweet ID and mention text required');
-                return;
-            }
-            const btn = document.getElementById('xReplyBtn');
-            btn.disabled = true;
-            btn.textContent = '🦑 Generating...';
-            showXResult('loading', '🦑 Crafting reply...');
-            try {
-                const author = document.getElementById('xReplyAuthor').value.trim();
-                const res = await fetch(API + '/x/reply', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json', 'x-squidbay-key': adminKey },
-                    body: JSON.stringify({ tweet_id: tweetId, mention_text: mentionText, mention_author: author || 'someone' })
-                });
-                const data = await res.json();
-                if (data.success) {
-                    showXResult('tweet', data.reply, data.url);
-                    refreshSchedulerStatus();
-                } else {
-                    showXResult('error', data.error || 'Unknown error');
-                }
-            } catch (e) {
-                showXResult('error', 'Request failed: ' + e.message);
-            }
-            btn.disabled = false;
-            btn.textContent = '🦑 Generate & Reply';
-        }
-
+        
         async function sendXManual() {
             const text = document.getElementById('xManualText').value.trim();
-            if (!text) {
-                showXResult('error', 'Type something to post');
-                return;
-            }
-            if (text.length > 280) {
-                showXResult('error', 'Over 280 characters');
-                return;
-            }
-            const btn = document.getElementById('xManualBtn');
-            btn.disabled = true;
-            btn.textContent = 'Posting...';
-            showXResult('loading', 'Posting to X...');
+            if (!text || text.length > 280) return;
+            document.getElementById('xResult').style.display = 'block';
+            document.getElementById('xResult').innerHTML = '<div class="result">Posting...</div>';
             try {
                 const res = await fetch(API + '/x/manual', {
                     method: 'POST',
@@ -1181,49 +778,17 @@
                     body: JSON.stringify({ text })
                 });
                 const data = await res.json();
-                if (data.success) {
-                    showXResult('tweet', data.tweet, data.url);
-                    refreshSchedulerStatus();
-                } else {
-                    showXResult('error', data.error || 'Unknown error');
-                }
+                document.getElementById('xResult').innerHTML = data.success 
+                    ? '<div class="result success">Posted!</div>'
+                    : '<div class="result error">' + esc(data.error) + '</div>';
+                refreshSchedulerStatus();
             } catch (e) {
-                showXResult('error', 'Request failed: ' + e.message);
+                document.getElementById('xResult').innerHTML = '<div class="result error">' + e.message + '</div>';
             }
-            btn.disabled = false;
-            btn.textContent = 'Post Exact Text to X';
         }
 
-        async function sendBanterPost() {
-            const btn = document.getElementById('xBanterBtn');
-            btn.disabled = true;
-            btn.textContent = '🎭 Generating banter...';
-            showXResult('loading', '🦑 SquidBot is roasting you...');
-            try {
-                const res = await fetch(API + '/scheduler/post-now', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json', 'x-squidbay-key': adminKey },
-                    body: JSON.stringify({ type: 'banter' })
-                });
-                const data = await res.json();
-                if (data.success) {
-                    showXResult('loading', 'Banter posted! Check @SquidBot on X');
-                    refreshSchedulerStatus();
-                } else {
-                    showXResult('error', data.error || 'Unknown error');
-                }
-            } catch (e) {
-                showXResult('error', 'Request failed: ' + e.message);
-            }
-            btn.disabled = false;
-            btn.textContent = '🎭 Post Banter Tweet';
-        }
-        
-        checkStatus();
-    </script>
-
-    <script>
-        async function runBulkFix() {
+        // Bulk Tier Fix
+        async function runBulkTierFix() {
             const resultEl = document.getElementById('bulkFixResult');
             const passcode = document.getElementById('adminPasscode').value;
             
@@ -1234,8 +799,91 @@
                 return;
             }
             
-            resultEl.textContent = 'Running bulk fixes... (check original test.html for full script)';
+            resultEl.textContent = '🔧 Fetching all skills...\n';
+            
+            try {
+                const res = await fetch(API + '/skills?limit=200');
+                const data = await res.json();
+                const skills = data.skills || [];
+                
+                resultEl.textContent += `Found ${skills.length} skills to update.\n\n`;
+                
+                const updates = [];
+                
+                for (let i = 0; i < skills.length; i++) {
+                    const skill = skills[i];
+                    const basePrice = skill.price_sats || skill.price_execution || 100;
+                    
+                    let update = { skill_id: skill.id, price_execution: basePrice };
+                    const pos = i % 20;
+                    
+                    if (pos < 8) {
+                        // 40% - Execution only
+                        update.transfer_type = 'execution_only';
+                    } else if (pos < 13) {
+                        // 25% - All three tiers (hybrid)
+                        const mFile = 10 + Math.floor(Math.random() * 40);
+                        const mPkg = 25 + Math.floor(Math.random() * 75);
+                        update.transfer_type = 'hybrid';
+                        update.price_skill_file = basePrice * mFile;
+                        update.price_full_package = basePrice * mPkg;
+                    } else if (pos < 17) {
+                        // 20% - Exec + Package
+                        const mPkg = 25 + Math.floor(Math.random() * 75);
+                        update.transfer_type = 'full_package';
+                        update.price_full_package = basePrice * mPkg;
+                    } else {
+                        // 15% - Exec + Blueprint
+                        const mFile = 10 + Math.floor(Math.random() * 40);
+                        update.transfer_type = 'skill_file';
+                        update.price_skill_file = basePrice * mFile;
+                    }
+                    
+                    updates.push(update);
+                }
+                
+                // Log plan
+                resultEl.textContent += 'Plan:\n';
+                updates.forEach((u, i) => {
+                    const s = skills[i];
+                    let p = `⚡${u.price_execution}`;
+                    if (u.price_skill_file) p += ` 📄${u.price_skill_file}`;
+                    if (u.price_full_package) p += ` 📦${u.price_full_package}`;
+                    resultEl.textContent += `${(i+1).toString().padStart(2)}. ${s.name.substring(0,22).padEnd(22)} ${u.transfer_type.padEnd(14)} ${p}\n`;
+                });
+                
+                resultEl.textContent += '\n🚀 Applying updates...\n';
+                
+                let success = 0, failed = 0;
+                
+                for (const u of updates) {
+                    try {
+                        const pRes = await fetch(API + '/register/' + u.skill_id, {
+                            method: 'PUT',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({
+                                price_execution: u.price_execution,
+                                price_skill_file: u.price_skill_file || null,
+                                price_full_package: u.price_full_package || null,
+                                transfer_type: u.transfer_type
+                            })
+                        });
+                        if (pRes.ok) success++;
+                        else { const e = await pRes.json(); resultEl.textContent += `❌ ${u.skill_id.slice(0,8)}: ${e.error}\n`; failed++; }
+                    } catch (e) {
+                        resultEl.textContent += `❌ ${u.skill_id.slice(0,8)}: ${e.message}\n`;
+                        failed++;
+                    }
+                }
+                
+                resultEl.textContent += `\n✅ Done! ${success} updated, ${failed} failed.\nRefresh marketplace to see changes.`;
+                
+            } catch (e) {
+                resultEl.textContent += `\n❌ Error: ${e.message}`;
+            }
         }
+        
+        checkStatus();
     </script>
 </body>
 </html>
