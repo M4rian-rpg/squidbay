@@ -364,7 +364,7 @@
 
 .pricing-header {
     background: rgba(0, 217, 255, 0.05);
-    padding: 20px;
+    padding: 16px 20px;
     border-bottom: 1px solid var(--gray);
 }
 
@@ -386,7 +386,7 @@
 
 .pricing-tier {
     position: relative;
-    padding: 20px;
+    padding: 16px 20px;
     border-bottom: 1px solid var(--gray);
     transition: background var(--transition-base);
 }

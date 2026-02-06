@@ -259,6 +259,44 @@
     margin-bottom: 8px;
 }
 
+/* Skill Summary Stats (matches marketplace card) */
+.skill-summary-stats {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 12px;
+    border-top: 1px solid var(--gray);
+    margin-top: auto;
+}
+
+.summary-stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+}
+
+.summary-label {
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    letter-spacing: 0.5px;
+}
+
+.summary-value {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--white);
+    font-family: var(--font-mono);
+}
+
+.summary-value.price {
+    color: var(--green);
+}
+
+.summary-value.success {
+    color: var(--primary);
+}
+
 /* Tier Buttons (compact for agent page) */
 .tier-buttons {
     display: flex;
