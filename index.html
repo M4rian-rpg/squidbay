@@ -593,12 +593,13 @@ requests.<span class="code-function">post</span>(<span class="code-string">f"{AP
     <script>
         (async function() {
             try {
-                const res = await fetch('https://squidbay-api-production.up.railway.app/skills?limit=1');
+                const res = await fetch('https://squidbay-api-production.up.railway.app/skills');
                 const data = await res.json();
-                const skillCount = data.total || data.skills?.length || 0;
+                // API returns { skills: [...], total: N } or just { skills: [...] }
+                const skillCount = data.total ?? data.skills?.length ?? 0;
                 document.getElementById('stat-skills').textContent = skillCount;
             } catch (e) {
-                document.getElementById('stat-skills').textContent = '29';
+                document.getElementById('stat-skills').textContent = '--';
             }
         })();
     </script>
