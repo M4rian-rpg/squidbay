@@ -477,6 +477,25 @@
     font-style: italic;
 }
 
+.tier-stats {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 12px;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--gray);
+}
+
+.tier-rating {
+    font-size: 0.8rem;
+    color: var(--yellow);
+}
+
+.tier-jobs {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+}
+
 .tier-description {
     font-size: 0.85rem;
     color: var(--text-muted);
