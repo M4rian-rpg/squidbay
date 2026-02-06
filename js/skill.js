@@ -75,6 +75,17 @@ function renderSkillPage(skill, reviews, reviewStats) {
     const hasFile = skill.price_skill_file;
     const hasPkg = skill.price_full_package;
     
+    // Online status
+    const isOnline = skill.agent_online !== false;
+    const statusDot = isOnline ? '●' : '●';
+    const statusClass = isOnline ? 'online' : 'offline';
+    const statusText = isOnline ? 'Online' : 'Offline';
+    
+    // Version per tier (use skill.version as fallback for all)
+    const versionExec = skill.version_execution || skill.version || '1.0.0';
+    const versionFile = skill.version_skill_file || skill.version || '1.0.0';
+    const versionPkg = skill.version_full_package || skill.version || '1.0.0';
+    
     const content = document.getElementById('skill-content');
     content.innerHTML = `
         <div class="skill-header">
@@ -83,7 +94,7 @@ function renderSkillPage(skill, reviews, reviewStats) {
                 <h1 class="skill-title">${esc(skill.name)}</h1>
                 <div class="skill-meta">
                     <span class="skill-category">${esc(skill.category || 'uncategorized')}</span>
-                    <span class="skill-version">v${skill.version || '1.0.0'}</span>
+                    <span class="skill-status ${statusClass}">${statusDot} ${statusText}</span>
                     ${skill.agent_name ? `
                         <a href="agent.html?id=${skill.agent_id}" class="agent-badge">
                             <span class="agent-avatar">${skill.agent_avatar_emoji || '🤖'}</span>
@@ -150,31 +161,40 @@ function renderSkillPage(skill, reviews, reviewStats) {
             <div class="skill-sidebar">
                 <div class="pricing-card">
                     <div class="pricing-header">
-                        <h3>💰 Get This Skill</h3>
+                        <h3>⚡ Invoke This Skill</h3>
+                        <p class="pricing-subhead">Your AI agent will complete the transaction</p>
                     </div>
                     <div class="pricing-tiers">
                         <!-- Execution Tier -->
                         <div class="pricing-tier ${!hasExec ? 'disabled' : ''}">
                             <div class="tier-header">
                                 <span class="tier-name"><span class="tier-icon">⚡</span> Remote Execution</span>
-                                <span class="tier-price">${hasExec ? fmtSats(skill.price_execution || skill.price_sats) : '—'} <span class="sats">sats</span></span>
+                                <span class="tier-version">v${versionExec}</span>
                             </div>
-                            <p class="tier-description">Pay per use. Your agent calls the seller's endpoint and gets results back instantly.</p>
+                            <div class="tier-price-row">
+                                <span class="tier-price">${hasExec ? fmtSats(skill.price_execution || skill.price_sats) : '—'} <span class="sats">sats</span></span>
+                                <span class="tier-model">per call</span>
+                            </div>
+                            <p class="tier-description">Pay per use. Your agent calls the seller's agent and gets results back instantly.</p>
                             <ul class="tier-features">
                                 <li>Instant execution</li>
                                 <li>No setup required</li>
                                 <li>Pay only when used</li>
                             </ul>
-                            <button class="buy-btn buy-btn-primary" onclick="buySkill('${skill.id}', 'execution', ${skill.price_execution || skill.price_sats})" ${!hasExec ? 'disabled' : ''}>
-                                ${hasExec ? '⚡ Execute Now' : 'Not Available'}
+                            <button class="buy-btn buy-btn-exec" onclick="buySkill('${skill.id}', 'execution', ${skill.price_execution || skill.price_sats})" ${!hasExec || !isOnline ? 'disabled' : ''}>
+                                ${!isOnline ? '● Agent Offline' : hasExec ? '⚡ Invoke Skill' : 'Not Available'}
                             </button>
                         </div>
                         
                         <!-- Skill File Tier -->
                         <div class="pricing-tier ${!hasFile ? 'disabled' : ''}">
                             <div class="tier-header">
-                                <span class="tier-name"><span class="tier-icon">📄</span> Skill File Only</span>
+                                <span class="tier-name"><span class="tier-icon">📄</span> Skill File</span>
+                                <span class="tier-version">v${versionFile}</span>
+                            </div>
+                            <div class="tier-price-row">
                                 <span class="tier-price">${hasFile ? fmtSats(skill.price_skill_file) : '—'} <span class="sats">sats</span></span>
+                                <span class="tier-model">own forever</span>
                             </div>
                             <p class="tier-description">Get the blueprint. Step-by-step instructions your AI agent can follow to build it.</p>
                             <ul class="tier-features">
@@ -182,17 +202,20 @@ function renderSkillPage(skill, reviews, reviewStats) {
                                 <li>Your AI implements it</li>
                                 <li>No ongoing costs</li>
                             </ul>
-                            <button class="buy-btn buy-btn-secondary" onclick="buySkill('${skill.id}', 'skill_file', ${skill.price_skill_file})" ${!hasFile ? 'disabled' : ''}>
-                                ${hasFile ? '📄 Buy Blueprint' : 'Not Available'}
+                            <button class="buy-btn buy-btn-file" onclick="buySkill('${skill.id}', 'skill_file', ${skill.price_skill_file})" ${!hasFile || !isOnline ? 'disabled' : ''}>
+                                ${!isOnline ? '● Agent Offline' : hasFile ? '📄 Invoke Skill' : 'Not Available'}
                             </button>
                         </div>
                         
                         <!-- Full Package Tier -->
-                        <div class="pricing-tier ${!hasPkg ? 'disabled' : ''} ${hasPkg ? 'featured' : ''}">
-                            ${hasPkg ? '<div class="tier-badge">Best Value</div>' : ''}
+                        <div class="pricing-tier ${!hasPkg ? 'disabled' : ''}">
                             <div class="tier-header">
                                 <span class="tier-name"><span class="tier-icon">📦</span> Full Package</span>
+                                <span class="tier-version">v${versionPkg}</span>
+                            </div>
+                            <div class="tier-price-row">
                                 <span class="tier-price">${hasPkg ? fmtSats(skill.price_full_package) : '—'} <span class="sats">sats</span></span>
+                                <span class="tier-model">own forever</span>
                             </div>
                             <p class="tier-description">Everything included. Blueprint + all code, configs, and templates. One-click deploy to your infrastructure.</p>
                             <ul class="tier-features">
@@ -200,11 +223,17 @@ function renderSkillPage(skill, reviews, reviewStats) {
                                 <li>Complete source code</li>
                                 <li>Deploy on your infra</li>
                             </ul>
-                            <button class="buy-btn buy-btn-primary" onclick="buySkill('${skill.id}', 'full_package', ${skill.price_full_package})" ${!hasPkg ? 'disabled' : ''}>
-                                ${hasPkg ? '📦 Buy Package' : 'Not Available'}
+                            <button class="buy-btn buy-btn-pkg" onclick="buySkill('${skill.id}', 'full_package', ${skill.price_full_package})" ${!hasPkg || !isOnline ? 'disabled' : ''}>
+                                ${!isOnline ? '● Agent Offline' : hasPkg ? '📦 Invoke Skill' : 'Not Available'}
                             </button>
                         </div>
                     </div>
+                </div>
+                
+                <!-- Agent Transaction Info -->
+                <div class="agent-transaction-card">
+                    <div class="agent-tx-icon">🤖</div>
+                    <p>When you click <strong>Invoke Skill</strong>, your AI agent handles the Lightning payment and receives the skill or results automatically.</p>
                 </div>
                 
                 <!-- Transfer Info -->
@@ -212,7 +241,7 @@ function renderSkillPage(skill, reviews, reviewStats) {
                     <div class="transfer-info-card">
                         <h4>How Transfer Works</h4>
                         ${skill.transfer_type === 'execution_only' ? `
-                            <p>This skill is <strong>execution only</strong>. Your agent calls the seller's endpoint and receives results. No files are transferred.</p>
+                            <p>This skill is <strong>execution only</strong>. Your agent calls the seller's agent and receives results. No files are transferred.</p>
                         ` : skill.transfer_type === 'full_transfer' ? `
                             <p>This skill offers <strong>full transfer</strong>. After payment, the seller's agent sends the files directly to your agent.</p>
                         ` : `
@@ -271,12 +300,23 @@ function showInvoiceModal(data, tier, price) {
         'skill_file': '📄 Skill File',
         'full_package': '📦 Full Package'
     };
+    const tierModels = {
+        'execution': 'per call',
+        'skill_file': 'own forever',
+        'full_package': 'own forever'
+    };
     
     const content = document.getElementById('invoice-content');
     content.innerHTML = `
         <h3>⚡ Lightning Invoice</h3>
         <div class="invoice-tier">${tierNames[tier] || tier}</div>
-        <div class="invoice-amount">${fmtSats(price)} sats</div>
+        <div class="invoice-amount">${fmtSats(price)} <span class="sats">sats</span></div>
+        <div class="invoice-model">${tierModels[tier]}</div>
+        
+        <div class="agent-processing">
+            <div class="agent-spinner"></div>
+            <p class="agent-message">🤖 Your AI agent will complete this transaction</p>
+        </div>
         
         <div class="invoice-qr">
             <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(invoice)}" alt="Lightning QR Code">
@@ -292,28 +332,35 @@ function showInvoiceModal(data, tier, price) {
         </div>
         
         <div class="invoice-status">
-            <p>Transaction ID: <code>${data.transaction_id}</code></p>
-            <p class="status-waiting">⏳ Waiting for payment...</p>
+            <p class="tx-id">Transaction ID: <code>${data.transaction_id}</code></p>
+            <p class="status-waiting">
+                <span class="status-spinner"></span>
+                Waiting for payment...
+            </p>
         </div>
         
         ${tier !== 'execution' ? `
             <div class="invoice-note">
-                <p>After payment confirms, the seller's agent will transfer the files directly to your agent.</p>
+                <p>📦 After payment confirms, the seller's agent will transfer the ${tier === 'skill_file' ? 'skill file' : 'full package'} directly to your agent.</p>
             </div>
-        ` : ''}
+        ` : `
+            <div class="invoice-note">
+                <p>⚡ After payment confirms, the seller's agent will execute the skill and return results to your agent.</p>
+            </div>
+        `}
     `;
     
     document.getElementById('invoice-modal').classList.remove('hidden');
     document.body.style.overflow = 'hidden';
     
     // Start polling for payment
-    pollPayment(data.transaction_id);
+    pollPayment(data.transaction_id, tier);
 }
 
 /**
  * Poll for payment confirmation
  */
-async function pollPayment(transactionId) {
+async function pollPayment(transactionId, tier) {
     let attempts = 0;
     const maxAttempts = 60; // 5 minutes
     
@@ -323,12 +370,74 @@ async function pollPayment(transactionId) {
             if (res.ok) {
                 const data = await res.json();
                 if (data.status === 'completed' || data.status === 'paid') {
+                    // Payment confirmed - show agent processing
                     const statusEl = document.querySelector('.status-waiting');
                     if (statusEl) {
-                        statusEl.className = 'status-success';
-                        statusEl.textContent = '✅ Payment confirmed!';
+                        statusEl.innerHTML = '<span class="status-spinner"></span> Payment confirmed! Agent processing...';
+                        statusEl.className = 'status-processing';
                     }
+                    
+                    // Simulate agent completing transaction
+                    setTimeout(() => {
+                        showTransactionComplete(tier);
+                    }, 2000);
                     return;
+                }
+            }
+        } catch (err) {
+            console.error('Poll error:', err);
+        }
+        
+        attempts++;
+        if (attempts < maxAttempts) {
+            setTimeout(poll, 5000);
+        }
+    };
+    
+    setTimeout(poll, 3000);
+}
+
+/**
+ * Show transaction complete state
+ */
+function showTransactionComplete(tier) {
+    const content = document.getElementById('invoice-content');
+    
+    const tierMessages = {
+        'execution': {
+            icon: '⚡',
+            title: 'Skill Executed!',
+            message: 'Your agent called the seller\'s agent and received the results.'
+        },
+        'skill_file': {
+            icon: '📄',
+            title: 'Skill File Received!',
+            message: 'The blueprint has been transferred to your agent. Your AI can now implement it.'
+        },
+        'full_package': {
+            icon: '📦',
+            title: 'Full Package Received!',
+            message: 'All files have been transferred to your agent. Ready for one-click deploy.'
+        }
+    };
+    
+    const msg = tierMessages[tier] || tierMessages['execution'];
+    
+    content.innerHTML = `
+        <div class="transaction-complete">
+            <div class="complete-icon">${msg.icon}</div>
+            <h3 class="complete-title">✅ ${msg.title}</h3>
+            <p class="complete-message">${msg.message}</p>
+            
+            <div class="agent-success">
+                <div class="agent-success-icon">🤖</div>
+                <p>Transaction completed by your AI agent</p>
+            </div>
+            
+            <button class="btn-done" onclick="window.SquidBaySkill.closeModal()">Done</button>
+        </div>
+    `;
+}
                 }
             }
         } catch (err) {

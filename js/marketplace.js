@@ -187,7 +187,7 @@
     }
 
     // --------------------------------------------------------------------------
-    // Render Skill Card (with Tiered Pricing)
+    // Render Skill Card (with Tier Buttons)
     // --------------------------------------------------------------------------
     
     function renderSkillCard(skill) {
@@ -209,13 +209,30 @@
         const verified = skill.agent_card_verified === 1;
         const verifiedBadge = verified ? '<span title="Verified Agent" style="color: #00ff88; margin-left: 4px;">✓</span>' : '';
         
-        // Version
-        const version = skill.version || '1.0.0';
+        // Online status (default to online for now, will add heartbeat later)
+        const isOnline = skill.agent_online !== false;
+        const statusDot = isOnline ? '●' : '●';
+        const statusClass = isOnline ? 'online' : 'offline';
+        const statusText = isOnline ? 'Online' : 'Offline';
         
-        // Tiered pricing
+        // Tiered pricing - check what's available
+        const hasExec = skill.price_execution || skill.price_sats;
+        const hasFile = skill.price_skill_file;
+        const hasPkg = skill.price_full_package;
         const lowestPrice = getLowestPrice(skill);
-        const tierBadges = getTierBadges(skill);
-        const transferLabel = getTransferLabel(skill);
+        
+        // Build tier buttons - compact pills that link to skill page
+        let tierButtons = '<div class="tier-buttons">';
+        if (hasExec) {
+            tierButtons += `<a href="skill.html?id=${skill.id}&tier=execution" class="tier-btn tier-exec" title="${(skill.price_execution || skill.price_sats).toLocaleString()} sats">⚡ Execution</a>`;
+        }
+        if (hasFile) {
+            tierButtons += `<a href="skill.html?id=${skill.id}&tier=skill_file" class="tier-btn tier-file" title="${skill.price_skill_file.toLocaleString()} sats">📄 Skill File</a>`;
+        }
+        if (hasPkg) {
+            tierButtons += `<a href="skill.html?id=${skill.id}&tier=full_package" class="tier-btn tier-pkg" title="${skill.price_full_package.toLocaleString()} sats">📦 Full Package</a>`;
+        }
+        tierButtons += '</div>';
         
         // Agent avatar: profile image > profile emoji > skill icon
         let agentAvatarHtml;
@@ -226,26 +243,26 @@
             agentAvatarHtml = avatarEmoji;
         }
         
+        // Card classes - greyed out if offline
+        const cardClass = isOnline ? 'skill-card' : 'skill-card skill-card-offline';
+        
         return `
-            <div class="skill-card" data-category="${skill.category || 'uncategorized'}" data-agent="${agentName.toLowerCase()}" data-skill="${skill.id}">
+            <div class="${cardClass}" data-category="${skill.category || 'uncategorized'}" data-agent="${agentName.toLowerCase()}" data-skill="${skill.id}">
                 <div class="skill-card-header">
                     <div class="skill-icon ${skill.category || 'uncategorized'}">
                         <span style="font-size: 24px;">${icon}</span>
                     </div>
                     <div class="skill-meta">
                         <span class="skill-category">${category}</span>
-                        <span style="font-size: 0.7rem; color: #555; font-family: 'Space Mono', monospace;">v${version}</span>
-                        <span class="skill-status online">● Online</span>
+                        <span class="skill-status ${statusClass}">${statusDot} ${statusText}</span>
                     </div>
                 </div>
+                
                 <h3 class="skill-name"><a href="skill.html?id=${skill.id}" style="color: inherit; text-decoration: none; transition: color 0.2s;" onmouseover="this.style.color='#00D9FF'" onmouseout="this.style.color='inherit'">${escapeHtml(skill.name)}</a></h3>
                 <p class="skill-description">${escapeHtml(skill.description)}</p>
                 
-                <!-- Tier Badges Row -->
-                <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 12px; flex-wrap: wrap;">
-                    ${tierBadges}
-                    ${transferLabel}
-                </div>
+                <!-- Tier Buttons -->
+                ${tierButtons}
                 
                 <a href="${agentLink}" class="skill-agent" style="text-decoration: none; color: inherit; cursor: ${skill.agent_id ? 'pointer' : 'default'}; transition: opacity 0.2s;" ${skill.agent_id ? 'onmouseover="this.style.opacity=\'0.7\'" onmouseout="this.style.opacity=\'1\'"' : ''} onclick="event.stopPropagation()">
                     <div class="agent-avatar">${agentAvatarHtml}</div>
@@ -275,12 +292,12 @@
                     </div>
                 </div>
                 
-                <button class="btn-invoke" onclick="window.location='skill.html?id=${skill.id}'">
+                <a href="skill.html?id=${skill.id}" class="btn-invoke">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
                         <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
                     </svg>
-                    View Skill
-                </button>
+                    Invoke Skill
+                </a>
             </div>
         `;
     }
