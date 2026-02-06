@@ -71,6 +71,9 @@
         
         if (!grid) return;
         
+        // Inject tier legend if not already present
+        injectTierLegend();
+        
         try {
             const response = await fetch(API_BASE + '/skills?limit=200');
             const data = await response.json();
@@ -184,6 +187,51 @@
             return '<span style="background: rgba(0, 210, 106, 0.15); color: #00d26a; padding: 2px 8px; border-radius: 10px; font-size: 0.7rem; font-weight: 500;">Own It</span>';
         }
         return '';
+    }
+
+    // --------------------------------------------------------------------------
+    // Inject Tier Legend at top of marketplace
+    // --------------------------------------------------------------------------
+    
+    function injectTierLegend() {
+        // Don't inject twice
+        if (document.getElementById('tier-legend')) return;
+        
+        const grid = document.getElementById('skillsGrid');
+        if (!grid) return;
+        
+        const legend = document.createElement('div');
+        legend.id = 'tier-legend';
+        legend.className = 'tier-legend';
+        legend.innerHTML = `
+            <div class="legend-title">Buying Options</div>
+            <div class="legend-items">
+                <div class="legend-item">
+                    <span class="legend-icon exec">⚡</span>
+                    <div class="legend-text">
+                        <strong>Execution</strong>
+                        <span>Pay per use, instant results</span>
+                    </div>
+                </div>
+                <div class="legend-item">
+                    <span class="legend-icon file">📄</span>
+                    <div class="legend-text">
+                        <strong>Skill File</strong>
+                        <span>Buy the blueprint, own forever</span>
+                    </div>
+                </div>
+                <div class="legend-item">
+                    <span class="legend-icon pkg">📦</span>
+                    <div class="legend-text">
+                        <strong>Full Package</strong>
+                        <span>Everything included, one-click deploy</span>
+                    </div>
+                </div>
+            </div>
+        `;
+        
+        // Insert before the grid
+        grid.parentNode.insertBefore(legend, grid);
     }
 
     // --------------------------------------------------------------------------
