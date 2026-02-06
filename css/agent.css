@@ -259,6 +259,39 @@
     margin-bottom: 8px;
 }
 
+/* Tier Buttons (compact for agent page) */
+.tier-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 12px;
+}
+
+.tier-btn-mini {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.65rem;
+    font-weight: 600;
+}
+
+.tier-btn-mini.tier-exec {
+    background: rgba(0, 217, 255, 0.15);
+    color: #00d9ff;
+}
+
+.tier-btn-mini.tier-file {
+    background: rgba(183, 148, 246, 0.15);
+    color: #b794f6;
+}
+
+.tier-btn-mini.tier-pkg {
+    background: rgba(0, 210, 106, 0.15);
+    color: #00d26a;
+}
+
 .skill-stats {
     display: flex;
     justify-content: space-between;
