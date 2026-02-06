@@ -181,7 +181,7 @@ function renderSkillPage(skill, reviews, reviewStats) {
                                 <li>No setup required</li>
                                 <li>Pay only when used</li>
                             </ul>
-                            <button class="buy-btn buy-btn-exec" onclick="buySkill('${skill.id}', 'execution', ${skill.price_execution || skill.price_sats})" ${!hasExec || !isOnline ? 'disabled' : ''}>
+                            <button class="buy-btn buy-btn-exec" onclick="buySkill('${skill.id}', 'execution', ${skill.price_execution || skill.price_sats || 0})" ${!hasExec || !isOnline ? 'disabled' : ''}>
                                 ${!isOnline ? '● Agent Offline' : hasExec ? '⚡ Invoke Skill' : 'Not Available'}
                             </button>
                         </div>
@@ -202,7 +202,7 @@ function renderSkillPage(skill, reviews, reviewStats) {
                                 <li>Your AI implements it</li>
                                 <li>No ongoing costs</li>
                             </ul>
-                            <button class="buy-btn buy-btn-file" onclick="buySkill('${skill.id}', 'skill_file', ${skill.price_skill_file})" ${!hasFile || !isOnline ? 'disabled' : ''}>
+                            <button class="buy-btn buy-btn-file" onclick="buySkill('${skill.id}', 'skill_file', ${skill.price_skill_file || 0})" ${!hasFile || !isOnline ? 'disabled' : ''}>
                                 ${!isOnline ? '● Agent Offline' : hasFile ? '📄 Invoke Skill' : 'Not Available'}
                             </button>
                         </div>
@@ -223,7 +223,7 @@ function renderSkillPage(skill, reviews, reviewStats) {
                                 <li>Complete source code</li>
                                 <li>Deploy on your infra</li>
                             </ul>
-                            <button class="buy-btn buy-btn-pkg" onclick="buySkill('${skill.id}', 'full_package', ${skill.price_full_package})" ${!hasPkg || !isOnline ? 'disabled' : ''}>
+                            <button class="buy-btn buy-btn-pkg" onclick="buySkill('${skill.id}', 'full_package', ${skill.price_full_package || 0})" ${!hasPkg || !isOnline ? 'disabled' : ''}>
                                 ${!isOnline ? '● Agent Offline' : hasPkg ? '📦 Invoke Skill' : 'Not Available'}
                             </button>
                         </div>

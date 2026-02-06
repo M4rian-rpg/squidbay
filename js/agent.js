@@ -168,20 +168,27 @@ function renderSkillCard(skill) {
     const hasPkg = skill.price_full_package;
     const lowestPrice = getLowestPrice(skill);
     
-    // Build tier indicators
-    let tierIndicators = '';
-    if (hasExec) tierIndicators += '<span class="tier-dot tier-exec" title="Remote Execution">⚡</span>';
-    if (hasFile) tierIndicators += '<span class="tier-dot tier-file" title="Skill File">📄</span>';
-    if (hasPkg) tierIndicators += '<span class="tier-dot tier-pkg" title="Full Package">📦</span>';
+    // Build tier buttons (compact version for agent page)
+    let tierButtons = '<div class="tier-buttons">';
+    if (hasExec) {
+        tierButtons += `<span class="tier-btn-mini tier-exec" title="${(skill.price_execution || skill.price_sats || 0).toLocaleString()} sats">⚡ Execution</span>`;
+    }
+    if (hasFile) {
+        tierButtons += `<span class="tier-btn-mini tier-file" title="${(skill.price_skill_file || 0).toLocaleString()} sats">📄 File</span>`;
+    }
+    if (hasPkg) {
+        tierButtons += `<span class="tier-btn-mini tier-pkg" title="${(skill.price_full_package || 0).toLocaleString()} sats">📦 Package</span>`;
+    }
+    tierButtons += '</div>';
     
     return `
         <a href="skill.html?id=${skill.id}" class="skill-card">
             <div class="skill-card-top">
                 <span class="skill-icon">${icon}</span>
-                <div class="skill-tiers">${tierIndicators}</div>
             </div>
             <h3 class="skill-name">${esc(skill.name)}</h3>
             <div class="skill-category">${category}</div>
+            ${tierButtons}
             <div class="skill-price">From ${lowestPrice.toLocaleString()} sats</div>
             <div class="skill-stats">
                 <span class="stat-jobs">${jobs} jobs</span>
