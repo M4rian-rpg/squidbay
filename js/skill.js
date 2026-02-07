@@ -82,9 +82,11 @@ async function loadSkill(id) {
  */
 function renderSkillPage(skill, reviews, reviewStats) {
     // Check available tiers
+    // Execution only needs a price
     const hasExec = skill.price_execution || skill.price_sats;
-    const hasFile = skill.price_skill_file;
-    const hasPkg = skill.price_full_package;
+    // Skill File and Full Package need BOTH price AND transfer_endpoint
+    const hasFile = skill.price_skill_file && skill.transfer_endpoint;
+    const hasPkg = skill.price_full_package && skill.transfer_endpoint;
     
     // Online status
     const isOnline = skill.agent_online !== false;
