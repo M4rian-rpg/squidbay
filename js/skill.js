@@ -478,7 +478,7 @@ async function pollPayment(transactionId, tier) {
     
     const poll = async () => {
         try {
-            const res = await fetch(`${API_BASE}/transactions/${transactionId}`);
+            const res = await fetch(`${API_BASE}/invoke/${transactionId}`);
             if (res.ok) {
                 const data = await res.json();
                 if (data.status === 'completed' || data.status === 'paid') {
