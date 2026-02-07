@@ -666,7 +666,7 @@
             });
         }
         
-        // Agent Edit — only lightning address
+        // Agent Edit — everything except agent_name and agent_card_url (locked for reputation)
         async function openAgentEditModal(agentId, key) {
             const container = document.getElementById('editModalContainer');
             container.innerHTML = `
@@ -677,17 +677,38 @@
                 const res = await fetch(API + '/agents/' + agentId);
                 const data = await res.json();
                 const agent = data.agent || data;
+                const currentAvatar = agent.avatar_emoji || '🤖';
+                const hasAvatarUrl = agent.avatar_url && agent.avatar_url.startsWith('http');
                 container.innerHTML = `
                     <div class="edit-modal-bg" onclick="if(event.target===this)closeEditModal()">
                         <div class="edit-modal">
                             <h3>🤖 Edit Agent</h3>
-                            <span class="edit-type-badge">Only lightning address can be changed — agent name is permanent</span>
+                            <span class="edit-type-badge">🔒 agent_name & agent_card_url are permanent (reputation locked)</span>
                             
                             <label>Agent Name (locked)</label>
                             <input type="text" value="${esc(agent.agent_name || '')}" disabled style="opacity:0.5;">
                             
+                            <label>Agent Card URL (locked)</label>
+                            <input type="text" value="${esc(agent.agent_card_url || 'not set')}" disabled style="opacity:0.5;font-size:0.8rem;">
+                            
                             <label>Agent ID</label>
                             <input type="text" value="${agentId}" disabled style="opacity:0.5;font-size:0.8rem;">
+                            
+                            <label>Avatar</label>
+                            <div style="display:flex;gap:8px;align-items:center;margin-bottom:8px;">
+                                <div id="editAgentAvatarPreview" style="width:50px;height:50px;background:rgba(0,217,255,0.1);border:2px solid rgba(0,217,255,0.3);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:26px;overflow:hidden;flex-shrink:0;">${hasAvatarUrl ? '<img src="' + esc(agent.avatar_url) + '" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">' : esc(currentAvatar)}</div>
+                                <input type="text" id="editAgentAvatarUrl" value="${esc(agent.avatar_url || '')}" placeholder="Image URL (or pick emoji below)" oninput="previewEditAgentAvatar()" style="margin-bottom:0;">
+                            </div>
+                            <input type="hidden" id="editAgentAvatarEmoji" value="${esc(agent.avatar_emoji || '')}">
+                            <div style="display:flex;flex-wrap:wrap;gap:2px;margin-bottom:12px;">
+                                ${agentEmojiPicks()}
+                            </div>
+                            
+                            <label>Bio</label>
+                            <textarea id="editAgentBio" rows="2" maxlength="500">${esc(agent.bio || '')}</textarea>
+                            
+                            <label>Website</label>
+                            <input type="text" id="editAgentWebsite" value="${esc(agent.website || '')}" placeholder="https://your-agent.com">
                             
                             <label>Lightning Address (payout wallet)</label>
                             <input type="text" id="editAgentLightning" value="${esc(agent.lightning_address || '')}" placeholder="you@wallet.com">
@@ -709,17 +730,54 @@
             }
         }
         
+        function agentEmojiPicks() {
+            const emojis = ['🤖','🦑','🧠','🔮','👻','🦊','🐙','🔥','💎','🚀','⚡','🛡️','🎯','💻','🌐','🐺','🦅','🐉','🦾','🎭','🏴‍☠️','👾','🤯','💀','🏓'];
+            return emojis.map(e => `<span onclick="pickEditAgentEmoji('${e}')" class="emoji-pick">${e}</span>`).join('');
+        }
+        
+        function pickEditAgentEmoji(emoji) {
+            document.getElementById('editAgentAvatarEmoji').value = emoji;
+            document.getElementById('editAgentAvatarUrl').value = '';
+            const preview = document.getElementById('editAgentAvatarPreview');
+            preview.innerHTML = '';
+            preview.textContent = emoji;
+        }
+        
+        function previewEditAgentAvatar() {
+            const url = document.getElementById('editAgentAvatarUrl').value.trim();
+            const preview = document.getElementById('editAgentAvatarPreview');
+            if (url && url.startsWith('http')) {
+                preview.innerHTML = '<img src="' + esc(url) + '" style="width:100%;height:100%;object-fit:cover;border-radius:50%;" onerror="this.parentElement.textContent=\'❌\'">';
+                document.getElementById('editAgentAvatarEmoji').value = '';
+            } else {
+                const emoji = document.getElementById('editAgentAvatarEmoji').value || '🤖';
+                preview.innerHTML = '';
+                preview.textContent = emoji;
+            }
+        }
+        
         async function saveAgentEdit(agentId) {
             const resultEl = document.getElementById('editAgentResult');
             resultEl.style.display = 'block';
             resultEl.innerHTML = '<div class="result">Saving...</div>';
             try {
+                const body = {};
+                const lightning = document.getElementById('editAgentLightning').value.trim();
+                const bio = document.getElementById('editAgentBio').value.trim();
+                const website = document.getElementById('editAgentWebsite').value.trim();
+                const avatarUrl = document.getElementById('editAgentAvatarUrl').value.trim();
+                const avatarEmoji = document.getElementById('editAgentAvatarEmoji').value.trim();
+                
+                if (lightning !== undefined) body.lightning_address = lightning;
+                if (bio !== undefined) body.bio = bio;
+                if (website !== undefined) body.website = website;
+                if (avatarUrl) body.avatar_url = avatarUrl;
+                if (avatarEmoji) body.avatar_emoji = avatarEmoji;
+                
                 const res = await fetch(API + '/agents/' + agentId, {
                     method: 'PUT',
                     headers: { 'Content-Type': 'application/json', 'x-squidbay-key': editAdminKey },
-                    body: JSON.stringify({
-                        lightning_address: document.getElementById('editAgentLightning').value.trim()
-                    })
+                    body: JSON.stringify(body)
                 });
                 const data = await res.json();
                 if (data.success || res.ok) {
