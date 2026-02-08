@@ -584,18 +584,23 @@ function showTransactionComplete(tier, transactionId, data) {
     } else if ((tier === 'skill_file' || tier === 'full_package') && data) {
         resultDetails = `
             <div class="transfer-result">
-                <h4>${tier === 'skill_file' ? '📄' : '📦'} Transfer Details</h4>
-                <p style="color:#888;font-size:0.85rem;">Your agent can present the transfer token to the seller's endpoint to retrieve the files.</p>
-                ${data.transfer_endpoint ? `<p style="font-size:0.8rem;color:#555;">Endpoint: <code style="color:#00d9ff;">${esc(data.transfer_endpoint)}</code></p>` : ''}
-                ${data.transfer_token ? `
-                    <div style="margin-top:8px;">
-                        <label style="font-size:0.75rem;color:#555;">Transfer Token:</label>
-                        <div style="display:flex;gap:6px;align-items:center;">
-                            <input type="text" value="${esc(data.transfer_token)}" readonly id="transfer-token-input" style="font-size:0.7rem;padding:8px;background:#0a0e14;border:1px solid #2a3540;border-radius:6px;color:#ffbd2e;flex:1;">
-                            <button onclick="navigator.clipboard.writeText(document.getElementById('transfer-token-input').value);this.textContent='✓'" style="width:auto;padding:8px 12px;font-size:0.8rem;">Copy</button>
-                        </div>
+                <h4>${tier === 'skill_file' ? '📄' : '📦'} Transfer Ready</h4>
+                <p style="color:#888;font-size:0.85rem;">Your AI agent has everything it needs to claim the files. The transfer token and endpoint have been recorded in the transaction.</p>
+                <div style="margin-top:10px;padding:12px;background:#0a0e14;border:1px solid #2a3540;border-radius:8px;">
+                    <div style="display:flex;justify-content:space-between;margin-bottom:6px;">
+                        <span style="color:#6b7b8d;font-size:0.75rem;">Transaction ID</span>
+                        <code style="color:#00d9ff;font-size:0.75rem;">${esc(data.transaction_id || transactionId)}</code>
                     </div>
-                ` : ''}
+                    <div style="display:flex;justify-content:space-between;margin-bottom:6px;">
+                        <span style="color:#6b7b8d;font-size:0.75rem;">Tier</span>
+                        <span style="color:#ffbd2e;font-size:0.75rem;">${tier === 'skill_file' ? '📄 Skill File' : '📦 Full Package'}</span>
+                    </div>
+                    <div style="display:flex;justify-content:space-between;">
+                        <span style="color:#6b7b8d;font-size:0.75rem;">Status</span>
+                        <span style="color:#00ff88;font-size:0.75rem;">✓ Ready for pickup</span>
+                    </div>
+                </div>
+                <p style="color:#555;font-size:0.75rem;margin-top:8px;">💡 Tell your AI agent: "Claim my SquidBay purchase — transaction ${esc(data.transaction_id || transactionId)}"</p>
             </div>
         `;
     }
@@ -646,7 +651,7 @@ function showTransactionComplete(tier, transactionId, data) {
                     <button class="star" data-rating="5">☆</button>
                 </div>
                 <textarea id="review-comment" placeholder="Optional: Share your experience..." rows="2"></textarea>
-                <button class="btn-submit-review" onclick="submitReview('${currentSkill?.id}', '${transactionId}')">Submit Review</button>
+                <button class="btn-submit-review" onclick="submitReview('${currentSkill?.id}', '${transactionId}', '${tier}')">Submit Review</button>
             </div>
             
             <button class="btn-done" onclick="window.SquidBaySkill.closeModal()">Done</button>
@@ -711,7 +716,7 @@ function updateStarDisplay(rating) {
 /**
  * Submit review for a skill
  */
-async function submitReview(skillId, transactionId) {
+async function submitReview(skillId, transactionId, tier) {
     if (selectedRating === 0) {
         alert('Please select a star rating');
         return;
@@ -731,7 +736,8 @@ async function submitReview(skillId, transactionId) {
                 transaction_id: transactionId,
                 rating: selectedRating,
                 comment: comment,
-                reviewer_name: 'Anonymous Agent'
+                reviewer_name: 'Anonymous Agent',
+                tier: tier || 'execution'
             })
         });
         
