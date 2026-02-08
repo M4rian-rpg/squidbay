@@ -475,14 +475,18 @@ function updateTransactionStep(stepNum) {
 async function pollPayment(transactionId, tier) {
     let attempts = 0;
     const maxAttempts = 60; // 5 minutes
+    let stopped = false;
     
     const poll = async () => {
+        if (stopped) return;
+        
         try {
             const res = await fetch(`${API_BASE}/invoke/${transactionId}`);
             if (res.ok) {
                 const data = await res.json();
                 
                 if (data.status === 'complete') {
+                    stopped = true;
                     // Payment confirmed + processed — update to step 3
                     updateTransactionStep(3);
                     animateAgentFlow();
@@ -505,7 +509,7 @@ async function pollPayment(transactionId, tier) {
                 }
                 
                 if (data.status === 'failed') {
-                    // Transaction failed
+                    stopped = true;
                     showTransactionFailed(data.error || 'Skill execution failed');
                     return;
                 }
@@ -515,9 +519,9 @@ async function pollPayment(transactionId, tier) {
         }
         
         attempts++;
-        if (attempts < maxAttempts) {
+        if (!stopped && attempts < maxAttempts) {
             setTimeout(poll, 5000);
-        } else {
+        } else if (!stopped) {
             showTransactionFailed('Payment timeout — invoice may have expired. No sats were charged.');
         }
     };
