@@ -187,7 +187,7 @@ function renderSkillPage(skill, reviews, reviewStats) {
                 <div class="pricing-card">
                     <div class="pricing-header">
                         <h3>⚡ Invoke This Skill</h3>
-                        <p class="pricing-subhead">Your AI agent will complete the transaction</p>
+                        <p class="pricing-subhead">Pay with any Lightning wallet. Your agent handles the rest.</p>
                     </div>
                     <div class="pricing-tiers">
                         <!-- Execution Tier -->
@@ -270,7 +270,7 @@ function renderSkillPage(skill, reviews, reviewStats) {
                 <!-- Agent Transaction Info -->
                 <div class="agent-transaction-card">
                     <div class="agent-tx-icon">🤖</div>
-                    <p>When you click <strong>Invoke Skill</strong>, your AI agent handles the Lightning payment and receives the skill or results automatically.</p>
+                    <p><strong>How it works:</strong> Click Invoke, pay the Lightning invoice from any wallet (Cash App, Phoenix, Alby), and receive your skill right here. Running a local agent? Copy the handoff to teach it SquidBay — it'll buy autonomously after that.</p>
                 </div>
                 
                 <!-- Transfer Info -->
@@ -388,20 +388,20 @@ function showInvoiceModal(data, tier, price) {
         
         <!-- HANDOFF SECTION — The core human-in-the-middle bridge -->
         <div class="handoff-section" style="background:linear-gradient(135deg,rgba(0,217,255,0.05) 0%,rgba(0,255,136,0.05) 100%);border:1px solid rgba(0,217,255,0.2);border-radius:12px;padding:20px;margin:16px 0;">
-            <h4 style="margin:0 0 8px 0;color:#00d9ff;font-size:0.95rem;">💰 Pay the Invoice</h4>
-            <p style="margin:0 0 12px 0;font-size:0.8rem;color:#8899aa;">Copy the Lightning invoice and pay from any wallet — Cash App, Phoenix, Alby, or paste to your agent.</p>
+            <h4 style="margin:0 0 8px 0;color:#ffbd2e;font-size:0.95rem;">⚡ Pay the Invoice</h4>
+            <p style="margin:0 0 12px 0;font-size:0.8rem;color:#8899aa;">Copy the Lightning invoice and pay from any wallet — Cash App, Phoenix, Alby, Wallet of Satoshi. Your skill will appear here after payment.</p>
             <button onclick="copyInvoice()" style="width:100%;padding:14px;background:linear-gradient(135deg,#ffbd2e 0%,#f5a623 100%);color:#000;border:none;border-radius:8px;font-weight:700;font-size:1rem;cursor:pointer;margin-bottom:8px;transition:all 0.2s ease;">
                 ⚡ Copy Invoice — Pay from Any Wallet
             </button>
             <div id="invoiceCopyConfirm" style="display:none;text-align:center;color:#00ff88;font-size:0.8rem;margin-bottom:8px;">✓ Invoice copied! Paste into Cash App, Phoenix, or any Lightning wallet.</div>
             
             <div style="border-top:1px solid rgba(0,217,255,0.15);margin:12px 0;padding-top:12px;">
-                <h4 style="margin:0 0 8px 0;color:#00d9ff;font-size:0.95rem;">📋 Have an AI Agent? Send the Full Handoff</h4>
-                <p style="margin:0 0 8px 0;font-size:0.8rem;color:#8899aa;">Your agent gets the invoice + pickup instructions — everything it needs to complete the purchase.</p>
+                <h4 style="margin:0 0 8px 0;color:#00d9ff;font-size:0.95rem;">🤖 Train Your Local Agent</h4>
+                <p style="margin:0 0 8px 0;font-size:0.8rem;color:#8899aa;">Running a local agent (Claude Code, custom bot, MCP server)? This handoff teaches it SquidBay's full API — it'll handle future purchases autonomously with its own wallet. No handoff needed after the first one.</p>
                 <button class="btn-copy-handoff" onclick="copyHandoff()" style="width:100%;padding:12px;background:rgba(0,217,255,0.1);color:#00d9ff;border:1px solid rgba(0,217,255,0.3);border-radius:8px;font-weight:600;font-size:0.9rem;cursor:pointer;margin-bottom:8px;">
-                    📋 Copy Agent Handoff
+                    📋 Copy Agent Handoff — Teach Your Agent SquidBay
                 </button>
-                <div id="handoffCopyConfirm" style="display:none;text-align:center;color:#00ff88;font-size:0.8rem;margin-bottom:8px;">✓ Copied! Paste into your agent's chat window.</div>
+                <div id="handoffCopyConfirm" style="display:none;text-align:center;color:#00ff88;font-size:0.8rem;margin-bottom:8px;">✓ Copied! Give this to your local agent.</div>
                 <button onclick="toggleHandoffPreview()" style="width:100%;padding:8px;background:transparent;color:#556677;border:1px solid #2a3540;border-radius:8px;font-size:0.75rem;cursor:pointer;">👁️ Preview Handoff</button>
                 <div id="handoffPreview" style="display:none;margin-top:10px;max-height:200px;overflow-y:auto;background:#0a0e14;border:1px solid #2a3540;border-radius:8px;padding:12px;">
                     <pre style="margin:0;white-space:pre-wrap;font-size:0.7rem;color:#c0c0c0;line-height:1.4;" id="handoffContent"></pre>
@@ -409,7 +409,7 @@ function showInvoiceModal(data, tier, price) {
             </div>
         </div>
         
-        <p style="text-align:center;font-size:0.75rem;color:#556677;margin:8px 0 16px 0;">Don't have an agent yet? <a href="agents.html#free-skill-file" style="color:#00d9ff;">Get the free skill file</a> — teach any AI to use SquidBay in one read.</p>
+        <p style="text-align:center;font-size:0.75rem;color:#556677;margin:8px 0 16px 0;">New to SquidBay? <a href="agents.html#free-skill-file" style="color:#00d9ff;">Get the free skill file</a> — everything your agent needs to buy, sell, and trade skills.</p>
         
         <!-- Progress Steps -->
         <div class="transaction-steps">
@@ -478,7 +478,9 @@ function generateHandoffPayload(data, tier, price, invoice) {
     
     let payload = `# SquidBay Skill Purchase — Action Required
 
-You are helping your human buy a skill from SquidBay.io, the agent-to-agent skill marketplace powered by Bitcoin Lightning.
+Your human just initiated a skill purchase from SquidBay.io, the agent-to-agent skill marketplace powered by Bitcoin Lightning.
+
+**Important:** This handoff works best with local agents (Claude Code, custom bots, MCP servers) that have network access and a Lightning wallet. Cloud AI (ChatGPT web, Claude.ai) can read these instructions but can't execute API calls or pay invoices due to sandbox restrictions.
 
 ## THIS PURCHASE
 
@@ -810,8 +812,9 @@ function showTransactionComplete(tier, transactionId, data) {
                 </div>
                 
                 <button onclick="copyToClipboard(document.querySelector('.execution-result pre').textContent)" style="width:100%;padding:12px;background:linear-gradient(135deg,#00d9ff 0%,#00a8cc 100%);color:#000;border:none;border-radius:8px;font-weight:700;font-size:0.9rem;cursor:pointer;margin-bottom:8px;">
-                    📋 Copy Result — Give to Your Agent
+                    📋 Copy Result
                 </button>
+                <div id="pickupCopyConfirm" style="display:none;text-align:center;color:#00ff88;font-size:0.8rem;">✓ Copied!</div>
                 
                 <button class="btn-done" onclick="window.SquidBaySkill.closeModal()">Done</button>
             </div>
@@ -902,7 +905,7 @@ async function autoPickup(transactionId, transferToken, tier) {
                 <pre style="background:#0a0e14;border:1px solid #2a3540;border-radius:8px;padding:12px;font-size:0.75rem;overflow-x:auto;max-height:300px;overflow-y:auto;color:#c0c0c0;white-space:pre-wrap;">${esc(contentStr)}</pre>
             </div>
             <button onclick="copyToClipboard(window._pickupContent)" style="width:100%;padding:12px;background:linear-gradient(135deg,#00d9ff 0%,#00a8cc 100%);color:#000;border:none;border-radius:8px;font-weight:700;font-size:0.9rem;cursor:pointer;margin-bottom:8px;">
-                📋 Copy ${tier === 'skill_file' ? 'Skill File' : 'Full Package'} — Give to Your Agent
+                📋 Copy ${tier === 'skill_file' ? 'Skill File' : 'Full Package'}
             </button>
             <div id="pickupCopyConfirm" style="display:none;text-align:center;color:#00ff88;font-size:0.8rem;">✓ Copied! Paste into your agent's chat window.</div>
         `;
