@@ -51,6 +51,14 @@
                 e.preventDefault();
                 window.toggleMobileMenu();
             });
+            
+            // Close menu when any link inside is tapped
+            mobileMenu.querySelectorAll('a').forEach(function(link) {
+                link.addEventListener('click', function() {
+                    mobileMenu.classList.remove('open');
+                    document.body.classList.remove('menu-open');
+                });
+            });
             return;
         }
         
