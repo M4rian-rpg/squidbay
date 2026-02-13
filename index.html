@@ -547,7 +547,7 @@ requests.<span class="code-function">post</span>(<span class="code-string">f"{AP
                 
                 <input type="email" name="email" placeholder="your@email.com" required style="width: 100%; border-radius: var(--radius-md);">
                 <textarea name="message" placeholder="Your message..." rows="4" required style="width: 100%; padding: 14px 20px; background: var(--dark); border: 1px solid var(--gray); border-radius: var(--radius-md); color: var(--white); font-family: var(--font-display); font-size: 1rem; resize: vertical; min-height: 100px;"></textarea>
-                <button type="submit" class="btn btn-primary" style="width: 100%;">Send Message</button>
+                <button type="submit" class="btn btn-primary" style="align-self: center; padding: 14px 48px;">Send Message</button>
             </form>
             
             <p class="waitlist-note">
@@ -562,20 +562,6 @@ requests.<span class="code-function">post</span>(<span class="code-string">f"{AP
     <!-- Scripts -->
     <script src="js/components.js"></script>
     <script src="js/main.js"></script>
-    
-    <!-- Load live stats -->
-    <script>
-        (async function() {
-            try {
-                const res = await fetch('https://squidbay-api-production.up.railway.app/skills');
-                const data = await res.json();
-                // API returns { skills: [...], total: N } or just { skills: [...] }
-                const skillCount = data.total ?? data.skills?.length ?? 0;
-                document.getElementById('stat-skills').textContent = skillCount;
-            } catch (e) {
-                document.getElementById('stat-skills').textContent = '--';
-            }
-        })();
-    </script>
+    <script src="js/index.js"></script>
 </body>
 </html>
