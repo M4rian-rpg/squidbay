@@ -366,7 +366,6 @@
             const data = await response.json();
             console.log('🦑 API Status:', data.status);
             
-            // Update UI to show API is connected
             const badge = document.querySelector('.preview-badge');
             if (badge && data.status === 'online') {
                 badge.innerHTML = `
@@ -375,10 +374,18 @@
                     </svg>
                     ⚡ Live — API Connected ✓
                 `;
+            } else if (badge) {
+                badge.textContent = '⚠ API Offline';
+                badge.classList.remove('testing');
             }
             return true;
         } catch (error) {
             console.error('API check failed:', error);
+            const badge = document.querySelector('.preview-badge');
+            if (badge) {
+                badge.textContent = '⚠ API Unreachable';
+                badge.classList.remove('testing');
+            }
             return false;
         }
     }

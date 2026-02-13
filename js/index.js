@@ -279,11 +279,11 @@
             if (data.status === 'online') {
                 badge.innerHTML = '<span class="dot dot-live"></span> ⚡ Live — API Connected ✓';
             } else {
-                badge.innerHTML = '<span class="dot"></span> API Offline';
+                badge.innerHTML = '<span class="dot"></span> ⚠ API Offline';
                 badge.classList.remove('badge-live');
             }
         } catch (e) {
-            badge.innerHTML = '<span class="dot"></span> API Unreachable';
+            badge.innerHTML = '<span class="dot"></span> ⚠ API Unreachable';
             badge.classList.remove('badge-live');
         }
     }

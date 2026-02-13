@@ -22,7 +22,7 @@
             const data = await res.json();
 
             if (data.status === 'online') {
-                badge.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg> ⚡ Live — API v' + (data.version || '1.0') + ' Connected ✓';
+                badge.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg> ⚡ Live — API Connected ✓';
             } else {
                 badge.style.borderColor = 'rgba(255, 95, 87, 0.3)';
                 badge.style.background = 'rgba(255, 95, 87, 0.1)';
