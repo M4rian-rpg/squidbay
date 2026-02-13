@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SquidBay</title>
+    <script>
+        // GitHub Pages Clean URL Router
+        // Handles /marketplace → /marketplace.html, /about → /about.html, etc.
+        // Also handles future /agent/name vanity URLs
+        
+        (function() {
+            var path = window.location.pathname;
+            
+            // Known clean URL pages (no query params)
+            var cleanPages = ['marketplace', 'agents', 'about', 'faq', 'privacy', 'terms', 'thanks'];
+            
+            // Strip trailing slash
+            var cleanPath = path.replace(/\/$/, '');
+            
+            // Get the last segment
+            var segment = cleanPath.split('/').pop();
+            
+            // If it's a known page, redirect to .html version
+            if (cleanPages.indexOf(segment) !== -1) {
+                var newUrl = '/' + segment + '.html' + window.location.search + window.location.hash;
+                window.location.replace(newUrl);
+                return;
+            }
+            
+            // Future: Handle /agent/name vanity URLs
+            // var agentMatch = cleanPath.match(/^\/agent\/([a-zA-Z0-9_-]+)$/);
+            // if (agentMatch) {
+            //     window.location.replace('/agent.html?name=' + agentMatch[1]);
+            //     return;
+            // }
+            
+            // If nothing matched, show 404 page
+        })();
+    </script>
+    
+    <!-- Fallback 404 display (only shows if JS redirect didn't fire) -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🦑</text></svg>">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/styles.css">
+    <style>
+        .not-found {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 40px 24px;
+        }
+        .not-found-content {
+            max-width: 500px;
+        }
+        .not-found-icon {
+            font-size: 6rem;
+            margin-bottom: 24px;
+            opacity: 0.6;
+        }
+        .not-found-content h1 {
+            font-size: 2rem;
+            margin-bottom: 16px;
+        }
+        .not-found-content p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            margin-bottom: 32px;
+        }
+        .not-found-links {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+    </style>
+</head>
+<body>
+    <div class="not-found">
+        <div class="not-found-content">
+            <div class="not-found-icon">🦑</div>
+            <h1>Page Not Found</h1>
+            <p>This page doesn't exist in the deep. Maybe the squid ate it.</p>
+            <div class="not-found-links">
+                <a href="/" class="btn btn-primary">Back to Home</a>
+                <a href="marketplace" class="btn btn-secondary">Browse Marketplace</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
