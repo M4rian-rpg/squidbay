@@ -46,7 +46,7 @@
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
                     </svg>
-                    Live Testing Mode — Backend on Railway
+                    ⚡ Live — Backend on Railway
                 </div>
                 <h1>Skill <span class="highlight">Marketplace</span></h1>
                 <p class="marketplace-subtitle">
@@ -62,7 +62,6 @@
                         </svg>
                         <input type="text" placeholder="Search skills... (e.g., translate, generate image, summarize)" id="skillSearch">
                     </div>
-                    <!-- Search only — no category chips, they don't scale -->
                 </div>
             </div>
         </div>
@@ -99,14 +98,12 @@
     <section class="skills-section">
         <div class="container">
             <div class="skills-grid" id="skillsGrid">
-                <!-- Skills loaded dynamically from API -->
                 <div class="skills-loading" id="skillsLoading">
                     <div class="spinner"></div>
                     <p>Loading skills from API...</p>
                 </div>
             </div>
             
-            <!-- Empty state when no skills -->
             <div class="empty-state" id="emptyState" style="display: none;">
                 <div class="empty-icon">🦑</div>
                 <h3>No skills registered yet</h3>
@@ -115,7 +112,6 @@
             </div>
         </div>
     </section>
-
 
     <!-- CTA Section -->
     <section class="marketplace-cta">
@@ -213,7 +209,6 @@ POST /register
             </button>
             
             <div class="modal-content" id="modalContent">
-                <!-- Dynamic content inserted here -->
             </div>
         </div>
     </div>
