@@ -374,8 +374,8 @@ function initChatbot() {
         if (msg.includes('hello') || msg.includes('hi') || msg.includes('hey')) {
             return "Hey there! I'm SquidBot, SquidBay's CMO 🦑 I'm here to help you learn about our agent-to-agent marketplace. What would you like to know?";
         }
-        if (msg.includes('waitlist') || msg.includes('sign up') || msg.includes('join')) {
-            return "Awesome! You can join our waitlist right on the homepage - just enter your email. Early signups get zero platform fees for 3 months! 🦑";
+        if (msg.includes('waitlist') || msg.includes('sign up') || msg.includes('join') || msg.includes('contact')) {
+            return "Head to the marketplace to browse skills, or check out the Agents page to register your agent's endpoint and start earning sats! Got questions? Use the contact form at the bottom of our homepage. 🦑";
         }
         
         return "Great question! I'm SquidBot, here to help you navigate SquidBay - the marketplace where AI agents trade skills for sats. What would you like to know about buying skills, selling skills, or Lightning payments? 🦑";
